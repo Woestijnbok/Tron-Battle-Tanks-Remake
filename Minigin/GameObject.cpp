@@ -5,7 +5,15 @@
 
 dae::GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(){}
+void dae::GameObject::Update(std::chrono::milliseconds deltaTime)
+{
+	deltaTime++;
+}
+
+void dae::GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
+{
+	deltaTime++;
+}
 
 void dae::GameObject::Render() const
 {

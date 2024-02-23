@@ -26,11 +26,19 @@ void Scene::RemoveAll()
 	m_objects.clear();
 }
 
-void Scene::Update()
+void Scene::Update(std::chrono::milliseconds deltaTime)
 {
 	for(auto& object : m_objects)
 	{
-		object->Update();
+		object->Update(deltaTime);
+	}
+}
+
+void Scene::FixedUpdate(std::chrono::milliseconds deltaTime)
+{
+	for (auto& object : m_objects)
+	{
+		object->Update(deltaTime);
 	}
 }
 
@@ -42,3 +50,7 @@ void Scene::Render() const
 	}
 }
 
+const std::string& Scene::GetName() const
+{
+	return m_name;
+}

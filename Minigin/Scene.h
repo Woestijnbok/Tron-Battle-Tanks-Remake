@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneManager.h"
+#include <chrono>
 
 namespace dae
 {
@@ -12,8 +13,10 @@ namespace dae
 		void Remove(std::shared_ptr<GameObject> object);
 		void RemoveAll();
 
-		void Update();
+		void Update(std::chrono::milliseconds deltaTime);
+		void FixedUpdate(std::chrono::milliseconds deltaTime);
 		void Render() const;
+		const std::string& GetName() const;
 
 		~Scene();
 		Scene(const Scene& other) = delete;

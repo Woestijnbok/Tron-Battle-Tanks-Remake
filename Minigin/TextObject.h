@@ -3,6 +3,7 @@
 #include <memory>
 #include "GameObject.h"
 #include "Transform.h"
+#include <chrono>
 
 namespace dae
 {
@@ -11,7 +12,7 @@ namespace dae
 	class TextObject final : public GameObject
 	{
 	public:
-		void Update() override;
+		void Update(std::chrono::milliseconds deltaTime) override;
 		void Render() const override;
 
 		void SetText(const std::string& text);

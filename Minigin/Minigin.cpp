@@ -9,6 +9,11 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
+#include "TextObject.h"
+#include "Scene.h"
+#include <thread>
+#include <memory>
+#include <iostream>
 
 SDL_Window* g_window{};
 
@@ -40,7 +45,11 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-dae::Minigin::Minigin(const std::string &dataPath)
+dae::Minigin::Minigin(const std::string &dataPath) :
+	m_MaxFrameRate{ 60 },
+	m_MinFrameDuration{ CalculateMinFrameDuration(m_MaxFrameRate) },
+	m_FixedDuration{ 20 },
+	m_FPSCounter{}
 {
 	PrintSDLVersion();
 	
@@ -57,13 +66,13 @@ dae::Minigin::Minigin(const std::string &dataPath)
 		480,
 		SDL_WINDOW_OPENGL
 	);
+
 	if (g_window == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
 	Renderer::GetInstance().Init(g_window);
-
 	ResourceManager::GetInstance().Init(dataPath);
 }
 
@@ -83,12 +92,45 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// todo: this update loop could use some work.
-	bool doContinue = true;
+	// Creating the fps counter
+	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25);
+	m_FPSCounter = std::make_shared<dae::TextObject>("0.0 FPS", font);
+	m_FPSCounter->SetPosition(0.0f, 0.0f);
+	sceneManager.GetScene("Demo")->Add(m_FPSCounter);
+
+	bool doContinue{ true };
+	std::chrono::steady_clock::time_point lastTime{ std::chrono::high_resolution_clock::now() };
+	std::chrono::milliseconds lag{};
 	while (doContinue)
 	{
+		const std::chrono::steady_clock::time_point currentTime{ std::chrono::high_resolution_clock::now() };
+		const std::chrono::milliseconds deltaTime{ std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime) };
+		lastTime = currentTime;
+		lag += deltaTime;
+
 		doContinue = input.ProcessInput();
-		sceneManager.Update();
+		while (lag >= m_FixedDuration)
+		{
+			sceneManager.FixedUpdate(m_FixedDuration);
+			lag -= m_FixedDuration;
+		}
+		sceneManager.Update(deltaTime);
 		renderer.Render();
+
+		const auto sleepTime{ currentTime + m_MinFrameDuration - std::chrono::high_resolution_clock::now() };
+		std::this_thread::sleep_for(sleepTime);
+
+		// Updating the fps counter
+		const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - currentTime };
+		const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
+		std::ostringstream stream{};
+		stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
+		m_FPSCounter->SetText(stream.str());
 	}
+}
+
+std::chrono::milliseconds dae::Minigin::CalculateMinFrameDuration(int frameRate)
+{
+	if (frameRate <= 0) throw std::runtime_error("Invalid max frame rate!");
+	else return std::chrono::milliseconds(static_cast<long long>(1000) / frameRate);
 }
