@@ -1,26 +1,39 @@
-#pragma once
+#ifndef SCENE_MANAGER
+#define SCENE_MANAGER
+
 #include <vector>
 #include <string>
 #include <memory>
-#include "Singleton.h"
 #include <chrono>
 
-namespace dae
+#include "Singleton.h"
+
+class Scene;
+
+class SceneManager final : public Singleton<SceneManager>
 {
-	class Scene;
-	class SceneManager final : public Singleton<SceneManager>
-	{
-	public:
-		Scene& CreateScene(const std::string& name);
+public:
 
-		void Update(std::chrono::milliseconds deltaTime);
-		void FixedUpdate(std::chrono::milliseconds deltaTime);
-		void Render();
-		std::shared_ptr<Scene> GetScene(const std::string& name);
+	~SceneManager() = default;
 
-	private:
-		friend class Singleton<SceneManager>;
-		SceneManager() = default;
-		std::vector<std::shared_ptr<Scene>> m_scenes;
-	};
-}
+	SceneManager(const SceneManager&) = delete;
+	SceneManager(SceneManager&&) = delete;
+	SceneManager& operator= (const SceneManager&) = delete;
+	SceneManager& operator= (const SceneManager&&) = delete;
+
+	Scene& CreateScene(const std::string& name);
+	void Update(std::chrono::milliseconds deltaTime);
+	void FixedUpdate(std::chrono::milliseconds deltaTime);
+	void Render();
+	std::shared_ptr<Scene> GetScene(const std::string& name);
+
+private:
+
+	SceneManager() = default;
+
+	friend class Singleton<SceneManager>;
+	
+	std::vector<std::shared_ptr<Scene>> m_Scenes;
+};
+
+#endif

@@ -1,14 +1,15 @@
 #include <stdexcept>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "Texture2D.h"
 #include "Font.h"
 
-void dae::ResourceManager::Init(const std::string& dataPath)
+void ResourceManager::Init(const std::string& dataPath)
 {
-	m_dataPath = dataPath;
+	m_DataPath = dataPath;
 
 	if (TTF_Init() != 0)
 	{
@@ -16,9 +17,9 @@ void dae::ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::string& file) const
+std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file) const
 {
-	const auto fullPath = m_dataPath + file;
+	const auto fullPath = m_DataPath + file;
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
 	if (texture == nullptr)
 	{
@@ -27,7 +28,7 @@ std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::str
 	return std::make_shared<Texture2D>(texture);
 }
 
-std::shared_ptr<dae::Font> dae::ResourceManager::LoadFont(const std::string& file, unsigned int size) const
+std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
-	return std::make_shared<Font>(m_dataPath + file, size);
+	return std::make_shared<Font>(m_DataPath + file, size);
 }

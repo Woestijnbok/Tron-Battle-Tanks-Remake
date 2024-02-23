@@ -1,14 +1,26 @@
-#pragma once
+#ifndef TRANSFORM
+#define TRANSFORM
+
 #include <glm/glm.hpp>
 
-namespace dae
+class Transform final
 {
-	class Transform final
-	{
-	public:
-		const glm::vec3& GetPosition() const { return m_position; }
-		void SetPosition(float x, float y, float z);
-	private:
-		glm::vec3 m_position;
-	};
-}
+public:
+
+	Transform() = default;
+	~Transform() = default;
+
+	Transform(const Transform&) = delete;
+	Transform(Transform&&) = delete;
+	Transform& operator= (const Transform&) = delete;
+	Transform& operator= (const Transform&&) = delete;
+
+	const glm::vec3& GetPosition() const;
+	void SetPosition(float x, float y, float z);
+
+private:
+
+	glm::vec3 m_Position;
+};
+
+#endif

@@ -1,32 +1,33 @@
 #include <string>
+
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
 
-dae::GameObject::~GameObject() = default;
+GameObject::~GameObject() = default;
 
-void dae::GameObject::Update(std::chrono::milliseconds deltaTime)
+void GameObject::Update(std::chrono::milliseconds deltaTime)
 {
 	deltaTime++;
 }
 
-void dae::GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
+void GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
 {
 	deltaTime++;
 }
 
-void dae::GameObject::Render() const
+void GameObject::Render() const
 {
-	const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);
+	/*const auto& pos = m_transform.GetPosition();
+	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);*/
 }
 
-void dae::GameObject::SetTexture(const std::string& filename)
-{
-	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-}
+//void GameObject::SetTexture(const std::string& filename)
+//{
+//	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
+//}
 
-void dae::GameObject::SetPosition(float x, float y)
+void GameObject::SetPosition(float x, float y)
 {
-	m_transform.SetPosition(x, y, 0.0f);
+	m_Transform.SetPosition(x, y, 0.0f);
 }

@@ -1,36 +1,43 @@
-#pragma once
-#include "SceneManager.h"
+#ifndef SCENE
+#define SCENE
+
 #include <chrono>
 
-namespace dae
+#include "SceneManager.h"
+
+class GameObject;
+
+class Scene final
 {
-	class GameObject;
-	class Scene final
-	{
-		friend Scene& SceneManager::CreateScene(const std::string& name);
-	public:
-		void Add(std::shared_ptr<GameObject> object);
-		void Remove(std::shared_ptr<GameObject> object);
-		void RemoveAll();
+	
+public:
 
-		void Update(std::chrono::milliseconds deltaTime);
-		void FixedUpdate(std::chrono::milliseconds deltaTime);
-		void Render() const;
-		const std::string& GetName() const;
+	~Scene() = default;
 
-		~Scene();
-		Scene(const Scene& other) = delete;
-		Scene(Scene&& other) = delete;
-		Scene& operator=(const Scene& other) = delete;
-		Scene& operator=(Scene&& other) = delete;
+	Scene(const Scene& other) = delete;
+	Scene(Scene&& other) = delete;
+	Scene& operator=(const Scene& other) = delete;
+	Scene& operator=(Scene&& other) = delete;
 
-	private: 
-		explicit Scene(const std::string& name);
+	friend Scene& SceneManager::CreateScene(const std::string& name);
 
-		std::string m_name;
-		std::vector < std::shared_ptr<GameObject>> m_objects{};
+	void Add(std::shared_ptr<GameObject> object);
+	void Remove(std::shared_ptr<GameObject> object);
+	void RemoveAll();
 
-		static unsigned int m_idCounter; 
-	};
+	void Update(std::chrono::milliseconds deltaTime);
+	void FixedUpdate(std::chrono::milliseconds deltaTime);
+	void Render() const;
+	const std::string& GetName() const;
 
-}
+private:
+
+	static unsigned int m_IdCounter;
+
+	std::string m_Name;
+	std::vector < std::shared_ptr<GameObject>> m_Objects{};
+
+	explicit Scene(const std::string& name);
+};
+
+#endif

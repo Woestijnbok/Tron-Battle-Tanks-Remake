@@ -1,9 +1,14 @@
-#include <stdexcept>
 #define WIN32_LEAN_AND_MEAN 
+
+#include <stdexcept>
 #include <windows.h>
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <thread>
+#include <memory>
+#include <iostream>
+
 #include "Minigin.h"
 #include "InputManager.h"
 #include "SceneManager.h"
@@ -11,11 +16,6 @@
 #include "ResourceManager.h"
 #include "TextObject.h"
 #include "Scene.h"
-#include <thread>
-#include <memory>
-#include <iostream>
-
-SDL_Window* g_window{};
 
 void PrintSDLVersion()
 {
@@ -45,7 +45,8 @@ void PrintSDLVersion()
 		version.major, version.minor, version.patch);
 }
 
-dae::Minigin::Minigin(const std::string &dataPath) :
+Minigin::Minigin(const std::string &dataPath) :
+	m_Window{},
 	m_MaxFrameRate{ 60 },
 	m_MinFrameDuration{ CalculateMinFrameDuration(m_MaxFrameRate) },
 	m_FixedDuration{ 20 },
@@ -58,7 +59,7 @@ dae::Minigin::Minigin(const std::string &dataPath) :
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	g_window = SDL_CreateWindow(
+	m_Window = SDL_CreateWindow(
 		"Programming 4 assignment",
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
@@ -67,24 +68,24 @@ dae::Minigin::Minigin(const std::string &dataPath) :
 		SDL_WINDOW_OPENGL
 	);
 
-	if (g_window == nullptr) 
+	if (m_Window == nullptr) 
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(g_window);
+	Renderer::GetInstance().Init(m_Window);
 	ResourceManager::GetInstance().Init(dataPath);
 }
 
-dae::Minigin::~Minigin()
+Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
-	SDL_DestroyWindow(g_window);
-	g_window = nullptr;
+	SDL_DestroyWindow(m_Window);
+	m_Window = nullptr;
 	SDL_Quit();
 }
 
-void dae::Minigin::Run(const std::function<void()>& load)
+void Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
@@ -93,10 +94,10 @@ void dae::Minigin::Run(const std::function<void()>& load)
 	auto& input = InputManager::GetInstance();
 
 	// Creating the fps counter
-	auto font = dae::ResourceManager::GetInstance().LoadFont("Lingua.otf", 25);
-	m_FPSCounter = std::make_shared<dae::TextObject>("0.0 FPS", font);
+	/*auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 25);
+	m_FPSCounter = std::make_shared<TextObject>("0.0 FPS", font);
 	m_FPSCounter->SetPosition(0.0f, 0.0f);
-	sceneManager.GetScene("Demo")->Add(m_FPSCounter);
+	sceneManager.GetScene("Demo")->Add(m_FPSCounter);*/
 
 	bool doContinue{ true };
 	std::chrono::steady_clock::time_point lastTime{ std::chrono::high_resolution_clock::now() };
@@ -121,15 +122,15 @@ void dae::Minigin::Run(const std::function<void()>& load)
 		std::this_thread::sleep_for(sleepTime);
 
 		// Updating the fps counter
-		const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - currentTime };
+		/*const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - currentTime };
 		const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
 		std::ostringstream stream{};
 		stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
-		m_FPSCounter->SetText(stream.str());
+		m_FPSCounter->SetText(stream.str());*/
 	}
 }
 
-std::chrono::milliseconds dae::Minigin::CalculateMinFrameDuration(int frameRate)
+std::chrono::milliseconds Minigin::CalculateMinFrameDuration(int frameRate)
 {
 	if (frameRate <= 0) throw std::runtime_error("Invalid max frame rate!");
 	else return std::chrono::milliseconds(static_cast<long long>(1000) / frameRate);

@@ -1,8 +1,13 @@
 #include "Transform.h"
 
-void dae::Transform::SetPosition(const float x, const float y, const float z)
+const glm::vec3& Transform::GetPosition() const
 {
-	m_position.x = x;
-	m_position.y = y;
-	m_position.z = z;
+	return m_Position; 
+}
+
+void Transform::SetPosition(const float x, const float y, const float z)
+{
+	m_Position.x = x;
+	m_Position.y = y;
+	m_Position.z = z;
 }

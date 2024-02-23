@@ -1,17 +1,23 @@
 #include <SDL.h>
+
 #include "InputManager.h"
 
-bool dae::InputManager::ProcessInput()
+bool InputManager::ProcessInput()
 {
-	SDL_Event e;
-	while (SDL_PollEvent(&e)) {
-		if (e.type == SDL_QUIT) {
+	SDL_Event event{};
+
+	while (SDL_PollEvent(&event)) 
+	{
+		if (event.type == SDL_QUIT) 
+		{
 			return false;
 		}
-		if (e.type == SDL_KEYDOWN) {
+		if (event.type == SDL_KEYDOWN) 
+		{
 			
 		}
-		if (e.type == SDL_MOUSEBUTTONDOWN) {
+		if (event.type == SDL_MOUSEBUTTONDOWN) 
+		{
 			
 		}
 		// etc...

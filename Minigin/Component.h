@@ -1,4 +1,6 @@
-#pragma once
+#ifndef COMPONENT
+#define COMPONENT
+
 #include <chrono>
 
 class Component
@@ -15,8 +17,11 @@ public:
 
 	virtual void Update(std::chrono::milliseconds deltaTime) = 0;
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) = 0;
+	virtual void Render() const = 0;
 
 private:
 
 	
 };
+
+#endif

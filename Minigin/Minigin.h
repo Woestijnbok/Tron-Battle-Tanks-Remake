@@ -1,31 +1,35 @@
-#pragma once
+#ifndef MINIGIN
+#define MINIGIN
+
 #include <string>
 #include <functional>
 #include <chrono>
 
-namespace dae
+class TextObject;
+
+class Minigin
 {
-	class TextObject;
+public:
 
-	class Minigin
-	{
-	public:
-		explicit Minigin(const std::string& dataPath);
-		~Minigin();
-		void Run(const std::function<void()>& load);
+	explicit Minigin(const std::string& dataPath);
+	~Minigin();
 
-		Minigin(const Minigin& other) = delete;
-		Minigin(Minigin&& other) = delete;
-		Minigin& operator=(const Minigin& other) = delete;
-		Minigin& operator=(Minigin&& other) = delete;
+	Minigin(const Minigin& other) = delete;
+	Minigin(Minigin&& other) = delete;
+	Minigin& operator=(const Minigin& other) = delete;
+	Minigin& operator=(Minigin&& other) = delete;
 
-	private:
+	void Run(const std::function<void()>& load);
 
-		const int m_MaxFrameRate;
-		const std::chrono::milliseconds m_MinFrameDuration;
-		const std::chrono::milliseconds m_FixedDuration;
-		std::shared_ptr<TextObject> m_FPSCounter;
+private:
 
-		std::chrono::milliseconds CalculateMinFrameDuration(int frameRate);
-	};
-}
+	SDL_Window* m_Window;
+	const int m_MaxFrameRate;
+	const std::chrono::milliseconds m_MinFrameDuration;
+	const std::chrono::milliseconds m_FixedDuration;
+	std::shared_ptr<TextObject> m_FPSCounter;
+
+	std::chrono::milliseconds CalculateMinFrameDuration(int frameRate);
+};
+
+#endif

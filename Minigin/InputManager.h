@@ -1,12 +1,20 @@
-#pragma once
+#ifndef INPUT_MANAGER
+#define INPUT_MANAGER
+
 #include "Singleton.h"
 
-namespace dae
+class InputManager final : public Singleton<InputManager>
 {
-	class InputManager final : public Singleton<InputManager>
-	{
-	public:
-		bool ProcessInput();
-	};
+public:
+	InputManager() = default;
+	~InputManager() = default;
 
-}
+	InputManager(const InputManager&) = delete;
+	InputManager(InputManager&&) = delete;
+	InputManager& operator= (const InputManager&) = delete;
+	InputManager& operator= (const InputManager&&) = delete;
+
+	bool ProcessInput();
+};
+
+#endif
