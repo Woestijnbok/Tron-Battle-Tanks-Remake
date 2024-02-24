@@ -14,8 +14,10 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "TextObject.h"
 #include "Scene.h"
+#include "GameObject.h"
+#include "RenderComponent.h"
+#include "TextObject.h"
 
 void PrintSDLVersion()
 {
@@ -93,11 +95,13 @@ void Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// Creating the fps counter
-	/*auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 25);
-	m_FPSCounter = std::make_shared<TextObject>("0.0 FPS", font);
+	// FPS counter game object
+	m_FPSCounter = std::make_shared<GameObject>();
+	auto font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
+	m_FPSCounter->AddComponent<RenderComponent>(std::make_shared<RenderComponent>(m_FPSCounter));
+	m_FPSCounter->AddComponent<TextComponent>(std::make_shared<TextComponent>(m_FPSCounter, "0.0 FPS", font));
 	m_FPSCounter->SetPosition(0.0f, 0.0f);
-	sceneManager.GetScene("Demo")->Add(m_FPSCounter);*/
+	sceneManager.GetScene("Demo")->Add(m_FPSCounter);
 
 	bool doContinue{ true };
 	std::chrono::steady_clock::time_point lastTime{ std::chrono::high_resolution_clock::now() };
@@ -122,11 +126,12 @@ void Minigin::Run(const std::function<void()>& load)
 		std::this_thread::sleep_for(sleepTime);
 
 		// Updating the fps counter
-		/*const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - currentTime };
+		const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - currentTime };
 		const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
 		std::ostringstream stream{};
 		stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
-		m_FPSCounter->SetText(stream.str());*/
+		auto text{ m_FPSCounter->GetComponent<TextComponent>() };
+		if(text != nullptr) text->SetText(stream.str());
 	}
 }
 
