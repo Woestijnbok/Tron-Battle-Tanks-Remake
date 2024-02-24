@@ -37,6 +37,9 @@
     <Filter Include="Scene Manager\Scene">
       <UniqueIdentifier>{89cc0cc4-3eee-4d7a-9bc9-64752d7eb54d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Component\Render Component">
+      <UniqueIdentifier>{8ea7d573-521f-420d-87d0-973d9ac579db}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -66,9 +69,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Scene Manager</Filter>
     </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Text Component</Filter>
-    </ClInclude>
     <ClInclude Include="Texture2D.h">
       <Filter>Texture 2D</Filter>
     </ClInclude>
@@ -76,6 +76,12 @@
       <Filter>Transform</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Component\Render Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TextObject.h">
+      <Filter>Text Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -105,9 +111,6 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Scene Manager</Filter>
     </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Text Component</Filter>
-    </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Texture 2D</Filter>
     </ClCompile>
@@ -115,5 +118,11 @@
       <Filter>Transform</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="RenderComponent.cpp">
+      <Filter>Component\Render Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TextObject.cpp">
+      <Filter>Text Component</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

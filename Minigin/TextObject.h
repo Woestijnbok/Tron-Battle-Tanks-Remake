@@ -16,7 +16,7 @@ class TextComponent final : public Component
 {
 public:
 
-	TextComponent(const std::string& text, std::shared_ptr<Font> font);
+	TextComponent(std::shared_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font);
 	virtual ~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;
@@ -26,7 +26,6 @@ public:
 
 	virtual void Update(std::chrono::milliseconds deltaTime) override;
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) override;
-	virtual void Render() const override;
 
 	void SetText(const std::string& text);
 	void SetPosition(float x, float y);
@@ -37,7 +36,7 @@ private:
 	std::string m_Text;
 	Transform m_Transform{};
 	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture2D> m_TextTexture;
+	//std::shared_ptr<Texture2D> m_TextTexture;
 };
 
 #endif

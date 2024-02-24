@@ -3,11 +3,13 @@
 
 #include <chrono>
 
+#include "GameObject.h"
+
 class Component
 {
 public:
 
-	Component() = default;
+	Component(std::shared_ptr<GameObject> owner);
 	virtual ~Component() = default;
 
 	Component(const Component& other) = delete;
@@ -17,11 +19,10 @@ public:
 
 	virtual void Update(std::chrono::milliseconds deltaTime) = 0;
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) = 0;
-	virtual void Render() const = 0;
 
-private:
+protected:
 
-	
+	const std::shared_ptr<GameObject> m_Owner;
 };
 
 #endif

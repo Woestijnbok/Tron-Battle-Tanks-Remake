@@ -31,3 +31,8 @@ void GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
 }
+
+const Transform& GameObject::GetTransform() const
+{
+	return m_Transform;
+}

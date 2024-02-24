@@ -26,13 +26,14 @@ public:
 	void FixedUpdate(std::chrono::milliseconds deltaTime);
 	void Render() const;
 	void SetPosition(float x, float y);
+	const Transform& GetTransform() const;
 
 	template<typename Type>
 	bool AddComponent(std::shared_ptr<Type> component)
 	{
-		if ((!HasComponent<Type>()) && (dynamic_cast<Component*>(component.get()) != nullptr))
+		if ((!HasComponent<Type>()) && (std::dynamic_pointer_cast<Component>(component) != nullptr))
 		{
-			m_Components.emplace_back(component);
+			m_Components.emplace_back(std::dynamic_pointer_cast<Component>(component));
 			return true;
 		}
 		else return false;
@@ -41,9 +42,9 @@ public:
 	template<typename Type>
 	bool RemoveComponent()
 	{
-		auto it = std::ranges::remove_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
+		auto it = std::ranges::find_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
 			{
-				return dynamic_cast<Type*>(component.get()) != nullptr;
+				return std::dynamic_pointer_cast<Type>(component) != nullptr;
 			}
 		);
 
@@ -56,15 +57,15 @@ public:
 	}
 
 	template<typename Type>
-	std::shared_ptr<Component> GetComponent()
+	std::shared_ptr<Type> GetComponent()
 	{
 		auto it = std::ranges::find_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
 			{
-				return dynamic_cast<Type*>(component.get()) != nullptr;
+				return std::dynamic_pointer_cast<Type>(component) != nullptr;
 			}
 		);
 
-		if (it != std::cend(m_Components)) return *it;
+		if (it != std::cend(m_Components)) return std::dynamic_pointer_cast<Type>(*it);
 		else return nullptr;
 	}
 
@@ -73,7 +74,7 @@ public:
 	{
 		auto it = std::ranges::find_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
 			{
-				return dynamic_cast<Type*>(component.get()) != nullptr;
+				return std::dynamic_pointer_cast<Type>(component) != nullptr;
 			}
 		);
 
@@ -84,7 +85,7 @@ public:
 private:
 
 	Transform m_Transform{};
-	std::vector<std::shared_ptr<Component>> m_Components;
+	std::vector<std::shared_ptr< Component>> m_Components;
 };
 
 #endif
