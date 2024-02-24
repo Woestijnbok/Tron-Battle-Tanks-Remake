@@ -5,12 +5,12 @@
 #include <memory>
 #include <chrono>
 
-#include "GameObject.h"
 #include "Transform.h"
 #include "Component.h"
 
 class Font;
 class Texture2D;
+class GameObject;
 
 class TextComponent final : public Component
 {
@@ -29,6 +29,7 @@ public:
 
 	void SetText(const std::string& text);
 	void SetPosition(float x, float y);
+	const std::shared_ptr<Texture2D> GetTextTexture() const;
 
 private:
 
@@ -36,7 +37,7 @@ private:
 	std::string m_Text;
 	Transform m_Transform{};
 	std::shared_ptr<Font> m_Font;
-	//std::shared_ptr<Texture2D> m_TextTexture;
+	std::shared_ptr<Texture2D> m_TextTexture;
 };
 
 #endif

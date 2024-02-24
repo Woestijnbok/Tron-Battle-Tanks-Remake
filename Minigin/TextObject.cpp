@@ -11,8 +11,8 @@ TextComponent::TextComponent(std::shared_ptr<GameObject> owner, const std::strin
 	m_NeedsUpdate{ true }, 
 	m_Text{ text }, 
 	m_Transform{},
-	m_Font{ std::move(font) } 
-	//m_TextTexture{ nullptr }
+	m_Font{ std::move(font) }, 
+	m_TextTexture{ nullptr }
 {
 
 }
@@ -35,7 +35,7 @@ void TextComponent::Update(std::chrono::milliseconds deltaTime)
 			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
 		}
 		SDL_FreeSurface(surf);
-		//m_TextTexture = std::make_shared<Texture2D>(texture);
+		m_TextTexture = std::make_shared<Texture2D>(m_Owner, texture);
 		m_NeedsUpdate = false;
 	}
 }
@@ -64,4 +64,9 @@ void TextComponent::SetText(const std::string& text)
 void TextComponent::SetPosition(const float x, const float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);
+}
+
+const std::shared_ptr<Texture2D> TextComponent::GetTextTexture() const
+{
+	return m_TextTexture;
 }

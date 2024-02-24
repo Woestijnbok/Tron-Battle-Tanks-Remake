@@ -1,6 +1,7 @@
 #include "RenderComponent.h"
 #include "Renderer.h"
 #include "Texture2D.h"
+#include "TextObject.h"
 
 RenderComponent::RenderComponent(std::shared_ptr<GameObject> owner) :
 	Component{ owner }
@@ -26,5 +27,16 @@ void RenderComponent::Render() const
 	{
 		const auto& position{ m_Owner->GetTransform().GetPosition() };
 		Renderer::GetInstance().RenderTexture(*texture, position.x, position.y);
+	}
+
+	auto text{ m_Owner->GetComponent<TextComponent>() };
+
+	if (text != nullptr)
+	{
+		if (text->GetTextTexture() != nullptr)
+		{
+			const auto& position{ m_Owner->GetTransform().GetPosition() };
+			Renderer::GetInstance().RenderTexture(*text->GetTextTexture(), position.x, position.y);
+		}
 	}
 }
