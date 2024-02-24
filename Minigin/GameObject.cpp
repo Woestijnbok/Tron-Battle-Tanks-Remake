@@ -16,12 +16,6 @@ void GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
 	deltaTime++;
 }
 
-void GameObject::Render() const
-{
-	/*const auto& pos = m_transform.GetPosition();
-	Renderer::GetInstance().RenderTexture(*m_texture, pos.x, pos.y);*/
-}
-
 //void GameObject::SetTexture(const std::string& filename)
 //{
 //	m_texture = ResourceManager::GetInstance().LoadTexture(filename);

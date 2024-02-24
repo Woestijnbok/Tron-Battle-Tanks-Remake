@@ -17,19 +17,16 @@ void ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-//std::shared_ptr<Texture2D> ResourceManager::LoadTexture(const std::string& file) const
-//{
-//	file;
-//	/*const auto fullPath = m_DataPath + file;
-//	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
-//	if (texture == nullptr)
-//	{
-//		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
-//	}
-//	return std::make_shared<Texture2D>(texture);*/
-//
-//	return 
-//}
+std::shared_ptr<Texture2D> ResourceManager::LoadTexture(std::shared_ptr<GameObject> owner, const std::string& file) const
+{
+	const auto fullPath = m_DataPath + file;
+	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
+	if (texture == nullptr)
+	{
+		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
+	}
+	return std::make_shared<Texture2D>(owner, texture);
+}
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const
 {
