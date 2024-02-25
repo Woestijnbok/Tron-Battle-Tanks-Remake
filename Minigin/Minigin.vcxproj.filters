@@ -49,6 +49,9 @@
     <Filter Include="Data Types\Texture">
       <UniqueIdentifier>{8de5b0f2-b0c8-4561-b285-c9e2fb6286f6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\FPS Counter Component">
+      <UniqueIdentifier>{18b8444b-a0d9-4f88-bd6c-f0898461075e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -94,6 +97,9 @@
       <Filter>Components\Image Component</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="FPSCounterComponent.h">
+      <Filter>Components\FPS Counter Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -138,6 +144,9 @@
     </ClCompile>
     <ClCompile Include="ImageComponent.cpp">
       <Filter>Components\Image Component</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounterComponent.cpp">
+      <Filter>Components\FPS Counter Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

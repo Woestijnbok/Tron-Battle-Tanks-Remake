@@ -27,7 +27,6 @@ private:
 	const int m_MaxFrameRate;
 	const std::chrono::milliseconds m_MinFrameDuration;
 	const std::chrono::milliseconds m_FixedDuration;
-	std::shared_ptr<GameObject> m_FPSCounter;
 
 	std::chrono::milliseconds CalculateMinFrameDuration(int frameRate);
 };

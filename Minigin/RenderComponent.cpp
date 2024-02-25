@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "ImageComponent.h"
 #include "TextComponent.h"
+#include "FPSCounterComponent.h"
 
 RenderComponent::RenderComponent(std::shared_ptr<GameObject> owner) :
 	Component{ owner }
@@ -37,6 +38,17 @@ void RenderComponent::Render() const
 		{
 			const auto& position{ m_Owner->GetTransform().GetPosition() };
 			Renderer::GetInstance().RenderTexture(*text->GetTexture(), position.x, position.y);
+		}
+	}
+
+	auto fpsCounter{ m_Owner->GetComponent<FPSCounterComponent>() };
+
+	if (fpsCounter != nullptr)
+	{
+		if (fpsCounter->GetTexture() != nullptr)
+		{
+			const auto& position{ m_Owner->GetTransform().GetPosition() };
+			Renderer::GetInstance().RenderTexture(*fpsCounter->GetTexture(), position.x, position.y);
 		}
 	}
 }

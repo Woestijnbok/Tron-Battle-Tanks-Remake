@@ -18,6 +18,7 @@
 #include "GameObject.h"
 #include "RenderComponent.h"
 #include "TextComponent.h"
+#include "FPSCounterComponent.h"
 
 void PrintSDLVersion()
 {
@@ -51,8 +52,7 @@ Minigin::Minigin(const std::string &dataPath) :
 	m_Window{},
 	m_MaxFrameRate{ 60 },
 	m_MinFrameDuration{ CalculateMinFrameDuration(m_MaxFrameRate) },
-	m_FixedDuration{ 20 },
-	m_FPSCounter{}
+	m_FixedDuration{ 20 }
 {
 	PrintSDLVersion();
 	
@@ -95,18 +95,6 @@ void Minigin::Run(const std::function<void()>& load)
 	auto& sceneManager = SceneManager::GetInstance();
 	auto& input = InputManager::GetInstance();
 
-	// FPS counter game object
-	m_FPSCounter = std::make_shared<GameObject>();
-	m_FPSCounter->AddComponent<RenderComponent>(
-		std::make_shared<RenderComponent>(m_FPSCounter)
-	);
-	auto font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
-	m_FPSCounter->AddComponent<TextComponent>(std::make_shared<TextComponent>(
-		m_FPSCounter, "0.0 FPS", font)
-	);
-	m_FPSCounter->SetPosition(0.0f, 0.0f);
-	sceneManager.GetScene("Demo")->Add(m_FPSCounter);
-
 	bool doContinue{ true };
 	std::chrono::steady_clock::time_point lastTime{ std::chrono::high_resolution_clock::now() };
 	std::chrono::milliseconds lag{};
@@ -134,8 +122,7 @@ void Minigin::Run(const std::function<void()>& load)
 		const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
 		std::ostringstream stream{};
 		stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
-		auto text{ m_FPSCounter->GetComponent<TextComponent>() };
-		if(text != nullptr) text->SetText(stream.str());
+		FPSCounterComponent::GetInstance().SetText(stream.str());
 	}
 }
 
