@@ -21,13 +21,11 @@ void FPSCounterComponent::Update(std::chrono::milliseconds deltaTime)
 	deltaTime;
 
 	// Updating frame rate information
-	/*auto currentTime{ std::chrono::high_resolution_clock::now() };
-	const auto durationCurrentFrame{ currentTime - m_LastTimePoint };
+	/*const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - m_LastTimePoint };
 	const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
 	std::ostringstream stream{};
 	stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
-	m_Text = stream.str();
-	m_LastTimePoint = currentTime;*/
+	m_Text = stream.str();*/
 
 	// Updating the SDL texture
 	const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
@@ -43,6 +41,8 @@ void FPSCounterComponent::Update(std::chrono::milliseconds deltaTime)
 	}
 	SDL_FreeSurface(surf);
 	m_Texture = std::make_shared<Texture>(texture);
+
+	/*m_LastTimePoint = std::chrono::high_resolution_clock::now();*/
 }
 
 void FPSCounterComponent::FixedUpdate(std::chrono::milliseconds deltaTime)

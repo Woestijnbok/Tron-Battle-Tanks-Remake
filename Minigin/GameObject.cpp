@@ -9,7 +9,11 @@ GameObject::~GameObject() = default;
 
 void GameObject::Update(std::chrono::milliseconds deltaTime)
 {
-	std::ranges::for_each(m_Components, [&deltaTime](std::shared_ptr<Component> component) -> void { component->Update(deltaTime); });
+	/*std::ranges::for_each(m_Components, [&deltaTime](std::shared_ptr<Component> component) -> void { component->Update(deltaTime); });*/
+	for (auto& component : m_Components)
+	{
+		component->Update(deltaTime);
+	}
 }
 
 void GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
