@@ -1,17 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Component">
-      <UniqueIdentifier>{ff699739-abc8-4fb6-8f62-5fd5d4596448}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Font">
-      <UniqueIdentifier>{d1489771-5ae5-4ec0-b4dd-d1e6110eaa88}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Game Object">
       <UniqueIdentifier>{4ecadd5e-d694-4f43-96fb-e2dad8bfef8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input Manager">
-      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
     </Filter>
     <Filter Include="Minigin">
       <UniqueIdentifier>{be5fb6ab-3e5a-4b3c-8f76-8d43ccb01823}</UniqueIdentifier>
@@ -19,40 +10,58 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{ee51c481-854a-491b-a19b-a0c91df1d478}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Manager">
-      <UniqueIdentifier>{f0f1b71a-25e7-402a-aa5a-decb6e8e088b}</UniqueIdentifier>
+    <Filter Include="Components">
+      <UniqueIdentifier>{ff699739-abc8-4fb6-8f62-5fd5d4596448}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene Manager">
-      <UniqueIdentifier>{fd0fb892-3c6d-4591-9883-d18ca9b688e7}</UniqueIdentifier>
+    <Filter Include="Components\Render Component">
+      <UniqueIdentifier>{8ea7d573-521f-420d-87d0-973d9ac579db}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Text Component">
+    <Filter Include="Components\Text Component">
       <UniqueIdentifier>{0e98cbf8-579d-4d93-8740-7a9934b7657a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Texture 2D">
-      <UniqueIdentifier>{8de5b0f2-b0c8-4561-b285-c9e2fb6286f6}</UniqueIdentifier>
+    <Filter Include="Components\Image Component">
+      <UniqueIdentifier>{b03f6d84-9029-490c-9df3-5aeb10d5ff9c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Transform">
+    <Filter Include="Data Types">
+      <UniqueIdentifier>{c7503e15-a6be-46df-8139-67bbebfb95f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types\Font">
+      <UniqueIdentifier>{d1489771-5ae5-4ec0-b4dd-d1e6110eaa88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{9496bb4e-c0b0-4877-bce0-7cd7ebef4404}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Input Manager">
+      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Resource Manager">
+      <UniqueIdentifier>{f0f1b71a-25e7-402a-aa5a-decb6e8e088b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Scene Manager">
+      <UniqueIdentifier>{fd0fb892-3c6d-4591-9883-d18ca9b688e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types\Transform">
       <UniqueIdentifier>{55fca1b8-de90-4f2d-8617-ee95a7327d51}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scene Manager\Scene">
+    <Filter Include="Scene">
       <UniqueIdentifier>{89cc0cc4-3eee-4d7a-9bc9-64752d7eb54d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Component\Render Component">
-      <UniqueIdentifier>{8ea7d573-521f-420d-87d0-973d9ac579db}</UniqueIdentifier>
+    <Filter Include="Data Types\Texture">
+      <UniqueIdentifier>{8de5b0f2-b0c8-4561-b285-c9e2fb6286f6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
-      <Filter>Component</Filter>
+      <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
-      <Filter>Font</Filter>
+      <Filter>Data Types\Font</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Game Object</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Input Manager</Filter>
+      <Filter>Managers\Input Manager</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
       <Filter>Minigin</Filter>
@@ -61,40 +70,43 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Resource Manager</Filter>
+      <Filter>Managers\Resource Manager</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Scene Manager\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Scene Manager</Filter>
+      <Filter>Managers\Scene Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Texture 2D</Filter>
+    <ClInclude Include="Texture.h">
+      <Filter>Data Types\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Transform.h">
-      <Filter>Transform</Filter>
+      <Filter>Data Types\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderComponent.h">
+      <Filter>Components\Render Component</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Components\Text Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageComponent.h">
+      <Filter>Components\Image Component</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="RenderComponent.h">
-      <Filter>Component\Render Component</Filter>
-    </ClInclude>
-    <ClInclude Include="TextObject.h">
-      <Filter>Text Component</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
-      <Filter>Component</Filter>
+      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
-      <Filter>Font</Filter>
+      <Filter>Data Types\Font</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Game Object</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Input Manager</Filter>
+      <Filter>Managers\Input Manager</Filter>
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Minigin</Filter>
@@ -103,26 +115,29 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Resource Manager</Filter>
+      <Filter>Managers\Resource Manager</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Scene Manager\Scene</Filter>
+      <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Scene Manager</Filter>
+      <Filter>Managers\Scene Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
-      <Filter>Texture 2D</Filter>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Data Types\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
-      <Filter>Transform</Filter>
+      <Filter>Data Types\Transform</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="RenderComponent.cpp">
-      <Filter>Component\Render Component</Filter>
+      <Filter>Components\Render Component</Filter>
     </ClCompile>
-    <ClCompile Include="TextObject.cpp">
-      <Filter>Text Component</Filter>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>Components\Text Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageComponent.cpp">
+      <Filter>Components\Image Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

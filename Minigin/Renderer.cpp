@@ -2,7 +2,7 @@
 
 #include "Renderer.h"
 #include "SceneManager.h"
-#include "Texture2D.h"
+#include "Texture.h"
 
 int GetOpenGLDriverIndex()
 {
@@ -48,7 +48,7 @@ void Renderer::Destroy()
 	}
 }
 
-void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y) const
+void Renderer::RenderTexture(const Texture& texture, const float x, const float y) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);
@@ -57,7 +57,7 @@ void Renderer::RenderTexture(const Texture2D& texture, const float x, const floa
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-void Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
+void Renderer::RenderTexture(const Texture& texture, const float x, const float y, const float width, const float height) const
 {
 	SDL_Rect dst{};
 	dst.x = static_cast<int>(x);

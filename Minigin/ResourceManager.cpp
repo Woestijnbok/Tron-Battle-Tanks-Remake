@@ -4,7 +4,7 @@
 
 #include "ResourceManager.h"
 #include "Renderer.h"
-#include "Texture2D.h"
+#include "Texture.h"
 #include "Font.h"
 
 void ResourceManager::Init(const std::string& dataPath)
@@ -17,7 +17,7 @@ void ResourceManager::Init(const std::string& dataPath)
 	}
 }
 
-std::shared_ptr<Texture2D> ResourceManager::LoadTexture(std::shared_ptr<GameObject> owner, const std::string& file) const
+std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& file) const
 {
 	const auto fullPath = m_DataPath + file;
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
@@ -25,7 +25,7 @@ std::shared_ptr<Texture2D> ResourceManager::LoadTexture(std::shared_ptr<GameObje
 	{
 		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
 	}
-	return std::make_shared<Texture2D>(owner, texture);
+	return std::make_shared<Texture>(texture);
 }
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const

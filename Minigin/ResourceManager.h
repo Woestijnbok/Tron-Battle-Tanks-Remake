@@ -6,7 +6,7 @@
 
 #include "Singleton.h"
 
-class Texture2D;
+class Texture;
 class Font;
 class GameObject;
 
@@ -22,7 +22,7 @@ public:
 	ResourceManager& operator= (const ResourceManager&&) = delete;
 
 	void Init(const std::string& data);
-	std::shared_ptr<Texture2D> LoadTexture(std::shared_ptr<GameObject> owner, const std::string& file) const;
+	std::shared_ptr<Texture> LoadTexture(const std::string& file) const;
 	std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
 
 private:

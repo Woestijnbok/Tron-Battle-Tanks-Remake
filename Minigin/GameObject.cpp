@@ -17,11 +17,6 @@ void GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
 	std::ranges::for_each(m_Components, [&deltaTime](std::shared_ptr<Component> component) -> void { component->FixedUpdate(deltaTime); });
 }
 
-//void GameObject::SetTexture(const std::string& filename)
-//{
-//	m_texture = ResourceManager::GetInstance().LoadTexture(filename);
-//}
-
 void GameObject::SetPosition(float x, float y)
 {
 	m_Transform.SetPosition(x, y, 0.0f);

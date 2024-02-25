@@ -5,7 +5,7 @@
 
 #include "Singleton.h"
 
-class Texture2D;
+class Texture;
 
 class Renderer final : public Singleton<Renderer>
 {
@@ -23,8 +23,8 @@ public:
 	void Init(SDL_Window* window);
 	void Render() const;
 	void Destroy();
-	void RenderTexture(const Texture2D& texture, float x, float y) const;
-	void RenderTexture(const Texture2D& texture, float x, float y, float width, float height) const;
+	void RenderTexture(const Texture& texture, float x, float y) const;
+	void RenderTexture(const Texture& texture, float x, float y, float width, float height) const;
 	SDL_Renderer* GetSDLRenderer() const;
 	const SDL_Color& GetBackgroundColor() const;
 	void SetBackgroundColor(const SDL_Color& color);

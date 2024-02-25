@@ -17,7 +17,7 @@
 #include "Scene.h"
 #include "GameObject.h"
 #include "RenderComponent.h"
-#include "TextObject.h"
+#include "TextComponent.h"
 
 void PrintSDLVersion()
 {
@@ -97,9 +97,13 @@ void Minigin::Run(const std::function<void()>& load)
 
 	// FPS counter game object
 	m_FPSCounter = std::make_shared<GameObject>();
+	m_FPSCounter->AddComponent<RenderComponent>(
+		std::make_shared<RenderComponent>(m_FPSCounter)
+	);
 	auto font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 25) };
-	m_FPSCounter->AddComponent<RenderComponent>(std::make_shared<RenderComponent>(m_FPSCounter));
-	m_FPSCounter->AddComponent<TextComponent>(std::make_shared<TextComponent>(m_FPSCounter, "0.0 FPS", font));
+	m_FPSCounter->AddComponent<TextComponent>(std::make_shared<TextComponent>(
+		m_FPSCounter, "0.0 FPS", font)
+	);
 	m_FPSCounter->SetPosition(0.0f, 0.0f);
 	sceneManager.GetScene("Demo")->Add(m_FPSCounter);
 

@@ -1,7 +1,7 @@
 #include "RenderComponent.h"
 #include "Renderer.h"
-#include "Texture2D.h"
-#include "TextObject.h"
+#include "ImageComponent.h"
+#include "TextComponent.h"
 
 RenderComponent::RenderComponent(std::shared_ptr<GameObject> owner) :
 	Component{ owner }
@@ -21,22 +21,22 @@ void RenderComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
 
 void RenderComponent::Render() const
 {
-	auto texture{ m_Owner->GetComponent<Texture2D>() };
+	auto image{ m_Owner->GetComponent<ImageComponent>() };
 
-	if (texture != nullptr)
+	if (image != nullptr)
 	{
 		const auto& position{ m_Owner->GetTransform().GetPosition() };
-		Renderer::GetInstance().RenderTexture(*texture, position.x, position.y);
+		Renderer::GetInstance().RenderTexture(*image->GetTexture(), position.x, position.y);
 	}
 
 	auto text{ m_Owner->GetComponent<TextComponent>() };
 
 	if (text != nullptr)
 	{
-		if (text->GetTextTexture() != nullptr)
+		if (text->GetTexture() != nullptr)
 		{
 			const auto& position{ m_Owner->GetTransform().GetPosition() };
-			Renderer::GetInstance().RenderTexture(*text->GetTextTexture(), position.x, position.y);
+			Renderer::GetInstance().RenderTexture(*text->GetTexture(), position.x, position.y);
 		}
 	}
 }

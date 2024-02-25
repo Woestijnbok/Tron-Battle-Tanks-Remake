@@ -5,12 +5,11 @@
 #include <memory>
 #include <chrono>
 
-#include "Transform.h"
 #include "Component.h"
 
 class Font;
-class Texture2D;
 class GameObject;
+class Texture;
 
 class TextComponent final : public Component
 {
@@ -28,16 +27,14 @@ public:
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) override;
 
 	void SetText(const std::string& text);
-	void SetPosition(float x, float y);
-	const std::shared_ptr<Texture2D> GetTextTexture() const;
+	const std::shared_ptr<Texture> GetTexture() const;
 
 private:
 
 	bool m_NeedsUpdate;
 	std::string m_Text;
-	Transform m_Transform{};
 	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture2D> m_TextTexture;
+	std::shared_ptr<Texture> m_Texture;
 };
 
 #endif
