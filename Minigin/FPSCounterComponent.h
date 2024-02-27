@@ -9,10 +9,11 @@
 class Font;
 class Texture;
 
-class FPSCounterComponent final : public Component, public Singleton<FPSCounterComponent>
+class FPSCounterComponent final : public Component
 {
 public:
 
+	FPSCounterComponent();
 	~FPSCounterComponent() = default;
 
 	FPSCounterComponent(const FPSCounterComponent&) = delete;
@@ -27,10 +28,6 @@ public:
 	void SetText(const std::string& text);
 
 private:
-
-	friend class Singleton<FPSCounterComponent>;
-
-	FPSCounterComponent();
 
 	std::string m_Text;
 	std::shared_ptr<Font> m_Font;
