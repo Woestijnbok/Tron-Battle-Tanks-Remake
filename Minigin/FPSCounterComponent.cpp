@@ -11,7 +11,8 @@ FPSCounterComponent::FPSCounterComponent() :
 	m_Text{ "0.0 FPS" },
 	m_Font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) },
 	m_Texture{ nullptr },
-	m_LastTimePoint{ std::chrono::high_resolution_clock::now() }
+	m_LastTimePoint{ std::chrono::high_resolution_clock::now() },
+	m_FrameCounter{ 0 }
 {
 
 }
@@ -20,29 +21,34 @@ void FPSCounterComponent::Update(std::chrono::milliseconds deltaTime)
 {
 	deltaTime;
 
-	// Updating frame rate information
-	/*const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - m_LastTimePoint };
-	const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
-	std::ostringstream stream{};
-	stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
-	m_Text = stream.str();*/
+	++m_FrameCounter;
+	const auto currentTime{ std::chrono::high_resolution_clock::now() };
+	const auto timeDifference{ std::chrono::high_resolution_clock::now() - m_LastTimePoint };
 
-	// Updating the SDL texture
-	const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
-	const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
-	if (surf == nullptr)
+	if (timeDifference >= std::chrono::seconds(1))
 	{
-		throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
-	}
-	auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
-	if (texture == nullptr)
-	{
-		throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
-	}
-	SDL_FreeSurface(surf);
-	m_Texture = std::make_shared<Texture>(texture);
+		std::ostringstream stream{};
+		stream << m_FrameCounter << " FPS";
+		m_Text = stream.str();
 
-	/*m_LastTimePoint = std::chrono::high_resolution_clock::now();*/
+		// Updating the SDL texture
+		const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
+		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
+		if (surf == nullptr)
+		{
+			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
+		}
+		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
+		if (texture == nullptr)
+		{
+			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
+		}
+		SDL_FreeSurface(surf);
+		m_Texture = std::make_shared<Texture>(texture);
+
+		m_FrameCounter = 0;
+		m_LastTimePoint = currentTime;
+	}
 }
 
 void FPSCounterComponent::FixedUpdate(std::chrono::milliseconds deltaTime)

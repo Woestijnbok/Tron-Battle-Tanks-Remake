@@ -36,6 +36,7 @@ private:
 	std::shared_ptr<Font> m_Font;
 	std::shared_ptr<Texture> m_Texture;
 	std::chrono::steady_clock::time_point m_LastTimePoint;
+	unsigned int m_FrameCounter;
 };
 
 #endif

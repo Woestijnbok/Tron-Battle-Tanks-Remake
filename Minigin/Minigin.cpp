@@ -116,13 +116,6 @@ void Minigin::Run(const std::function<void()>& load)
 
 		const auto sleepTime{ currentTime + m_MinFrameDuration - std::chrono::high_resolution_clock::now() };
 		std::this_thread::sleep_for(sleepTime);
-
-		//Updating the fps counter
-		const auto durationCurrentFrame{ std::chrono::high_resolution_clock::now() - currentTime };
-		const float framesPerSeconds{ 1.0f / std::chrono::duration<float>(durationCurrentFrame).count() };
-		std::ostringstream stream{};
-		stream << std::fixed << std::setprecision(1) << framesPerSeconds << " FPS";
-		FPSCounterComponent::GetInstance().SetText(stream.str());
 	}
 }
 

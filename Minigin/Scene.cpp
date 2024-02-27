@@ -40,7 +40,7 @@ void Scene::FixedUpdate(std::chrono::milliseconds deltaTime)
 {
 	for (auto& object : m_Objects)
 	{
-		object->Update(deltaTime);
+		object->FixedUpdate(deltaTime);
 	}
 }
 

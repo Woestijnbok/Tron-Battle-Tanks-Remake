@@ -84,7 +84,7 @@ public:
 private:
 
 	Transform m_Transform{};
-	std::vector<std::shared_ptr< Component>> m_Components;
+	std::vector<std::shared_ptr<Component>> m_Components;
 };
 
 #endif
