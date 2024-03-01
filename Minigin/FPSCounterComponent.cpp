@@ -5,9 +5,10 @@
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture.h"
+#include "GameObject.h"
 
-FPSCounterComponent::FPSCounterComponent() :
-	Component{ nullptr },
+FPSCounterComponent::FPSCounterComponent(std::weak_ptr<GameObject> owner) :
+	Component{ owner },
 	m_Text{ "0.0 FPS" },
 	m_Font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) },
 	m_Texture{ nullptr },

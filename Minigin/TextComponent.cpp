@@ -6,7 +6,7 @@
 #include "Font.h"
 #include "Texture.h"
 
-TextComponent::TextComponent(std::shared_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font) :
+TextComponent::TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font) :
 	Component{ owner },
 	m_NeedsUpdate{ true }, 
 	m_Text{ text }, 

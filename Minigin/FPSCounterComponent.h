@@ -8,12 +8,13 @@
 
 class Font;
 class Texture;
+class GameObject;
 
 class FPSCounterComponent final : public Component
 {
 public:
 
-	FPSCounterComponent();
+	FPSCounterComponent(std::weak_ptr<GameObject> owner);
 	~FPSCounterComponent() = default;
 
 	FPSCounterComponent(const FPSCounterComponent&) = delete;

@@ -10,7 +10,7 @@ class ImageComponent final : public Component
 {
 public:
 
-	ImageComponent(std::shared_ptr<GameObject> owner, std::shared_ptr<Texture> texture);
+	ImageComponent(std::weak_ptr<GameObject> owner, std::shared_ptr<Texture> texture);
 	virtual ~ImageComponent() = default;
 
 	ImageComponent(const ImageComponent&) = delete;

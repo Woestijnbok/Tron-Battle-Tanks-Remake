@@ -7,7 +7,7 @@ class RenderComponent final : public Component
 {
 public:
 
-	RenderComponent(std::shared_ptr<GameObject> owner);
+	RenderComponent(std::weak_ptr<GameObject> owner);
 	virtual ~RenderComponent() = default;
 
 	RenderComponent(const RenderComponent& other) = delete;

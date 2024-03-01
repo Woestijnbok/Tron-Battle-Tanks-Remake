@@ -1,10 +1,12 @@
+#include <iostream>
+
 #include "RenderComponent.h"
 #include "Renderer.h"
 #include "ImageComponent.h"
 #include "TextComponent.h"
 #include "FPSCounterComponent.h"
 
-RenderComponent::RenderComponent(std::shared_ptr<GameObject> owner) :
+RenderComponent::RenderComponent(std::weak_ptr<GameObject> owner) :
 	Component{ owner }
 {
 
@@ -22,33 +24,40 @@ void RenderComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
 
 void RenderComponent::Render() const
 {
-	auto image{ m_Owner->GetComponent<ImageComponent>() };
-
-	if (image != nullptr)
+	if (auto owner = m_Owner.lock()) 
 	{
-		const auto& position{ m_Owner->GetTransform().GetPosition() };
-		Renderer::GetInstance().RenderTexture(*image->GetTexture(), position.x, position.y);
-	}
+		auto image{ owner->GetComponent<ImageComponent>() };
 
-	auto text{ m_Owner->GetComponent<TextComponent>() };
-
-	if (text != nullptr)
-	{
-		if (text->GetTexture() != nullptr)
+		if (image != nullptr)
 		{
-			const auto& position{ m_Owner->GetTransform().GetPosition() };
-			Renderer::GetInstance().RenderTexture(*text->GetTexture(), position.x, position.y);
+			const auto& position{ owner->GetTransform().GetPosition() };
+			Renderer::GetInstance().RenderTexture(*image->GetTexture(), position.x, position.y);
+		}
+
+		auto text{ owner->GetComponent<TextComponent>() };
+
+		if (text != nullptr)
+		{
+			if (text->GetTexture() != nullptr)
+			{
+				const auto& position{ owner->GetTransform().GetPosition() };
+				Renderer::GetInstance().RenderTexture(*text->GetTexture(), position.x, position.y);
+			}
+		}
+
+		auto fpsCounter{ owner->GetComponent<FPSCounterComponent>() };
+
+		if (fpsCounter != nullptr)
+		{
+			if (fpsCounter->GetTexture() != nullptr)
+			{
+				const auto& position{ owner->GetTransform().GetPosition() };
+				Renderer::GetInstance().RenderTexture(*fpsCounter->GetTexture(), position.x, position.y);
+			}
 		}
 	}
-
-	auto fpsCounter{ m_Owner->GetComponent<FPSCounterComponent>() };
-
-	if (fpsCounter != nullptr)
+	else 
 	{
-		if (fpsCounter->GetTexture() != nullptr)
-		{
-			const auto& position{ m_Owner->GetTransform().GetPosition() };
-			Renderer::GetInstance().RenderTexture(*fpsCounter->GetTexture(), position.x, position.y);
-		}
+		std::cout << "Weak ptr is invalid RenderComponent::Render()" << std::endl;
 	}
 }

@@ -9,7 +9,7 @@ class Component
 {
 public:
 
-	Component(std::shared_ptr<GameObject> owner);
+	Component(std::weak_ptr<GameObject> owner);
 	virtual ~Component() = default;
 
 	Component(const Component& other) = delete;
@@ -22,7 +22,7 @@ public:
 
 protected:
 
-	const std::shared_ptr<GameObject> m_Owner;
+	const std::weak_ptr<GameObject> m_Owner;
 };
 
 #endif

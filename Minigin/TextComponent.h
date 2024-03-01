@@ -15,7 +15,7 @@ class TextComponent final : public Component
 {
 public:
 
-	TextComponent(std::shared_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font);
+	TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font);
 	virtual ~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;

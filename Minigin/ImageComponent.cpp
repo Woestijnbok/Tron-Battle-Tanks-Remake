@@ -1,7 +1,7 @@
 #include "ImageComponent.h"
 #include "Texture.h"
 
-ImageComponent::ImageComponent(std::shared_ptr<GameObject> owner, std::shared_ptr<Texture> texture) :
+ImageComponent::ImageComponent(std::weak_ptr<GameObject> owner, std::shared_ptr<Texture> texture) :
 	Component{ owner },
 	m_Texture{ texture }
 {
