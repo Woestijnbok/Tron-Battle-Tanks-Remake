@@ -26,6 +26,10 @@ public:
 	void FixedUpdate(std::chrono::milliseconds deltaTime);
 	void SetPosition(float x, float y);
 	const Transform& GetTransform() const;
+	GameObject* GetParent() const;
+	void SetParent(GameObject* parent);
+	size_t GetChildCount() const;
+	GameObject* GetChild(size_t index) const;
 
 	template<typename Type>
 	bool AddComponent(std::shared_ptr<Type> component)
@@ -85,6 +89,8 @@ private:
 
 	Transform m_Transform{};
 	std::vector<std::shared_ptr<Component>> m_Components;
+	std::vector<GameObject*> m_Children;
+	GameObject* m_Parent;
 };
 
 #endif
