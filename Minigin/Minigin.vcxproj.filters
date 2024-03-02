@@ -52,6 +52,9 @@
     <Filter Include="Components\FPS Counter Component">
       <UniqueIdentifier>{18b8444b-a0d9-4f88-bd6c-f0898461075e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Rotater Component">
+      <UniqueIdentifier>{9c616990-8ac6-4dec-acf3-389897e6b857}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -100,6 +103,9 @@
     <ClInclude Include="FPSCounterComponent.h">
       <Filter>Components\FPS Counter Component</Filter>
     </ClInclude>
+    <ClInclude Include="RotaterComponent.h">
+      <Filter>Components\Rotater Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -147,6 +153,9 @@
     </ClCompile>
     <ClCompile Include="FPSCounterComponent.cpp">
       <Filter>Components\FPS Counter Component</Filter>
+    </ClCompile>
+    <ClCompile Include="RotaterComponent.cpp">
+      <Filter>Components\Rotater Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
