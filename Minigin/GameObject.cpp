@@ -24,14 +24,47 @@ void GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
 	std::ranges::for_each(m_Components, [&deltaTime](std::shared_ptr<Component> component) -> void { component->FixedUpdate(deltaTime); });
 }
 
-void GameObject::SetPosition(float x, float y)
+void GameObject::FlagWorldTransform()
 {
-	m_Transform.SetPosition(x, y, 0.0f);
+	m_WorldTransform.first = false;
+
+	for (GameObject* child : m_Children) child->FlagWorldTransform();
 }
 
-const Transform& GameObject::GetTransform() const
+const Transform& GameObject::GetWorldTransform()
 {
-	return m_Transform;
+	if (!m_WorldTransform.first)
+	{
+		if (m_Parent == nullptr)
+		{
+			m_WorldTransform.second = m_LocalTransform;
+		}
+		else
+		{
+			m_WorldTransform.second = m_Parent->GetWorldTransform() + m_LocalTransform;
+		}
+
+		m_WorldTransform.first = true;
+	}
+
+	return m_WorldTransform.second;
+}
+
+const Transform& GameObject::GetLocalTransform() const
+{
+	return m_LocalTransform;
+}
+
+void GameObject::SetLocalTransform(const Transform& transform)
+{
+	m_LocalTransform = transform;
+	FlagWorldTransform();
+}
+
+void GameObject::SetLocalPosition(float x, float y)
+{
+	m_LocalTransform.SetPosition(x, y, 0.0f);
+	FlagWorldTransform();
 }
 
 GameObject* GameObject::GetParent() const
@@ -64,6 +97,16 @@ void GameObject::SetParent(GameObject* parent)
 		if (parent != nullptr)
 		{
 			parent->m_Children.push_back(this);
+		}
+
+		// Fix our world and local position
+		if (parent == nullptr)
+		{
+			SetLocalTransform(GetWorldTransform());
+		}
+		else
+		{
+			FlagWorldTransform();
 		}
 	}
 	else

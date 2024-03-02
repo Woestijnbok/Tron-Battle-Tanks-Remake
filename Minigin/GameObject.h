@@ -24,8 +24,10 @@ public:
 
 	void Update(std::chrono::milliseconds deltaTime);
 	void FixedUpdate(std::chrono::milliseconds deltaTime);
-	void SetPosition(float x, float y);
-	const Transform& GetTransform() const;
+	void SetLocalPosition(float x, float y);
+	const Transform& GetWorldTransform();
+	const Transform& GetLocalTransform() const;
+	void SetLocalTransform(const Transform& transform);
 	GameObject* GetParent() const;
 	void SetParent(GameObject* parent);
 	size_t GetChildCount() const;
@@ -87,10 +89,14 @@ public:
 
 private:
 
-	Transform m_Transform{};
+	void FlagWorldTransform();
+
+	Transform m_LocalTransform;
+	std::pair<bool, Transform> m_WorldTransform;
 	std::vector<std::shared_ptr<Component>> m_Components;
 	std::vector<GameObject*> m_Children;
 	GameObject* m_Parent;
+	
 };
 
 #endif

@@ -30,7 +30,7 @@ void RenderComponent::Render() const
 
 		if (image != nullptr)
 		{
-			const auto& position{ owner->GetTransform().GetPosition() };
+			const auto& position{ owner->GetWorldTransform().GetPosition() };
 			Renderer::GetInstance().RenderTexture(*image->GetTexture(), position.x, position.y);
 		}
 
@@ -40,7 +40,7 @@ void RenderComponent::Render() const
 		{
 			if (text->GetTexture() != nullptr)
 			{
-				const auto& position{ owner->GetTransform().GetPosition() };
+				const auto& position{ owner->GetWorldTransform().GetPosition() };
 				Renderer::GetInstance().RenderTexture(*text->GetTexture(), position.x, position.y);
 			}
 		}
@@ -51,7 +51,7 @@ void RenderComponent::Render() const
 		{
 			if (fpsCounter->GetTexture() != nullptr)
 			{
-				const auto& position{ owner->GetTransform().GetPosition() };
+				const auto& position{ owner->GetWorldTransform().GetPosition() };
 				Renderer::GetInstance().RenderTexture(*fpsCounter->GetTexture(), position.x, position.y);
 			}
 		}
