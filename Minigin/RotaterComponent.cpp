@@ -1,3 +1,6 @@
+#include <iostream>
+#include <chrono>
+
 #include "RotaterComponent.h"
 
 RotaterComponent::RotaterComponent(std::weak_ptr<GameObject> owner, const glm::vec2& center) :
@@ -17,10 +20,16 @@ void RotaterComponent::Update(std::chrono::milliseconds deltaTime)
 
 void RotaterComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
 {
-	m_Angle += deltaTime * m_RotationalSpeed;
+	float seconds{ std::chrono::duration_cast<std::chrono::duration<float>>(deltaTime).count() };
+	m_Angle += seconds * m_RotationalSpeed;
+	if (m_Angle > 360.0f) m_Angle -= 360.0f;
 
-	const float x{ m_Center.x + (m_Radius * glm::cos(glm::radians(m_RotationalSpeed))) };
-	const float y{ m_Center.y + (m_Radius * glm::sin(glm::radians(m_RotationalSpeed))) };
+	const float x{ m_Center.x + (m_Radius * glm::cos(glm::radians(m_Angle))) };
+	const float y{ m_Center.y + (m_Radius * glm::sin(glm::radians(m_Angle))) };
 
 	m_Owner.lock()->SetLocalPosition(x, y);
+
+	/*auto pos = m_Owner.lock()->GetLocalTransform().GetPosition();
+	pos += (seconds * 100);
+	m_Owner.lock()->SetLocalPosition(pos.x, pos.y);*/
 }
