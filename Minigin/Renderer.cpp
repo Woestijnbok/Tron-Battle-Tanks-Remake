@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdl2.h"
 #include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdlrenderer2.h"
+#include "implot.h"
 
 int GetOpenGLDriverIndex()
 {
@@ -32,6 +33,7 @@ void Renderer::Init(SDL_Window* window)
 	}
 
 	m_ImGuiContext = ImGui::CreateContext();
+	m_ImPlotContext = ImPlot::CreateContext();
 	ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
 	ImGui_ImplSDLRenderer2_Init(m_Renderer);
 }
@@ -48,7 +50,7 @@ void Renderer::Render() const
 	ImGui_ImplSDLRenderer2_NewFrame();
 	ImGui::NewFrame();
 
-	ImGui::ShowDemoWindow();
+	ImPlot::ShowDemoWindow();
 
 	ImGui::Render();
 	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
@@ -58,8 +60,9 @@ void Renderer::Render() const
 
 void Renderer::Destroy()
 {
-	ImGui_ImplSDL2_Shutdown();
 	ImGui_ImplSDLRenderer2_Shutdown();
+	ImGui_ImplSDL2_Shutdown();
+	ImPlot::DestroyContext(m_ImPlotContext);
 	ImGui::DestroyContext(m_ImGuiContext);
 
 	if (m_Renderer != nullptr)

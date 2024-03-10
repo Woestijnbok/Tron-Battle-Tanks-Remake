@@ -2,11 +2,12 @@
 #define RENDERER
 
 #include <SDL.h>
-#include <imgui.h>
 
 #include "Singleton.h"
 
 class Texture;
+struct ImGuiContext;
+struct ImPlotContext;
 
 class Renderer final : public Singleton<Renderer>
 {
@@ -36,6 +37,7 @@ private:
 	SDL_Window* m_Window;
 	SDL_Color m_ClearColor;
 	ImGuiContext* m_ImGuiContext;
+	ImPlotContext* m_ImPlotContext;
 };
 
 #endif
