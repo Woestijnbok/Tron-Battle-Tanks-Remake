@@ -2,6 +2,7 @@
 #define RENDERER
 
 #include <SDL.h>
+#include <imgui.h>
 
 #include "Singleton.h"
 
@@ -34,6 +35,7 @@ private:
 	SDL_Renderer* m_Renderer;
 	SDL_Window* m_Window;
 	SDL_Color m_ClearColor;
+	ImGuiContext* m_ImGuiContext;
 };
 
 #endif

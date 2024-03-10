@@ -3,6 +3,9 @@
 #include "Renderer.h"
 #include "SceneManager.h"
 #include "Texture.h"
+#include "imgui.h"
+#include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdl2.h"
+#include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdlrenderer2.h"
 
 int GetOpenGLDriverIndex()
 {
@@ -22,10 +25,15 @@ void Renderer::Init(SDL_Window* window)
 {
 	m_Window = window;
 	m_Renderer = SDL_CreateRenderer(window, GetOpenGLDriverIndex(), SDL_RENDERER_ACCELERATED);
-	if (m_Renderer == nullptr) 
+	if (m_Renderer == nullptr)
 	{
 		throw std::runtime_error(std::string("SDL_CreateRenderer Error: ") + SDL_GetError());
+
 	}
+
+	m_ImGuiContext = ImGui::CreateContext();
+	ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
+	ImGui_ImplSDLRenderer2_Init(m_Renderer);
 }
 
 void Renderer::Render() const
@@ -36,11 +44,24 @@ void Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 	
+	ImGui_ImplSDL2_NewFrame();
+	ImGui_ImplSDLRenderer2_NewFrame();
+	ImGui::NewFrame();
+
+	ImGui::ShowDemoWindow();
+
+	ImGui::Render();
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+
 	SDL_RenderPresent(m_Renderer);
 }
 
 void Renderer::Destroy()
 {
+	ImGui_ImplSDL2_Shutdown();
+	ImGui_ImplSDLRenderer2_Shutdown();
+	ImGui::DestroyContext(m_ImGuiContext);
+
 	if (m_Renderer != nullptr)
 	{
 		SDL_DestroyRenderer(m_Renderer);
