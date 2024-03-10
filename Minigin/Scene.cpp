@@ -2,7 +2,6 @@
 
 #include "Scene.h"
 #include "GameObject.h"
-#include "RenderComponent.h"
 
 unsigned int Scene::m_IdCounter{ 0 };
 
@@ -48,9 +47,7 @@ void Scene::Render() const
 {
 	for (const auto& object : m_Objects)
 	{
-		auto renderComoponent{ object->GetComponent<RenderComponent>() };
-
-		if (renderComoponent != nullptr) renderComoponent->Render();
+		object->Render();
 	}
 }
 

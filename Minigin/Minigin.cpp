@@ -16,7 +16,6 @@
 #include "ResourceManager.h"
 #include "Scene.h"
 #include "GameObject.h"
-#include "RenderComponent.h"
 #include "TextComponent.h"
 #include "FPSCounterComponent.h"
 

@@ -57,6 +57,16 @@ void FPSCounterComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
 	++deltaTime;
 }
 
+void FPSCounterComponent::Render() const
+{
+	std::shared_ptr<GameObject> owner = m_Owner.lock();
+	if ((owner != nullptr) and (m_Texture.get() != nullptr))
+	{
+		auto position{ owner->GetWorldTransform().GetPosition() };
+		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
+	}
+}
+
 const std::shared_ptr<Texture> FPSCounterComponent::GetTexture() const
 {
 	return m_Texture;

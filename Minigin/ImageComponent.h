@@ -20,6 +20,7 @@ public:
 
 	virtual void Update(std::chrono::milliseconds deltaTime) override;
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) override;
+	virtual void Render() const override;
 
 	const std::shared_ptr<Texture> GetTexture() const;
 

@@ -19,6 +19,7 @@ public:
 
 	virtual void Update(std::chrono::milliseconds deltaTime) = 0;
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) = 0;
+	virtual void Render() const;
 
 protected:
 

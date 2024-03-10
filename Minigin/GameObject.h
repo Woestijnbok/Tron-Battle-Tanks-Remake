@@ -24,6 +24,7 @@ public:
 
 	void Update(std::chrono::milliseconds deltaTime);
 	void FixedUpdate(std::chrono::milliseconds deltaTime);
+	void Render() const;
 	void SetLocalPosition(float x, float y);
 	const Transform& GetWorldTransform();
 	const Transform& GetLocalTransform() const;

@@ -24,6 +24,11 @@ void GameObject::FixedUpdate(std::chrono::milliseconds deltaTime)
 	std::ranges::for_each(m_Components, [&deltaTime](std::shared_ptr<Component> component) -> void { component->FixedUpdate(deltaTime); });
 }
 
+void GameObject::Render() const
+{
+	for (const auto& component : m_Components) component->Render();
+}
+
 void GameObject::FlagWorldTransform()
 {
 	m_WorldTransform.first = false;

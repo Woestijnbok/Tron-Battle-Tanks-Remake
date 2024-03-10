@@ -5,3 +5,8 @@ Component::Component(std::weak_ptr<GameObject> owner) :
 {
 	
 }
+
+void Component::Render() const
+{
+
+}

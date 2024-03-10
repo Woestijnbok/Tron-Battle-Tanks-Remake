@@ -44,14 +44,11 @@ void Renderer::Render() const
 	SDL_SetRenderDrawColor(m_Renderer, color.r, color.g, color.b, color.a);
 	SDL_RenderClear(m_Renderer);
 
-	SceneManager::GetInstance().Render();
-	
 	ImGui_ImplSDL2_NewFrame();
 	ImGui_ImplSDLRenderer2_NewFrame();
 	ImGui::NewFrame();
 
-	ImPlot::ShowDemoWindow();
-
+	SceneManager::GetInstance().Render();
 	ImGui::Render();
 	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
 

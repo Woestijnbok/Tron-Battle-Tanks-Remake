@@ -1,6 +1,7 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
+#include "Implot.h"
 #include "TextComponent.h"
 #include "Renderer.h"
 #include "Font.h"
@@ -42,6 +43,16 @@ void TextComponent::Update(std::chrono::milliseconds deltaTime)
 void TextComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
 {
 	deltaTime++;
+}
+
+void TextComponent::Render() const
+{
+	std::shared_ptr<GameObject> owner = m_Owner.lock();
+	if ((owner != nullptr) and (m_Texture.get() != nullptr))
+	{
+		auto position{ owner->GetWorldTransform().GetPosition() };
+		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
+	}
 }
 
 void TextComponent::SetText(const std::string& text)
