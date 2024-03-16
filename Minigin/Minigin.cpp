@@ -82,7 +82,6 @@ Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
-	m_Window = nullptr;
 	SDL_Quit();
 }
 
@@ -104,7 +103,7 @@ void Minigin::Run(const std::function<void()>& load)
 		lastTime = currentTime;
 		lag += deltaTime;
 
-		doContinue = input.ProcessInput();
+		doContinue = input.ProcessInput(deltaTime);
 		while (lag >= m_FixedDuration)
 		{
 			sceneManager.FixedUpdate(m_FixedDuration);

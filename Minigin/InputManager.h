@@ -4,6 +4,8 @@
 #include <vector>
 #include <unordered_map>
 #include <optional>
+#include <SDL.h>
+//#include <Xinput.h>
 
 #include "Singleton.h"
 #include "InputMappingContext.h"
@@ -19,7 +21,7 @@ public:
 	InputManager& operator= (const InputManager&) = delete;
 	InputManager& operator= (const InputManager&&) = delete;
 
-	bool ProcessInput();
+	bool ProcessInput(std::chrono::milliseconds deltaTime);
 	void AddInputMappingContext(GameObject* gameObject);
 	InputMappingContext* GetInputMappingContext(GameObject* gameObject);
 

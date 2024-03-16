@@ -22,13 +22,13 @@ public:
     bool operator==(const InputMappingContext& rhs) const;
 
     template<typename CommandType>
-    bool AddInputAction(SDL_KeyCode keyCode)
+    bool AddInputAction(SDL_KeyCode keyCode, InputTrigger trigger)
     {
         if constexpr (std::is_base_of<GameObjectCommand, CommandType>::value)
         {
             if (m_LinkedToGameObjet)
             {
-                return m_InputActions.emplace(keyCode, new CommandType{ m_GameObject }).second;
+                return m_InputActions.emplace(keyCode, trigger, new CommandType{ m_GameObject }).second;
             }
             else return false;
         }
@@ -36,7 +36,7 @@ public:
         {
             if (!m_LinkedToGameObjet)
             {
-                return m_InputActions.emplace(keyCode, new CommandType()).second;
+                return m_InputActions.emplace(keyCode, trigger, new CommandType()).second;
             }
             else return false;
         }

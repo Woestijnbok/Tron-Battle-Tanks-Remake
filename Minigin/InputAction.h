@@ -6,10 +6,17 @@
 
 #include "Command.h"
 
+enum class InputTrigger
+{
+	up,
+	pressed,
+	down
+};
+
 class InputAction final
 {
 public:
-	InputAction(SDL_KeyCode keyCode, Command* command);
+	InputAction(SDL_KeyCode keyCode, InputTrigger trigger, Command* command);
 	~InputAction() = default;
 
 	InputAction(const InputAction&) = delete;
@@ -20,6 +27,7 @@ public:
 	std::weak_ptr<GameObject> GetGameObject();
 	Command* GetCommand() const;
 	SDL_KeyCode GetSDLKeyCode() const;
+	InputTrigger GetInputTrigger() const;
 
 	bool operator==(const InputAction& rhs) const;
 	bool operator<(const InputAction& rhs) const;
@@ -29,6 +37,7 @@ public:
 private:
 	SDL_KeyCode m_KeyCode;
 	std::unique_ptr<Command> m_Command;
+	InputTrigger m_Trigger;
 };
 
 template<>

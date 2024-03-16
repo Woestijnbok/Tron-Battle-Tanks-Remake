@@ -1,4 +1,4 @@
-#include <SDL.h>
+#include <iostream>
 
 #include "InputManager.h"
 #include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdl2.h"
@@ -11,7 +11,7 @@ InputManager::~InputManager()
 	}
 }
 
-bool InputManager::ProcessInput()
+bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 {
 	SDL_Event event{};
 
@@ -27,14 +27,42 @@ bool InputManager::ProcessInput()
 			{
 				for (const auto& inputAction : mapping.second->GetInputActions())
 				{
-					if (event.key.keysym.sym == inputAction.GetSDLKeyCode())
+					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and (inputAction.GetInputTrigger() == InputTrigger::down))
 					{
-						inputAction.GetCommand()->Execute();
+						inputAction.GetCommand()->Execute(deltaTime);
 					}
 				}
 			}
 		}
+		if (event.type == SDL_KEYUP)
+		{
+			for (auto& mapping : m_InputMappingContexts)
+			{
+				for (const auto& inputAction : mapping.second->GetInputActions())
+				{
+					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and (inputAction.GetInputTrigger() == InputTrigger::up))
+					{
+						inputAction.GetCommand()->Execute(deltaTime);
+					}
+				}
+			}
+		}
+
+		const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
+
+		for (auto& mapping : m_InputMappingContexts)
+		{
+			for (const auto& inputAction : mapping.second->GetInputActions())
+			{
+				if ((keyboardState[SDL_GetScancodeFromKey(inputAction.GetSDLKeyCode())]) and (inputAction.GetInputTrigger() == InputTrigger::pressed))
+				{
+					inputAction.GetCommand()->Execute(deltaTime);
+				}
+			}
+		}
+
 		ImGui_ImplSDL2_ProcessEvent(&event);
+		
 	}
 
 	return true;

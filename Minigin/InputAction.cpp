@@ -1,8 +1,9 @@
 #include "InputAction.h"
 
-InputAction::InputAction(SDL_KeyCode keyCode, Command* command) :
+InputAction::InputAction(SDL_KeyCode keyCode, InputTrigger trigger, Command* command):
 	m_KeyCode{ keyCode },
-	m_Command{ command }
+	m_Command{ command },
+	m_Trigger{ trigger }
 {
 
 }
@@ -28,6 +29,11 @@ Command* InputAction::GetCommand() const
 SDL_KeyCode InputAction::GetSDLKeyCode() const
 {
 	return m_KeyCode;
+}
+
+InputTrigger InputAction::GetInputTrigger() const
+{
+	return m_Trigger;
 }
 
 bool InputAction::operator==(const InputAction& rhs) const
