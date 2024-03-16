@@ -31,9 +31,6 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{9496bb4e-c0b0-4877-bce0-7cd7ebef4404}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Managers\Input Manager">
-      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Managers\Resource Manager">
       <UniqueIdentifier>{f0f1b71a-25e7-402a-aa5a-decb6e8e088b}</UniqueIdentifier>
     </Filter>
@@ -61,6 +58,24 @@
     <Filter Include="Components\Trash The Cache">
       <UniqueIdentifier>{9edfd189-b4ee-4d16-bc04-0af0fbfe8cdd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{e56e98dd-fa61-41e9-b0fe-e0d84ff25bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Command">
+      <UniqueIdentifier>{bef7310c-1de6-4385-8611-53e972a18b97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Action">
+      <UniqueIdentifier>{37ef5360-df90-42ff-8296-174a0c57842f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Manager">
+      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Command\Custom Commands">
+      <UniqueIdentifier>{6e8234d6-7d62-4665-978b-a7080e107748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Mapping Context">
+      <UniqueIdentifier>{b50dcc1f-6270-4541-86f5-03ce8cfe12aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -73,7 +88,7 @@
       <Filter>Game Object</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Managers\Input Manager</Filter>
+      <Filter>Input\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
       <Filter>Minigin</Filter>
@@ -142,6 +157,18 @@
     <ClInclude Include="TrashTheCacheComponent.h">
       <Filter>Components\Trash The Cache</Filter>
     </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Input\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="CustumCommands.h">
+      <Filter>Input\Command\Custom Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InputAction.h">
+      <Filter>Input\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMappingContext.h">
+      <Filter>Input\Mapping Context</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -154,7 +181,7 @@
       <Filter>Game Object</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Managers\Input Manager</Filter>
+      <Filter>Input\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
       <Filter>Minigin</Filter>
@@ -222,6 +249,18 @@
     </ClCompile>
     <ClCompile Include="TrashTheCacheComponent.cpp">
       <Filter>Components\Trash The Cache</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Input\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="CustumCommands.cpp">
+      <Filter>Input\Command\Custom Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="InputAction.cpp">
+      <Filter>Input\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMappingContext.cpp">
+      <Filter>Input\Mapping Context</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
