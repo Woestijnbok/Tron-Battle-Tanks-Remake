@@ -5,7 +5,8 @@
 #include <unordered_map>
 #include <optional>
 #include <SDL.h>
-//#include <Xinput.h>
+#include <Windows.h>
+#include <Xinput.h>
 
 #include "Singleton.h"
 #include "InputMappingContext.h"
@@ -27,6 +28,8 @@ public:
 
 private:
 	std::unordered_map<GameObject*, InputMappingContext*> m_InputMappingContexts;
+	XINPUT_STATE m_PreviousXState;
+	XINPUT_STATE m_CurrentXState;
 };
 
 #endif

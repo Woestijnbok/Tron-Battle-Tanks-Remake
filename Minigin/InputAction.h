@@ -3,6 +3,8 @@
 
 #include <SDL.h>
 #include <memory>
+#include <Windows.h>
+#include <Xinput.h>
 
 #include "Command.h"
 
@@ -16,7 +18,7 @@ enum class InputTrigger
 class InputAction final
 {
 public:
-	InputAction(SDL_KeyCode keyCode, InputTrigger trigger, Command* command);
+	InputAction(bool isController, unsigned int button, InputTrigger trigger, Command* command);
 	~InputAction() = default;
 
 	InputAction(const InputAction&) = delete;
@@ -24,10 +26,12 @@ public:
 	InputAction& operator= (const InputAction&) = delete;
 	InputAction& operator= (const InputAction&&) = delete;
 
-	std::weak_ptr<GameObject> GetGameObject();
-	Command* GetCommand() const;
+	bool IsControllerInputAction() const;
 	SDL_KeyCode GetSDLKeyCode() const;
+	unsigned int GetXInputButton() const;
 	InputTrigger GetInputTrigger() const;
+	Command* GetCommand() const;
+	std::weak_ptr<GameObject> GetGameObject();
 
 	bool operator==(const InputAction& rhs) const;
 	bool operator<(const InputAction& rhs) const;
@@ -35,9 +39,11 @@ public:
 	friend struct std::hash<InputAction>;
 		
 private:
-	SDL_KeyCode m_KeyCode;
-	std::unique_ptr<Command> m_Command;
+	bool m_IsControllerInputAction;
+	unsigned int m_Button;
 	InputTrigger m_Trigger;
+	std::unique_ptr<Command> m_Command;
+	
 };
 
 template<>

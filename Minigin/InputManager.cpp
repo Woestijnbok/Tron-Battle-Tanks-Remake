@@ -13,6 +13,14 @@ InputManager::~InputManager()
 
 bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 {
+	CopyMemory(&m_PreviousXState, &m_CurrentXState, sizeof(XINPUT_STATE));
+	ZeroMemory(&m_CurrentXState, sizeof(XINPUT_STATE));
+	XInputGetState(0, &m_CurrentXState);
+
+	auto buttonChanges{ m_CurrentXState.Gamepad.wButtons ^ m_PreviousXState.Gamepad.wButtons };
+	auto buttonsPressedThisFrame{ buttonChanges & m_CurrentXState.Gamepad.wButtons };
+	auto buttonsReleasedThisFrame{ buttonChanges & (~m_CurrentXState.Gamepad.wButtons) };
+
 	SDL_Event event{};
 
 	while (SDL_PollEvent(&event)) 
@@ -27,7 +35,9 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 			{
 				for (const auto& inputAction : mapping.second->GetInputActions())
 				{
-					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and (inputAction.GetInputTrigger() == InputTrigger::down))
+					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and 
+						(inputAction.GetInputTrigger() == InputTrigger::down) and
+						(!inputAction.IsControllerInputAction()))
 					{
 						inputAction.GetCommand()->Execute(deltaTime);
 					}
@@ -40,7 +50,9 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 			{
 				for (const auto& inputAction : mapping.second->GetInputActions())
 				{
-					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and (inputAction.GetInputTrigger() == InputTrigger::up))
+					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and 
+						(inputAction.GetInputTrigger() == InputTrigger::up) and
+						(!inputAction.IsControllerInputAction()))
 					{
 						inputAction.GetCommand()->Execute(deltaTime);
 					}
@@ -54,7 +66,9 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 		{
 			for (const auto& inputAction : mapping.second->GetInputActions())
 			{
-				if ((keyboardState[SDL_GetScancodeFromKey(inputAction.GetSDLKeyCode())]) and (inputAction.GetInputTrigger() == InputTrigger::pressed))
+				if ((keyboardState[SDL_GetScancodeFromKey(inputAction.GetSDLKeyCode())]) and 
+					(inputAction.GetInputTrigger() == InputTrigger::pressed) and
+					(!inputAction.IsControllerInputAction()))
 				{
 					inputAction.GetCommand()->Execute(deltaTime);
 				}
@@ -64,6 +78,39 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 		ImGui_ImplSDL2_ProcessEvent(&event);
 		
 	}
+
+	for (auto& mapping : m_InputMappingContexts)
+	{
+		for (const auto& inputAction : mapping.second->GetInputActions())
+		{
+			if (inputAction.IsControllerInputAction())
+			{
+				switch (inputAction.GetInputTrigger())
+				{
+				case InputTrigger::up:
+					if (buttonsReleasedThisFrame & inputAction.GetXInputButton())
+					{
+						inputAction.GetCommand()->Execute(deltaTime);
+					}
+					break;
+				case InputTrigger::pressed:
+					if (m_CurrentXState.Gamepad.wButtons & inputAction.GetXInputButton())
+					{
+						inputAction.GetCommand()->Execute(deltaTime);
+					}
+					break;
+				case InputTrigger::down:
+					if (buttonsPressedThisFrame & inputAction.GetXInputButton())
+					{
+						inputAction.GetCommand()->Execute(deltaTime);
+					}
+					break;
+				}
+			}
+		}
+	}
+
+	SDL_CONTROLLER_BUTTON_A;
 
 	return true;
 }

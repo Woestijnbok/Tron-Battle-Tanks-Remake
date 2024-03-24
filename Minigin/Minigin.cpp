@@ -18,6 +18,7 @@
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "FPSCounterComponent.h"
+#include "EventManager.h"
 
 void PrintSDLVersion()
 {
@@ -110,6 +111,7 @@ void Minigin::Run(const std::function<void()>& load)
 			lag -= m_FixedDuration;
 		}
 		sceneManager.Update(deltaTime);
+		EventManager::GetInstance().Update();
 		renderer.Render();
 
 		const auto sleepTime{ currentTime + m_MinFrameDuration - std::chrono::high_resolution_clock::now() };

@@ -186,9 +186,11 @@
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CustumCommands.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSCounterComponent.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImageComponent.h" />
     <ClInclude Include="InputAction.h" />
     <ClInclude Include="InputManager.h" />
@@ -199,6 +201,7 @@
     <ClInclude Include="RotaterComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="ScoreBoardComponent.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture.h" />
@@ -219,9 +222,11 @@
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CustumCommands.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounterComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImageComponent.cpp" />
     <ClCompile Include="InputAction.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -233,6 +238,7 @@
     <ClCompile Include="RotaterComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="ScoreBoardComponent.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />

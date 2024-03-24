@@ -117,4 +117,23 @@ private:
 
 };
 
+class PlayerDie final : public GameObjectCommand
+{
+public:
+	PlayerDie(GameObject* gameObject);
+	virtual ~PlayerDie() = default;
+
+	PlayerDie(const PlayerDie&) = delete;
+	PlayerDie(PlayerDie&&) = delete;
+	PlayerDie& operator= (const PlayerDie&) = delete;
+	PlayerDie& operator= (const PlayerDie&&) = delete;
+
+	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+
+
+private:
+
+
+};
+
 #endif

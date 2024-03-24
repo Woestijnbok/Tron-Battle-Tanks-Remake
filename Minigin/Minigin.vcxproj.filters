@@ -13,9 +13,6 @@
     <Filter Include="Components">
       <UniqueIdentifier>{ff699739-abc8-4fb6-8f62-5fd5d4596448}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Render Component">
-      <UniqueIdentifier>{8ea7d573-521f-420d-87d0-973d9ac579db}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Text Component">
       <UniqueIdentifier>{0e98cbf8-579d-4d93-8740-7a9934b7657a}</UniqueIdentifier>
     </Filter>
@@ -75,6 +72,15 @@
     </Filter>
     <Filter Include="Input\Mapping Context">
       <UniqueIdentifier>{b50dcc1f-6270-4541-86f5-03ce8cfe12aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Event Manager">
+      <UniqueIdentifier>{f05e28b0-d5e8-4826-9b8a-cc87fa5d5788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Health Component">
+      <UniqueIdentifier>{85503db5-b510-43a4-897f-43054c4f6828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Scoreboard Component">
+      <UniqueIdentifier>{a40eb6b7-95a9-4332-92cd-5b1a67413f76}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +175,15 @@
     <ClInclude Include="InputMappingContext.h">
       <Filter>Input\Mapping Context</Filter>
     </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Managers\Event Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Components\Health Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreBoardComponent.h">
+      <Filter>Components\Scoreboard Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -261,6 +276,15 @@
     </ClCompile>
     <ClCompile Include="InputMappingContext.cpp">
       <Filter>Input\Mapping Context</Filter>
+    </ClCompile>
+    <ClCompile Include="EventManager.cpp">
+      <Filter>Managers\Event Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Components\Health Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreBoardComponent.cpp">
+      <Filter>Components\Scoreboard Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 
 #include "CustumCommands.h"
 #include "GameObject.h"
+#include "HealthComponent.h"
 
 void TestCommand::Execute(std::chrono::milliseconds deltaTime) const
 {
@@ -72,4 +73,21 @@ void MoveDown::Execute(std::chrono::milliseconds deltaTime) const
 	auto transform{ m_GameObject->GetLocalTransform() };
 	float seconds{ std::chrono::duration_cast<std::chrono::duration<float>>(deltaTime).count() };
 	m_GameObject->SetLocalPosition(transform.GetPosition().x, transform.GetPosition().y + (100.0f * seconds));
+}
+
+PlayerDie::PlayerDie(GameObject* gameObject) :
+	GameObjectCommand(gameObject)
+{
+
+}
+
+void PlayerDie::Execute(std::chrono::milliseconds deltaTime) const
+{
+	auto healthComponent = m_GameObject->GetComponent<HealthComponent>();
+	if(healthComponent.get())
+	{
+		healthComponent->Die();
+	}
+
+	deltaTime;
 }
