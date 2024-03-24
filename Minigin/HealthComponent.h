@@ -18,6 +18,7 @@ public:
 	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) override;
 
 	void Die();
+	unsigned int GetLives() const;
 
 private:
 	unsigned int m_Lives;

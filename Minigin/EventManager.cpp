@@ -1,9 +1,10 @@
 #include "EventManager.h"
 
-Event::Event(EventType type) :
+Event::Event(EventType type, void* caller) :
 	m_Type{ type },
 	m_NumberArguments{  },
-	m_WordArguments{  }
+	m_WordArguments{  },
+	m_Caller{ caller }
 {
 
 }
@@ -33,32 +34,53 @@ std::vector<std::string> Event::GetWordArguments() const
 	return m_WordArguments;
 }
 
+void* Event::GetCaller() const
+{
+	return m_Caller;
+}
+
 EventManager::EventManager() :
 	m_EventHandlers{},
 	m_Events{}
 {
-	m_EventHandlers[EventType::PlayerDied] = std::vector<std::function<void(const Event&)>>{};
+	for (int i{}; i < EventType::NumberOfTypes; ++i)
+	{
+		m_EventHandlers[static_cast<EventType>(i)] = std::vector<std::function<void(const Event&)>>{};
+	}
 }
 
 void EventManager::Update()
 {
-	for (const Event& event : m_Events)
+	// For now we do the whole queue every time.
+	while (!m_Events.empty())
 	{
-		for (const auto& handler : m_EventHandlers[event.GetType()])
+		for (const auto& handler : m_EventHandlers[m_Events.front().GetType()])
 		{
-			handler(event);
+			handler(m_Events.front());
 		}
-	}
 
-	m_Events.clear();
+		m_Events.pop();
+	}
 }
 
 void EventManager::SendEvent(const Event& event)
 {
-	m_Events.push_back(event);
+	m_Events.push(event);
 }
 
 void EventManager::AddHandler(EventType type, std::function<void(const Event&)> handler)
 {
 	m_EventHandlers.at(type).push_back(handler);
+}
+
+void EventManager::RemoveHandler(EventType type, std::function<void(const Event&)> handlerToRemove)
+{
+	auto& vector{ m_EventHandlers.at(type) };
+
+	vector.erase(std::remove_if(vector.begin(), vector.end(), 
+		[&handlerToRemove](std::function<void(const Event&)> handler) -> bool 
+		{
+			return handler.target_type() == handlerToRemove.target_type();
+		}
+	), vector.end());
 }

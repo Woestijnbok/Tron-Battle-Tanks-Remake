@@ -136,4 +136,23 @@ private:
 
 };
 
+class Add100Score final : public GameObjectCommand
+{
+public:
+	Add100Score(GameObject* gameObject);
+	virtual ~Add100Score() = default;
+
+	Add100Score(const Add100Score&) = delete;
+	Add100Score(Add100Score&&) = delete;
+	Add100Score& operator= (const Add100Score&) = delete;
+	Add100Score& operator= (const Add100Score&&) = delete;
+
+	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+
+
+private:
+
+
+};
+
 #endif

@@ -5,18 +5,21 @@
 #include <string>
 #include <map>
 #include <functional>
+#include <queue>
 
 #include "Singleton.h"
 
 enum EventType
 {
-	PlayerDied
+	PlayerDied,
+	ScoreUpdated,
+	NumberOfTypes
 };
 
 class Event final
 {
 public:
-	Event(EventType type);
+	Event(EventType type, void* caller);
 	~Event() = default;
 
 	Event(const Event&) = default;
@@ -29,11 +32,13 @@ public:
 	EventType GetType() const;
 	std::vector<int> GetNumberArguments() const;
 	std::vector<std::string> GetWordArguments() const;
+	void* GetCaller() const;
 
 private:
 	EventType m_Type;
 	std::vector<int> m_NumberArguments;
 	std::vector<std::string> m_WordArguments;
+	void* m_Caller;
 
 };
 
@@ -51,10 +56,11 @@ public:
 	void Update();
 	void SendEvent(const Event& event);
 	void AddHandler(EventType type, std::function<void(const Event&)> handler);
+	void RemoveHandler(EventType type, std::function<void(const Event&)> handlerToRemove);
 
 private:
 	std::map<EventType, std::vector<std::function<void(const Event&)>>> m_EventHandlers;
-	std::vector<Event> m_Events;
+	std::queue<Event> m_Events;
 };
 
 #endif

@@ -8,8 +8,8 @@
 class ScoreBoardComponent : public Component
 {
 public:
-	ScoreBoardComponent(std::weak_ptr<GameObject> owner);
-	virtual ~ScoreBoardComponent() = default;
+	ScoreBoardComponent(std::weak_ptr<GameObject> owner, glm::vec2 position);
+	virtual ~ScoreBoardComponent();
 
 	ScoreBoardComponent(const ScoreBoardComponent&) = delete;
 	ScoreBoardComponent(ScoreBoardComponent&&) = delete;
@@ -21,6 +21,7 @@ public:
 	virtual void Render() const override;
 
 	void HandlePlayerDied(const Event& event);
+	void HandleScoreChange(const Event& event);
 
 private:
 	TextComponent m_Lives;

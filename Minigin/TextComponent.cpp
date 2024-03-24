@@ -12,7 +12,21 @@ TextComponent::TextComponent(std::weak_ptr<GameObject> owner, const std::string&
 	m_NeedsUpdate{ true }, 
 	m_Text{ text }, 
 	m_Font{ std::move(font) },
-	m_Texture{ nullptr }
+	m_Texture{ nullptr },
+	m_Position{},
+	m_SeperatePosition{ false }
+{
+
+}
+
+TextComponent::TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font, glm::vec2 position) :
+	Component{ owner },
+	m_NeedsUpdate{ true },
+	m_Text{ text },
+	m_Font{ std::move(font) },
+	m_Texture{ nullptr },
+	m_Position{ position },
+	m_SeperatePosition{ true }
 {
 
 }
@@ -50,7 +64,7 @@ void TextComponent::Render() const
 	std::shared_ptr<GameObject> owner = m_Owner.lock();
 	if ((owner != nullptr) and (m_Texture.get() != nullptr))
 	{
-		auto position{ owner->GetWorldTransform().GetPosition() };
+		auto position{ (m_SeperatePosition) ? m_Position : owner->GetWorldTransform().GetPosition() };
 		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
 	}
 }

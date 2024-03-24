@@ -4,6 +4,7 @@
 #include "CustumCommands.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
+#include "ScoreComponent.h"
 
 void TestCommand::Execute(std::chrono::milliseconds deltaTime) const
 {
@@ -87,6 +88,23 @@ void PlayerDie::Execute(std::chrono::milliseconds deltaTime) const
 	if(healthComponent.get())
 	{
 		healthComponent->Die();
+	}
+
+	deltaTime;
+}
+
+Add100Score::Add100Score(GameObject* gameObject) :
+	GameObjectCommand(gameObject)
+{
+
+}
+
+void Add100Score::Execute(std::chrono::milliseconds deltaTime) const
+{
+	auto scoreComponent = m_GameObject->GetComponent<ScoreComponent>();
+	if (scoreComponent.get())
+	{
+		scoreComponent->AddScore(100);
 	}
 
 	deltaTime;

@@ -82,6 +82,9 @@
     <Filter Include="Components\Scoreboard Component">
       <UniqueIdentifier>{a40eb6b7-95a9-4332-92cd-5b1a67413f76}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Score Component">
+      <UniqueIdentifier>{60fa2d7a-4489-4a0a-aa4d-9a8d736116da}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -184,6 +187,9 @@
     <ClInclude Include="ScoreBoardComponent.h">
       <Filter>Components\Scoreboard Component</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components\Score Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -285,6 +291,9 @@
     </ClCompile>
     <ClCompile Include="ScoreBoardComponent.cpp">
       <Filter>Components\Scoreboard Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components\Score Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -16,6 +16,7 @@ class TextComponent final : public Component
 public:
 
 	TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font);
+	TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font, glm::vec2 position);
 	virtual ~TextComponent() = default;
 
 	TextComponent(const TextComponent& other) = delete;
@@ -36,6 +37,8 @@ private:
 	std::string m_Text;
 	std::shared_ptr<Font> m_Font;
 	std::shared_ptr<Texture> m_Texture;
+	glm::vec2 m_Position;
+	bool m_SeperatePosition;
 };
 
 #endif
