@@ -85,6 +85,12 @@
     <Filter Include="Components\Score Component">
       <UniqueIdentifier>{60fa2d7a-4489-4a0a-aa4d-9a8d736116da}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{2a6220c1-4058-4f73-8d73-4eb5c10822fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Locator">
+      <UniqueIdentifier>{7a2d8c0a-a932-41fa-b182-e9cca9924c94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -190,6 +196,12 @@
     <ClInclude Include="ScoreComponent.h">
       <Filter>Components\Score Component</Filter>
     </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>Locator</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -294,6 +306,12 @@
     </ClCompile>
     <ClCompile Include="ScoreComponent.cpp">
       <Filter>Components\Score Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>Locator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

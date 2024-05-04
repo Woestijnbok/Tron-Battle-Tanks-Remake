@@ -5,6 +5,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #include <thread>
 #include <memory>
 #include <iostream>
@@ -19,6 +20,8 @@
 #include "TextComponent.h"
 #include "FPSCounterComponent.h"
 #include "EventManager.h"
+#include "Locator.h"
+#include "Sound.h"
 
 void PrintSDLVersion()
 {
@@ -56,7 +59,7 @@ Minigin::Minigin(const std::string &dataPath) :
 {
 	PrintSDLVersion();
 	
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
@@ -77,12 +80,14 @@ Minigin::Minigin(const std::string &dataPath) :
 
 	Renderer::GetInstance().Init(m_Window);
 	ResourceManager::GetInstance().Init(dataPath);
+	Locator::ProvideAudio(new SDLMixerAudio{ "../Sound" });
 }
 
 Minigin::~Minigin()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
+	Locator::DestroyAudio();	
 	SDL_Quit();
 }
 
@@ -112,6 +117,8 @@ void Minigin::Run(const std::function<void()>& load)
 		}
 		sceneManager.Update(deltaTime);
 		EventManager::GetInstance().Update();
+		std::thread soundThread{ &Audio::Update, Locator::GetAudio() };
+		soundThread.detach();
 		renderer.Render();
 
 		const auto sleepTime{ currentTime + m_MinFrameDuration - std::chrono::high_resolution_clock::now() };
