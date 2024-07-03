@@ -1,6 +1,10 @@
 #ifndef MINIGIN
 #define MINIGIN
 
+#if _DEBUG
+#include <vld.h>
+#endif
+
 #include <string>
 #include <functional>
 #include <chrono>
@@ -12,7 +16,7 @@ class Minigin
 {
 public:
 
-	explicit Minigin(const std::string& dataPath);
+	explicit Minigin();
 	~Minigin();
 
 	Minigin(const Minigin& other) = delete;

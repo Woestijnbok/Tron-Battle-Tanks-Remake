@@ -1,295 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Game Object">
-      <UniqueIdentifier>{4ecadd5e-d694-4f43-96fb-e2dad8bfef8b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Renderer">
-      <UniqueIdentifier>{ee51c481-854a-491b-a19b-a0c91df1d478}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components">
-      <UniqueIdentifier>{ff699739-abc8-4fb6-8f62-5fd5d4596448}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Text Component">
-      <UniqueIdentifier>{0e98cbf8-579d-4d93-8740-7a9934b7657a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Image Component">
-      <UniqueIdentifier>{b03f6d84-9029-490c-9df3-5aeb10d5ff9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Types">
-      <UniqueIdentifier>{c7503e15-a6be-46df-8139-67bbebfb95f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Types\Font">
-      <UniqueIdentifier>{d1489771-5ae5-4ec0-b4dd-d1e6110eaa88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers">
-      <UniqueIdentifier>{9496bb4e-c0b0-4877-bce0-7cd7ebef4404}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Resource Manager">
-      <UniqueIdentifier>{f0f1b71a-25e7-402a-aa5a-decb6e8e088b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Scene Manager">
-      <UniqueIdentifier>{fd0fb892-3c6d-4591-9883-d18ca9b688e7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Types\Transform">
-      <UniqueIdentifier>{55fca1b8-de90-4f2d-8617-ee95a7327d51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{89cc0cc4-3eee-4d7a-9bc9-64752d7eb54d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data Types\Texture">
-      <UniqueIdentifier>{8de5b0f2-b0c8-4561-b285-c9e2fb6286f6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\FPS Counter Component">
-      <UniqueIdentifier>{18b8444b-a0d9-4f88-bd6c-f0898461075e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Rotater Component">
-      <UniqueIdentifier>{9c616990-8ac6-4dec-acf3-389897e6b857}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Trash The Cache">
-      <UniqueIdentifier>{9edfd189-b4ee-4d16-bc04-0af0fbfe8cdd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input">
-      <UniqueIdentifier>{e56e98dd-fa61-41e9-b0fe-e0d84ff25bce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Command">
-      <UniqueIdentifier>{bef7310c-1de6-4385-8611-53e972a18b97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Action">
-      <UniqueIdentifier>{37ef5360-df90-42ff-8296-174a0c57842f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Command\Custom Commands">
-      <UniqueIdentifier>{6e8234d6-7d62-4665-978b-a7080e107748}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Mapping Context">
-      <UniqueIdentifier>{b50dcc1f-6270-4541-86f5-03ce8cfe12aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Event Manager">
-      <UniqueIdentifier>{f05e28b0-d5e8-4826-9b8a-cc87fa5d5788}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Health Component">
-      <UniqueIdentifier>{85503db5-b510-43a4-897f-43054c4f6828}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Scoreboard Component">
-      <UniqueIdentifier>{a40eb6b7-95a9-4332-92cd-5b1a67413f76}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Score Component">
-      <UniqueIdentifier>{60fa2d7a-4489-4a0a-aa4d-9a8d736116da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sound">
-      <UniqueIdentifier>{2a6220c1-4058-4f73-8d73-4eb5c10822fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Locator">
-      <UniqueIdentifier>{7a2d8c0a-a932-41fa-b182-e9cca9924c94}</UniqueIdentifier>
-    </Filter>
-<<<<<<< Updated upstream
-=======
-    <Filter Include="imgui">
-      <UniqueIdentifier>{10864dfc-4877-4946-8e0c-5664a2aae576}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="imgui\backends">
-      <UniqueIdentifier>{2d5f00a7-2125-492e-8819-a867e57ac2c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="implot">
-      <UniqueIdentifier>{d55a8f0b-c5fc-440b-856e-747a30981c0f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Input Manager">
-      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
-    </Filter>
->>>>>>> Stashed changes
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Component.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Font.h">
-      <Filter>Data Types\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Game Object</Filter>
-    </ClInclude>
-    <ClInclude Include="InputManager.h">
-      <Filter>Managers\Input Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceManager.h">
-      <Filter>Managers\Resource Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="SceneManager.h">
-      <Filter>Managers\Scene Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Data Types\Texture</Filter>
-    </ClInclude>
-    <ClInclude Include="Transform.h">
-      <Filter>Data Types\Transform</Filter>
-    </ClInclude>
-    <ClInclude Include="TextComponent.h">
-      <Filter>Components\Text Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ImageComponent.h">
-      <Filter>Components\Image Component</Filter>
-    </ClInclude>
-    <ClInclude Include="FPSCounterComponent.h">
-      <Filter>Components\FPS Counter Component</Filter>
-    </ClInclude>
-    <ClInclude Include="RotaterComponent.h">
-      <Filter>Components\Rotater Component</Filter>
-    </ClInclude>
-    <ClInclude Include="TrashTheCacheComponent.h">
-      <Filter>Components\Trash The Cache</Filter>
-    </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Input\Command</Filter>
-    </ClInclude>
-    <ClInclude Include="CustumCommands.h">
-      <Filter>Input\Command\Custom Commands</Filter>
-    </ClInclude>
-    <ClInclude Include="InputAction.h">
-      <Filter>Input\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="InputMappingContext.h">
-      <Filter>Input\Mapping Context</Filter>
-    </ClInclude>
-    <ClInclude Include="EventManager.h">
-      <Filter>Managers\Event Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Components\Health Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreBoardComponent.h">
-      <Filter>Components\Scoreboard Component</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Components\Score Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Locator.h">
-      <Filter>Locator</Filter>
-    </ClInclude>
-<<<<<<< Updated upstream
-=======
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui_internal.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_rectpack.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_textedit.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_truetype.h">
-      <Filter>imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.h">
-      <Filter>imgui\backends</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.h">
-      <Filter>imgui\backends</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\implot - 0.16\include\implot.h">
-      <Filter>implot</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h">
-      <Filter>implot</Filter>
-    </ClInclude>
-    <ClInclude Include="Minigin.h" />
-    <ClInclude Include="Singleton.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
->>>>>>> Stashed changes
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Component.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Font.cpp">
-      <Filter>Data Types\Font</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Game Object</Filter>
-    </ClCompile>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>Managers\Input Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceManager.cpp">
-      <Filter>Managers\Resource Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Managers\Scene Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Data Types\Texture</Filter>
-    </ClCompile>
-    <ClCompile Include="Transform.cpp">
-      <Filter>Data Types\Transform</Filter>
-    </ClCompile>
-    <ClCompile Include="TextComponent.cpp">
-      <Filter>Components\Text Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ImageComponent.cpp">
-      <Filter>Components\Image Component</Filter>
-    </ClCompile>
-    <ClCompile Include="FPSCounterComponent.cpp">
-      <Filter>Components\FPS Counter Component</Filter>
-    </ClCompile>
-    <ClCompile Include="RotaterComponent.cpp">
-      <Filter>Components\Rotater Component</Filter>
-    </ClCompile>
-    <ClCompile Include="TrashTheCacheComponent.cpp">
-      <Filter>Components\Trash The Cache</Filter>
-    </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Input\Command</Filter>
-    </ClCompile>
-    <ClCompile Include="CustumCommands.cpp">
-      <Filter>Input\Command\Custom Commands</Filter>
-    </ClCompile>
-    <ClCompile Include="InputAction.cpp">
-      <Filter>Input\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="InputMappingContext.cpp">
-      <Filter>Input\Mapping Context</Filter>
-    </ClCompile>
+    <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="EventManager.cpp">
       <Filter>Managers\Event Manager</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Components\Health Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreBoardComponent.cpp">
-      <Filter>Components\Scoreboard Component</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Components\Score Component</Filter>
-    </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Locator.cpp">
-      <Filter>Locator</Filter>
-    </ClCompile>
-<<<<<<< Updated upstream
-=======
     <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -305,19 +20,235 @@
     <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp">
-      <Filter>imgui\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.cpp">
-      <Filter>imgui\backends</Filter>
-    </ClCompile>
     <ClCompile Include="..\Libraries\implot - 0.16\include\implot.cpp">
       <Filter>implot</Filter>
     </ClCompile>
     <ClCompile Include="..\Libraries\implot - 0.16\include\implot_items.cpp">
       <Filter>implot</Filter>
     </ClCompile>
-    <ClCompile Include="Minigin.cpp" />
->>>>>>> Stashed changes
+    <ClCompile Include="Component.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSCounterComponent.cpp">
+      <Filter>Components\FPS Counter Component</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageComponent.cpp">
+      <Filter>Components\Image Component</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Managers\Input Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Data Types\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Game Object</Filter>
+    </ClCompile>
+    <ClCompile Include="InputAction.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputMappingContext.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Managers\Resource Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Managers\Scene Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextComponent.cpp">
+      <Filter>Components\Text Component</Filter>
+    </ClCompile>
+    <ClCompile Include="Sound.cpp">
+      <Filter>Sound</Filter>
+    </ClCompile>
+    <ClCompile Include="Locator.cpp">
+      <Filter>Locator</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Data Types\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Transform.cpp">
+      <Filter>Data Types\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Input\Command</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Minigin.h" />
+    <ClInclude Include="EventManager.h">
+      <Filter>Managers\Event Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\implot - 0.16\include\implot.h">
+      <Filter>implot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h">
+      <Filter>implot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSCounterComponent.h">
+      <Filter>Components\FPS Counter Component</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageComponent.h">
+      <Filter>Components\Image Component</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Managers\Input Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Data Types\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Game Object</Filter>
+    </ClInclude>
+    <ClInclude Include="InputAction.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputMappingContext.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Managers\Resource Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Managers\Scene Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextComponent.h">
+      <Filter>Components\Text Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Sound.h">
+      <Filter>Sound</Filter>
+    </ClInclude>
+    <ClInclude Include="Locator.h">
+      <Filter>Locator</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Data Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Data Types\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Data Types\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Input\Command</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Managers">
+      <UniqueIdentifier>{00d64441-a795-470f-afb9-f29366e4c0b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Event Manager">
+      <UniqueIdentifier>{8b7859a4-0c0f-4c3e-b139-85e79d06ec28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui">
+      <UniqueIdentifier>{9f7a4a1f-a376-444e-9ee0-ce3ce0bd560e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implot">
+      <UniqueIdentifier>{e0970c6b-6ad9-40f1-b2cb-735eeba4af46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{beb27258-f0a7-4bb7-ba7f-1f4162e50a5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\FPS Counter Component">
+      <UniqueIdentifier>{dc208c94-3e28-4c92-a646-872bb68a3a37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Image Component">
+      <UniqueIdentifier>{c594663e-4f94-41b4-9209-66ad3b5950e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Input Manager">
+      <UniqueIdentifier>{44099e95-4628-4c9b-82b5-193b6fd2ea22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Scene Manager">
+      <UniqueIdentifier>{46bd5a21-96dc-4d02-bba8-f13d462cc535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types">
+      <UniqueIdentifier>{d03e03b1-0216-458e-9ecd-24b622dbbe85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types\Font">
+      <UniqueIdentifier>{945c4bb7-3bef-429f-a1a2-7427995e065b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types\Texture">
+      <UniqueIdentifier>{a399832a-e73a-4f81-b4fc-5dd8b3492951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types\Transform">
+      <UniqueIdentifier>{e87e5028-5048-4d83-a019-31010462074c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{70c3c9c4-b4e1-4afa-b846-c4d041b67187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Object">
+      <UniqueIdentifier>{d6fc41cc-0f98-4a6d-934a-afbea2d3e5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sound">
+      <UniqueIdentifier>{a704ffb3-565f-4c84-b502-1c3f4f72d581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Resource Manager">
+      <UniqueIdentifier>{ce2ce5da-4ef7-48d9-b564-c11424d2a5cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{56d2f64e-b16e-4efd-982e-ea573cc27b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Text Component">
+      <UniqueIdentifier>{74312c38-072a-4a6d-a34d-33a8c9d875bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Locator">
+      <UniqueIdentifier>{9a735c14-e277-4d91-8124-0f92fd8b1653}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{c9f4a7c2-db78-4ca2-9c5a-d64c8533ece6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Command">
+      <UniqueIdentifier>{5e0e1dc9-b5a2-49fa-92ad-6a210a0d9c1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\backends">
+      <UniqueIdentifier>{1c84caa6-0055-4a5b-b118-a8d66922a0c8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

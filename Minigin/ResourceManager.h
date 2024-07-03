@@ -21,7 +21,7 @@ public:
 	ResourceManager& operator= (const ResourceManager&) = delete;
 	ResourceManager& operator= (const ResourceManager&&) = delete;
 
-	void Init(const std::string& data);
+	void Init();
 	std::shared_ptr<Texture> LoadTexture(const std::string& file) const;
 	std::shared_ptr<Font> LoadFont(const std::string& file, unsigned int size) const;
 
@@ -30,8 +30,6 @@ private:
 	ResourceManager() = default;
 
 	friend class Singleton<ResourceManager>;
-	
-	std::string m_DataPath;
 };
 
 #endif

@@ -28,9 +28,8 @@ std::string SoundRequest::GetSoundName() const
 	return m_SoundName;
 }
 
-SDLMixerAudio::SDLMixerAudio(const std::filesystem::path& audioPath) :
+SDLMixerAudio::SDLMixerAudio() :
 	Audio{},
-	m_AudioPath{ audioPath },
 	m_SoundRequest{},
 	m_Music{},
 	m_SoundChannels
@@ -43,11 +42,6 @@ SDLMixerAudio::SDLMixerAudio(const std::filesystem::path& audioPath) :
 	},
 	m_Mutex{}
 {
-	if (!std::filesystem::is_directory(m_AudioPath))
-	{
-		throw std::runtime_error("SDL Mixer Audio constructed with invalid audio asset folder!");
-	}
-
 	if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_WAVPACK) == 0)
 	{
 		throw std::runtime_error(std::string("Mix_Init Error: ") + Mix_GetError());
@@ -108,7 +102,7 @@ void SDLMixerAudio::StopAll()
 
 void SDLMixerAudio::ProcessSoundRequest(const SoundRequest& request)
 {
-	const std::string path{ m_AudioPath.string() + '/' + request.GetSoundName() };
+	const std::string filePath{ "../Resources/Audio/" + request.GetSoundName()};
 
 	switch (request.GetSoundType())
 	{
@@ -116,7 +110,7 @@ void SDLMixerAudio::ProcessSoundRequest(const SoundRequest& request)
 		// either play or stop music
 		if (request.GetSoundAction() == SoundAction::Play)
 		{
-			StartPlayingMusic(path);
+			StartPlayingMusic(filePath);
 		}
 		else if (request.GetSoundAction() == SoundAction::Stop)
 		{
@@ -125,7 +119,7 @@ void SDLMixerAudio::ProcessSoundRequest(const SoundRequest& request)
 		break;
 	case SoundType::Effect:
 		// only play effect
-		StartPlayingSound(path);
+		StartPlayingSound(filePath);
 		break;
 	case SoundType::All:
 		// only stop all
@@ -134,41 +128,41 @@ void SDLMixerAudio::ProcessSoundRequest(const SoundRequest& request)
 	}
 }
 
-void SDLMixerAudio::StartPlayingMusic(const std::string& path)
+void SDLMixerAudio::StartPlayingMusic(const std::string& file)
 {
 	Mix_FreeMusic(m_Music);
 	m_Music = nullptr;
 
-	m_Music = Mix_LoadMUS(path.c_str());
+	m_Music = Mix_LoadMUS(file.c_str());
 	if (!m_Music)
 	{
-		throw std::runtime_error("failed to load music - " + path);
+		throw std::runtime_error("failed to load music - " + file);
 	}
 
 	if (Mix_PlayMusic(m_Music, -1) == -1)
 	{
-		throw std::runtime_error("failed to play music - " + path);
+		throw std::runtime_error("failed to play music - " + file);
 	}
 }
 
-void SDLMixerAudio::StartPlayingSound(const std::string& path)
+void SDLMixerAudio::StartPlayingSound(const std::string& file)
 {
 	const auto it{ std::ranges::find_if(m_SoundChannels, [](const std::pair<Mix_Chunk*, int>& pair) -> bool { return pair.first == nullptr; }) };
 	if (it == m_SoundChannels.end())
 	{
-		throw std::runtime_error("failed find open sound channel - " + path);
+		throw std::runtime_error("failed find open sound channel - " + file);
 	}
 
-	Mix_Chunk* sound{ Mix_LoadWAV(path.c_str()) };
+	Mix_Chunk* sound{ Mix_LoadWAV(file.c_str()) };
 	if (!sound)
 	{
-		throw std::runtime_error("failed to load sound - " + path);
+		throw std::runtime_error("failed to load sound - " + file);
 	}
 
 	it->first = sound;
 	if (Mix_PlayChannel(it->second, it->first, 0) == -1)
 	{
-		throw std::runtime_error("failed to play sound - " + path);
+		throw std::runtime_error("failed to play sound - " + file);
 	}
 }
 

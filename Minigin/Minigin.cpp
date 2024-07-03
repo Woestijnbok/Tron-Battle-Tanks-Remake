@@ -23,42 +23,12 @@
 #include "Locator.h"
 #include "Sound.h"
 
-void PrintSDLVersion()
-{
-	SDL_version version{};
-	SDL_VERSION(&version);
-	printf("We compiled against SDL version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	SDL_GetVersion(&version);
-	printf("We are linking against SDL version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_IMAGE_VERSION(&version);
-	printf("We compiled against SDL_image version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *IMG_Linked_Version();
-	printf("We are linking against SDL_image version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-
-	SDL_TTF_VERSION(&version)
-	printf("We compiled against SDL_ttf version %u.%u.%u ...\n",
-		version.major, version.minor, version.patch);
-
-	version = *TTF_Linked_Version();
-	printf("We are linking against SDL_ttf version %u.%u.%u.\n",
-		version.major, version.minor, version.patch);
-}
-
-Minigin::Minigin(const std::string &dataPath) :
+Minigin::Minigin() :
 	m_Window{},
 	m_MaxFrameRate{ 60 },
 	m_MinFrameDuration{ CalculateMinFrameDuration(m_MaxFrameRate) },
 	m_FixedDuration{ 20 }
 {
-	PrintSDLVersion();
-	
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
@@ -79,8 +49,8 @@ Minigin::Minigin(const std::string &dataPath) :
 	}
 
 	Renderer::GetInstance().Init(m_Window);
-	ResourceManager::GetInstance().Init(dataPath);
-	Locator::ProvideAudio(new SDLMixerAudio{ "../Sound" });
+	ResourceManager::GetInstance().Init();
+	Locator::ProvideAudio(new SDLMixerAudio{});
 }
 
 Minigin::~Minigin()

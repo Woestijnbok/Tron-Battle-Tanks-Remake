@@ -397,9 +397,11 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Track all files under the Libraries folder
+# Track all files under the Libraries and Resources folder
 !Libraries/
 !Libraries/**
+!Resources/
+!Resources/**
 
 #cmake output
 build

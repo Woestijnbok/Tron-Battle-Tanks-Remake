@@ -72,24 +72,24 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(Platform)\</OutDir>
-    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
+    <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,7 +110,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;vld.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -132,7 +132,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;vld.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -158,7 +158,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;vld.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -184,7 +184,7 @@
     </Link>
     <PostBuildEvent />
     <Lib>
-      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;vld.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -200,12 +200,10 @@
     <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="CustumCommands.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSCounterComponent.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="ImageComponent.h" />
     <ClInclude Include="InputAction.h" />
     <ClInclude Include="InputManager.h" />
@@ -214,17 +212,13 @@
     <ClInclude Include="Minigin.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="RotaterComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
-    <ClInclude Include="ScoreBoardComponent.h" />
-    <ClInclude Include="ScoreComponent.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Transform.h" />
-    <ClInclude Include="TrashTheCacheComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp" />
@@ -238,12 +232,10 @@
     <ClCompile Include="..\Libraries\implot - 0.16\include\implot_items.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="CustumCommands.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSCounterComponent.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="ImageComponent.cpp" />
     <ClCompile Include="InputAction.cpp" />
     <ClCompile Include="InputManager.cpp" />
@@ -252,16 +244,12 @@
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="RotaterComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
-    <ClCompile Include="ScoreBoardComponent.cpp" />
-    <ClCompile Include="ScoreComponent.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Transform.cpp" />
-    <ClCompile Include="TrashTheCacheComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

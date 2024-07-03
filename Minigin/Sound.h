@@ -72,7 +72,7 @@ private:
 class SDLMixerAudio final : public Audio
 {
 public:
-	SDLMixerAudio(const std::filesystem::path& audioPath);
+	SDLMixerAudio();
 	virtual ~SDLMixerAudio();
 
 	SDLMixerAudio(const SDLMixerAudio&) = delete;
@@ -87,15 +87,14 @@ public:
 	virtual void StopAll() override;
 
 private:
-	const std::filesystem::path m_AudioPath;
 	std::queue<SoundRequest> m_SoundRequest;
 	Mix_Music* m_Music;
 	std::array<std::pair<Mix_Chunk*, int>, SDL_MIXER_AUDIO_NUMBER_OF_CHANNELS> m_SoundChannels;
 	std::mutex m_Mutex;
 
 	void ProcessSoundRequest(const SoundRequest& request);
-	void StartPlayingMusic(const std::string& path);
-	void StartPlayingSound(const std::string& path);
+	void StartPlayingMusic(const std::string& file);
+	void StartPlayingSound(const std::string& file);
 	void StopPlayingMusic();
 	void StopAllSoundsAndMusic();
 	void CheckSoundChannels();
