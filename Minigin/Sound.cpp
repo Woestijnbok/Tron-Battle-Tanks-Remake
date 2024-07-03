@@ -48,9 +48,14 @@ SDLMixerAudio::SDLMixerAudio(const std::filesystem::path& audioPath) :
 		throw std::runtime_error("SDL Mixer Audio constructed with invalid audio asset folder!");
 	}
 
+	if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_WAVPACK) == 0)
+	{
+		throw std::runtime_error(std::string("Mix_Init Error: ") + Mix_GetError());
+	}
+
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, SDL_MIXER_AUDIO_NUMBER_OF_CHANNELS, 2048) == -1)
 	{
-		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
+		throw std::runtime_error(std::string("Mix_OpenAudio Error: ") + Mix_GetError());	
 	}
 }
 
@@ -148,13 +153,6 @@ void SDLMixerAudio::StartPlayingMusic(const std::string& path)
 
 void SDLMixerAudio::StartPlayingSound(const std::string& path)
 {
-<<<<<<< Updated upstream
-	// We will throw an error when to many sounds are trying to play at the same time.
-	// This is due to not enough channels wich is 5 see SDL_MIXER_AUDIO_NUMBER_OF_CHANNELS.
-	// Could change the amount of channels in the future or the error handling
-	
-=======
->>>>>>> Stashed changes
 	const auto it{ std::ranges::find_if(m_SoundChannels, [](const std::pair<Mix_Chunk*, int>& pair) -> bool { return pair.first == nullptr; }) };
 	if (it == m_SoundChannels.end())
 	{

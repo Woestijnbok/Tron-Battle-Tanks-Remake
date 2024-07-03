@@ -98,11 +98,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-<<<<<<< Updated upstream
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -124,11 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-<<<<<<< Updated upstream
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -152,11 +144,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-<<<<<<< Updated upstream
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -182,11 +170,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-<<<<<<< Updated upstream
-      <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-=======
       <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
->>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -265,10 +249,6 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputMappingContext.cpp" />
     <ClCompile Include="Locator.cpp" />
-<<<<<<< Updated upstream
-    <ClCompile Include="Main.cpp" />
-=======
->>>>>>> Stashed changes
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
