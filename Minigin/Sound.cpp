@@ -148,10 +148,13 @@ void SDLMixerAudio::StartPlayingMusic(const std::string& path)
 
 void SDLMixerAudio::StartPlayingSound(const std::string& path)
 {
+<<<<<<< Updated upstream
 	// We will throw an error when to many sounds are trying to play at the same time.
 	// This is due to not enough channels wich is 5 see SDL_MIXER_AUDIO_NUMBER_OF_CHANNELS.
 	// Could change the amount of channels in the future or the error handling
 	
+=======
+>>>>>>> Stashed changes
 	const auto it{ std::ranges::find_if(m_SoundChannels, [](const std::pair<Mix_Chunk*, int>& pair) -> bool { return pair.first == nullptr; }) };
 	if (it == m_SoundChannels.end())
 	{

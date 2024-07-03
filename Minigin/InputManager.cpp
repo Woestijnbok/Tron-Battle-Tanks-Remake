@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "InputManager.h"
-#include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_sdl2.h"
 
 InputManager::~InputManager()
 {

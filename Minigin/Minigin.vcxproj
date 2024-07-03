@@ -23,29 +23,30 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Minigin</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Minigin</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -58,21 +59,15 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\sdl.props" />
-    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\sdl.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\sdl.props" />
-    <Import Project="..\vld.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\sdl.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -103,7 +98,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -114,6 +113,9 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib>
+      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -122,7 +124,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -133,6 +139,9 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib>
+      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -143,7 +152,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -156,6 +169,9 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib>
+      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -166,7 +182,11 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+<<<<<<< Updated upstream
       <AdditionalIncludeDirectories>$(SolutionDir)\3rdParty\imgui-1.90.4;$(SolutionDir)\3rdParty\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+=======
+      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -179,18 +199,21 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib>
+      <AdditionalDependencies>xinput.lib</AdditionalDependencies>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdl2.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdlrenderer2.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imconfig.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imgui.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imgui_internal.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\implot.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\implot_internal.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_rectpack.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_textedit.h" />
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_truetype.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui_internal.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_rectpack.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_textedit.h" />
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_truetype.h" />
+    <ClInclude Include="..\Libraries\implot - 0.16\include\implot.h" />
+    <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CustumCommands.h" />
@@ -220,16 +243,15 @@
     <ClInclude Include="TrashTheCacheComponent.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdl2.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdlrenderer2.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_demo.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_draw.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_tables.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_widgets.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\implot.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\implot_demo.cpp" />
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\implot_items.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_demo.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_draw.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_tables.cpp" />
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_widgets.cpp" />
+    <ClCompile Include="..\Libraries\implot - 0.16\include\implot.cpp" />
+    <ClCompile Include="..\Libraries\implot - 0.16\include\implot_items.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CustumCommands.cpp" />
@@ -243,7 +265,10 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InputMappingContext.cpp" />
     <ClCompile Include="Locator.cpp" />
+<<<<<<< Updated upstream
     <ClCompile Include="Main.cpp" />
+=======
+>>>>>>> Stashed changes
     <ClCompile Include="Minigin.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

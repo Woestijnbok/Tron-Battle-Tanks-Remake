@@ -1,7 +1,7 @@
 #ifndef TEXTURE2D
 #define TEXTURE2D
 
-#include <glm/vec2.hpp>
+#include <vec2.hpp>
 
 struct SDL_Texture;
 

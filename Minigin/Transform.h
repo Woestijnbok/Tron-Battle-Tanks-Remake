@@ -1,7 +1,7 @@
 #ifndef TRANSFORM
 #define TRANSFORM
 
-#include <glm/glm.hpp>
+#include <glm.hpp>
 
 class Transform final
 {

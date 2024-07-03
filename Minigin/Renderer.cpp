@@ -4,8 +4,8 @@
 #include "SceneManager.h"
 #include "Texture.h"
 #include "imgui.h"
-#include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdl2.h"
-#include "../3rdParty/imgui-1.90.4/backends/imgui_impl_sdlrenderer2.h"
+#include "backends/imgui_impl_sdl2.h"
+#include "backends/imgui_impl_sdlrenderer2.h"
 #include "implot.h"
 
 int GetOpenGLDriverIndex()
@@ -50,7 +50,7 @@ void Renderer::Render() const
 
 	SceneManager::GetInstance().Render();
 	ImGui::Render();
-	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), GetSDLRenderer());
 
 	SDL_RenderPresent(m_Renderer);
 }

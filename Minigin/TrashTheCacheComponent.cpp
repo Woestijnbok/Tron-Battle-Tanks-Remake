@@ -1,6 +1,6 @@
 #include "TrashTheCacheComponent.h"
-#include "ImGui.h"
-#include "ImPlot.h"
+#include "imgui.h"
+#include "implot.h"
 
 TrashTheCacheComponent::TrashTheCacheComponent(std::weak_ptr<GameObject> owner) :
 	Component{ owner },

@@ -1,7 +1,7 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
-#include "Implot.h"
+#include "implot.h"
 #include "TextComponent.h"
 #include "Renderer.h"
 #include "Font.h"

@@ -6,6 +6,7 @@
 #include <chrono>
 
 class GameObject;
+struct SDL_Window;
 
 class Minigin
 {

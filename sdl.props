@@ -5,6 +5,7 @@
 	<PropertyGroup />
 	<ItemDefinitionGroup>
 		<Link>
+<<<<<<< Updated upstream
 			<AdditionalLibraryDirectories>
 				$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget);
 				$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget);
@@ -29,6 +30,13 @@
 				$(SolutionDir)3rdParty\SDL2_mixer\include;
 				%(AdditionalIncludeDirectories)
 			</AdditionalIncludeDirectories>
+=======
+			<AdditionalLibraryDirectories>$(SolutionDir)3rdParty\SDL2\lib\$(PlatformTarget);$(SolutionDir)3rdParty\SDL2_image\lib\$(PlatformTarget);$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget);$(SolutionDir)3rdParty\SDL2_mixer\lib\$(PlatformTarget);</AdditionalLibraryDirectories>
+			<AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;</AdditionalDependencies>
+		</Link>
+		<ClCompile>
+			<AdditionalIncludeDirectories>$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2_mixer\include;</AdditionalIncludeDirectories>
+>>>>>>> Stashed changes
 		</ClCompile>
 		<PostBuildEvent>
 			<Command>
@@ -39,5 +47,9 @@
 			</Command>
 		</PostBuildEvent>
 	</ItemDefinitionGroup>
+<<<<<<< Updated upstream
 	<ItemGroup />
+=======
+	<ItemGroup/>
+>>>>>>> Stashed changes
 </Project>

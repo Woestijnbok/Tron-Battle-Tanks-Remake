@@ -4,9 +4,6 @@
     <Filter Include="Game Object">
       <UniqueIdentifier>{4ecadd5e-d694-4f43-96fb-e2dad8bfef8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Minigin">
-      <UniqueIdentifier>{be5fb6ab-3e5a-4b3c-8f76-8d43ccb01823}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{ee51c481-854a-491b-a19b-a0c91df1d478}</UniqueIdentifier>
     </Filter>
@@ -49,9 +46,6 @@
     <Filter Include="Components\Rotater Component">
       <UniqueIdentifier>{9c616990-8ac6-4dec-acf3-389897e6b857}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Imgui">
-      <UniqueIdentifier>{f31996c1-f978-43f5-8cc9-f85810b277fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Trash The Cache">
       <UniqueIdentifier>{9edfd189-b4ee-4d16-bc04-0af0fbfe8cdd}</UniqueIdentifier>
     </Filter>
@@ -63,9 +57,6 @@
     </Filter>
     <Filter Include="Input\Action">
       <UniqueIdentifier>{37ef5360-df90-42ff-8296-174a0c57842f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Manager">
-      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
     </Filter>
     <Filter Include="Input\Command\Custom Commands">
       <UniqueIdentifier>{6e8234d6-7d62-4665-978b-a7080e107748}</UniqueIdentifier>
@@ -91,6 +82,21 @@
     <Filter Include="Locator">
       <UniqueIdentifier>{7a2d8c0a-a932-41fa-b182-e9cca9924c94}</UniqueIdentifier>
     </Filter>
+<<<<<<< Updated upstream
+=======
+    <Filter Include="imgui">
+      <UniqueIdentifier>{10864dfc-4877-4946-8e0c-5664a2aae576}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="imgui\backends">
+      <UniqueIdentifier>{2d5f00a7-2125-492e-8819-a867e57ac2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="implot">
+      <UniqueIdentifier>{d55a8f0b-c5fc-440b-856e-747a30981c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Managers\Input Manager">
+      <UniqueIdentifier>{8128e6de-0481-4aa3-b221-b8139c5e7c50}</UniqueIdentifier>
+    </Filter>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Component.h">
@@ -103,10 +109,7 @@
       <Filter>Game Object</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Input\Manager</Filter>
-    </ClInclude>
-    <ClInclude Include="Minigin.h">
-      <Filter>Minigin</Filter>
+      <Filter>Managers\Input Manager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Renderer</Filter>
@@ -132,42 +135,11 @@
     <ClInclude Include="ImageComponent.h">
       <Filter>Components\Image Component</Filter>
     </ClInclude>
-    <ClInclude Include="Singleton.h" />
     <ClInclude Include="FPSCounterComponent.h">
       <Filter>Components\FPS Counter Component</Filter>
     </ClInclude>
     <ClInclude Include="RotaterComponent.h">
       <Filter>Components\Rotater Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imconfig.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imgui.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imgui_internal.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_rectpack.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_textedit.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\imstb_truetype.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdl2.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdlrenderer2.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\implot.h">
-      <Filter>Imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\3rdParty\imgui-1.90.4\implot_internal.h">
-      <Filter>Imgui</Filter>
     </ClInclude>
     <ClInclude Include="TrashTheCacheComponent.h">
       <Filter>Components\Trash The Cache</Filter>
@@ -202,6 +174,43 @@
     <ClInclude Include="Locator.h">
       <Filter>Locator</Filter>
     </ClInclude>
+<<<<<<< Updated upstream
+=======
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui_internal.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_rectpack.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_textedit.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_truetype.h">
+      <Filter>imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.h">
+      <Filter>imgui\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\implot - 0.16\include\implot.h">
+      <Filter>implot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h">
+      <Filter>implot</Filter>
+    </ClInclude>
+    <ClInclude Include="Minigin.h" />
+    <ClInclude Include="Singleton.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Component.cpp">
@@ -214,10 +223,7 @@
       <Filter>Game Object</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Input\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Minigin.cpp">
-      <Filter>Minigin</Filter>
+      <Filter>Managers\Input Manager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Renderer</Filter>
@@ -237,7 +243,6 @@
     <ClCompile Include="Transform.cpp">
       <Filter>Data Types\Transform</Filter>
     </ClCompile>
-    <ClCompile Include="Main.cpp" />
     <ClCompile Include="TextComponent.cpp">
       <Filter>Components\Text Component</Filter>
     </ClCompile>
@@ -249,36 +254,6 @@
     </ClCompile>
     <ClCompile Include="RotaterComponent.cpp">
       <Filter>Components\Rotater Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_demo.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_draw.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_tables.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\imgui_widgets.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdl2.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\backends\imgui_impl_sdlrenderer2.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\implot.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\implot_demo.cpp">
-      <Filter>Imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\3rdParty\imgui-1.90.4\implot_items.cpp">
-      <Filter>Imgui</Filter>
     </ClCompile>
     <ClCompile Include="TrashTheCacheComponent.cpp">
       <Filter>Components\Trash The Cache</Filter>
@@ -313,5 +288,36 @@
     <ClCompile Include="Locator.cpp">
       <Filter>Locator</Filter>
     </ClCompile>
+<<<<<<< Updated upstream
+=======
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_demo.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_draw.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_tables.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_widgets.cpp">
+      <Filter>imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.cpp">
+      <Filter>imgui\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\implot - 0.16\include\implot.cpp">
+      <Filter>implot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Libraries\implot - 0.16\include\implot_items.cpp">
+      <Filter>implot</Filter>
+    </ClCompile>
+    <ClCompile Include="Minigin.cpp" />
+>>>>>>> Stashed changes
   </ItemGroup>
 </Project>
