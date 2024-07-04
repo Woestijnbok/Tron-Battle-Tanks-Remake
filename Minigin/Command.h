@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "GameObject.h"
+#include "Component.h"
 
 class Command
 {

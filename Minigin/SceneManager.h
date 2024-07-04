@@ -7,12 +7,15 @@
 #include <chrono>
 
 #include "Singleton.h"
+#include "Component.h"
 
 class Scene;
 
 class SceneManager final : public Singleton<SceneManager>
 {
 public:
+
+	
 
 	~SceneManager() = default;
 
@@ -21,19 +24,17 @@ public:
 	SceneManager& operator= (const SceneManager&) = delete;
 	SceneManager& operator= (const SceneManager&&) = delete;
 
-	Scene& CreateScene(const std::string& name);
+	Scene* CreateScene(const std::string& name);
+	Scene* GetScene(const std::string& name);
 	void Update(std::chrono::milliseconds deltaTime);
-	void FixedUpdate(std::chrono::milliseconds deltaTime);
+	void FixedUpdate();
 	void Render();
-	std::shared_ptr<Scene> GetScene(const std::string& name);
 
 private:
-
-	SceneManager() = default;
-
 	friend class Singleton<SceneManager>;
+	SceneManager() = default;
 	
-	std::vector<std::shared_ptr<Scene>> m_Scenes;
+	std::vector<std::unique_ptr<Scene>> m_Scenes;
 };
 
 #endif

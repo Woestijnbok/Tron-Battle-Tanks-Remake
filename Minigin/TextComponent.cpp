@@ -6,8 +6,9 @@
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture.h"
+#include "GameObject.h"
 
-TextComponent::TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font) :
+TextComponent::TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font) :
 	Component{ owner },
 	m_NeedsUpdate{ true }, 
 	m_Text{ text }, 
@@ -19,7 +20,7 @@ TextComponent::TextComponent(std::weak_ptr<GameObject> owner, const std::string&
 
 }
 
-TextComponent::TextComponent(std::weak_ptr<GameObject> owner, const std::string& text, std::shared_ptr<Font> font, glm::vec2 position) :
+TextComponent::TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font, glm::vec2 position) :
 	Component{ owner },
 	m_NeedsUpdate{ true },
 	m_Text{ text },
@@ -54,17 +55,11 @@ void TextComponent::Update(std::chrono::milliseconds deltaTime)
 	}
 }
 
-void TextComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
-{
-	deltaTime++;
-}
-
 void TextComponent::Render() const
 {
-	std::shared_ptr<GameObject> owner = m_Owner.lock();
-	if ((owner != nullptr) and (m_Texture.get() != nullptr))
+	if ((m_Owner != nullptr) and (m_Texture.get() != nullptr))
 	{
-		auto position{ (m_SeperatePosition) ? m_Position : owner->GetWorldTransform().GetPosition() };
+		auto position{ (m_SeperatePosition) ? m_Position : m_Owner->GetWorldTransform().GetPosition() };
 		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
 	}
 }

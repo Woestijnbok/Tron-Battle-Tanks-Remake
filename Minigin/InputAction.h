@@ -7,6 +7,7 @@
 #include <Xinput.h>
 
 #include "Command.h"
+#include "Component.h"
 
 enum class InputTrigger
 {

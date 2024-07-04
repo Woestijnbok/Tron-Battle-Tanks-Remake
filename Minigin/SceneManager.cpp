@@ -2,6 +2,20 @@
 
 #include "SceneManager.h"
 #include "Scene.h"
+#include "GameObject.h"
+
+Scene* SceneManager::CreateScene(const std::string& name)
+{
+	return m_Scenes.emplace_back(new Scene{ name }).get();
+}
+
+Scene* SceneManager::GetScene(const std::string& name)
+{
+	const auto it{ std::ranges::find_if(m_Scenes, [name](const std::unique_ptr<Scene>& scene) -> bool { return scene->GetName() == name; }) };	
+
+	if (it != m_Scenes.end()) return it->get();
+	else return nullptr;
+}
 
 void SceneManager::Update(std::chrono::milliseconds deltaTime)
 {
@@ -11,11 +25,11 @@ void SceneManager::Update(std::chrono::milliseconds deltaTime)
 	}
 }
 
-void SceneManager::FixedUpdate(std::chrono::milliseconds deltaTime)
+void SceneManager::FixedUpdate()
 {
 	for (auto& scene : m_Scenes)
 	{
-		scene->FixedUpdate(deltaTime);
+		scene->FixedUpdate();
 	}
 }
 
@@ -25,19 +39,4 @@ void SceneManager::Render()
 	{
 		scene->Render();
 	}
-}
-
-std::shared_ptr<Scene> SceneManager::GetScene(const std::string& name)
-{
-	const auto it{ std::ranges::find_if(m_Scenes, [name](const std::shared_ptr<Scene>& scene) -> bool { return scene->GetName() == name; }) };
-
-	if (it != m_Scenes.end()) return *it;
-	else return nullptr;
-}
-
-Scene& SceneManager::CreateScene(const std::string& name)
-{
-	const auto& scene = std::shared_ptr<Scene>(new Scene(name));
-	m_Scenes.push_back(scene);
-	return *scene;
 }

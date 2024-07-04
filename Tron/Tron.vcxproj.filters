@@ -11,39 +11,9 @@
     <ClCompile Include="CustumCommands.cpp">
       <Filter>Old stuff</Filter>
     </ClCompile>
-    <ClCompile Include="HealthComponent.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="RotaterComponent.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreBoardComponent.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="ScoreComponent.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="TrashTheCacheComponent.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustumCommands.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="HealthComponent.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="RotaterComponent.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreBoardComponent.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="ScoreComponent.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="TrashTheCacheComponent.h">
       <Filter>Old stuff</Filter>
     </ClInclude>
   </ItemGroup>

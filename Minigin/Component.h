@@ -3,13 +3,13 @@
 
 #include <chrono>
 
-#include "GameObject.h"
+class GameObject;
 
 class Component
 {
 public:
 
-	Component(std::weak_ptr<GameObject> owner);
+	Component(GameObject* owner);
 	virtual ~Component() = default;
 
 	Component(const Component& other) = delete;
@@ -17,13 +17,13 @@ public:
 	Component& operator=(const Component& other) = delete;
 	Component& operator=(Component&& other) = delete;
 
-	virtual void Update(std::chrono::milliseconds deltaTime) = 0;
-	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) = 0;
+	virtual void Update(std::chrono::milliseconds deltaTime);
+	virtual void FixedUpdate();
 	virtual void Render() const;
 
 protected:
 
-	const std::weak_ptr<GameObject> m_Owner;
+	GameObject * const m_Owner;
 };
 
 #endif

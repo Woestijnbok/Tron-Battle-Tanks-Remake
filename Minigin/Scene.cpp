@@ -3,8 +3,6 @@
 #include "Scene.h"
 #include "GameObject.h"
 
-unsigned int Scene::m_IdCounter{ 0 };
-
 Scene::Scene(const std::string& name) : 
 	m_Name{ name },
 	m_Objects{}
@@ -12,17 +10,24 @@ Scene::Scene(const std::string& name) :
 
 }
 
-void Scene::Add(std::shared_ptr<GameObject> object)
+GameObject* Scene::CreateGameObject()
 {
-	m_Objects.emplace_back(std::move(object));
+	return m_Objects.emplace_back(new GameObject{}).get();
 }
 
-void Scene::Remove(std::shared_ptr<GameObject> object)
+void Scene::RemoveGameObject(GameObject* object)
 {
-	m_Objects.erase(std::remove(m_Objects.begin(), m_Objects.end(), object), m_Objects.end());
+	m_Objects.erase
+	(
+		std::remove_if
+		(
+			std::begin(m_Objects), std::end(m_Objects), [object](const std::unique_ptr<GameObject>& ptr) -> bool { return ptr.get() == object; }
+		)
+		, m_Objects.end()
+	);
 }
 
-void Scene::RemoveAll()
+void Scene::Clear()
 {
 	m_Objects.clear();
 }
@@ -35,11 +40,11 @@ void Scene::Update(std::chrono::milliseconds deltaTime)
 	}
 }
 
-void Scene::FixedUpdate(std::chrono::milliseconds deltaTime)
+void Scene::FixedUpdate()
 {
 	for (auto& object : m_Objects)
 	{
-		object->FixedUpdate(deltaTime);
+		object->FixedUpdate();
 	}
 }
 

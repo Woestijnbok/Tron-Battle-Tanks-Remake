@@ -14,7 +14,7 @@ class FPSCounterComponent final : public Component
 {
 public:
 
-	FPSCounterComponent(std::weak_ptr<GameObject> owner);
+	FPSCounterComponent(GameObject* owner);
 	~FPSCounterComponent() = default;
 
 	FPSCounterComponent(const FPSCounterComponent&) = delete;
@@ -23,7 +23,6 @@ public:
 	FPSCounterComponent& operator= (const FPSCounterComponent&&) = delete;
 
 	virtual void Update(std::chrono::milliseconds deltaTime) override;
-	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) override;
 	virtual void Render() const override;
 
 	const std::shared_ptr<Texture> GetTexture() const;

@@ -172,20 +172,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CustumCommands.cpp" />
-    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="RotaterComponent.cpp" />
-    <ClCompile Include="ScoreBoardComponent.cpp" />
-    <ClCompile Include="ScoreComponent.cpp" />
-    <ClCompile Include="TrashTheCacheComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustumCommands.h" />
-    <ClInclude Include="HealthComponent.h" />
-    <ClInclude Include="RotaterComponent.h" />
-    <ClInclude Include="ScoreBoardComponent.h" />
-    <ClInclude Include="ScoreComponent.h" />
-    <ClInclude Include="TrashTheCacheComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

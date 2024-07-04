@@ -10,7 +10,7 @@ class ImageComponent final : public Component
 {
 public:
 
-	ImageComponent(std::weak_ptr<GameObject> owner, std::shared_ptr<Texture> texture);
+	ImageComponent(GameObject* owner, std::shared_ptr<Texture> texture);
 	virtual ~ImageComponent() = default;
 
 	ImageComponent(const ImageComponent&) = delete;
@@ -18,8 +18,6 @@ public:
 	ImageComponent& operator= (const ImageComponent&) = delete;
 	ImageComponent& operator= (const ImageComponent&&) = delete;
 
-	virtual void Update(std::chrono::milliseconds deltaTime) override;
-	virtual void FixedUpdate(std::chrono::milliseconds deltaTime) override;
 	virtual void Render() const override;
 
 	const std::shared_ptr<Texture> GetTexture() const;

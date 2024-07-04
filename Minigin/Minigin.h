@@ -9,6 +9,8 @@
 #include <functional>
 #include <chrono>
 
+#include "Component.h"
+
 class GameObject;
 struct SDL_Window;
 
@@ -16,22 +18,25 @@ class Minigin
 {
 public:
 
-	explicit Minigin(const std::string& nameWindow);
-	~Minigin();
+	static const int m_TargetFrameRate;
+	static const std::chrono::milliseconds m_FixedFrameDuration;
 
-	Minigin(const Minigin& other) = delete;
-	Minigin(Minigin&& other) = delete;
-	Minigin& operator=(const Minigin& other) = delete;
-	Minigin& operator=(Minigin&& other) = delete;
-
-	void Run(const std::function<void()>& load);
+	static void Initialize(const std::string& nameWindow);	
+	static void Run(const std::function<void()>& load);	
+	static void Destroy();
 
 private:
 
-	SDL_Window* m_Window;
-	const int m_TargetFrameRate;
-	const std::chrono::milliseconds m_TargetFrameDuration;
-	const std::chrono::milliseconds m_FixedFrameDuration;
+	static SDL_Window* m_Window;	
+	static const std::chrono::milliseconds m_TargetFrameDuration;	
+
+	Minigin() = delete;	
+	~Minigin() = delete;	
+
+	Minigin(const Minigin& other) = delete;	
+	Minigin(Minigin&& other) = delete;	
+	Minigin& operator=(const Minigin& other) = delete;		
+	Minigin& operator=(Minigin&& other) = delete;		
 };
 
 #endif

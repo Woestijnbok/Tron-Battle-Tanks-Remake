@@ -4,8 +4,10 @@
 #include <memory>
 #include <chrono>
 #include <algorithm>
+#include <type_traits>
 
 #include "Transform.h"
+#include "Scene.h"
 
 class Component;
 class Texture2D;
@@ -14,16 +16,12 @@ class GameObject final
 {
 public:
 
-	GameObject() = default;
-	virtual ~GameObject();
+	friend GameObject* Scene::CreateGameObject();	
 
-	GameObject(const GameObject& other) = delete;
-	GameObject(GameObject&& other) = delete;
-	GameObject& operator=(const GameObject& other) = delete;
-	GameObject& operator=(GameObject&& other) = delete;
+	~GameObject() = default;
 
 	void Update(std::chrono::milliseconds deltaTime);
-	void FixedUpdate(std::chrono::milliseconds deltaTime);
+	void FixedUpdate();
 	void Render() const;
 	void SetLocalPosition(float x, float y);
 	const Transform& GetWorldTransform();
@@ -34,12 +32,12 @@ public:
 	size_t GetChildCount() const;
 	GameObject* GetChild(size_t index) const;
 
-	template<typename Type>
-	bool AddComponent(std::shared_ptr<Type> component)
+	template<typename Type, typename... Arguments>
+	bool AddComponent(Arguments&&... arguments)	
 	{
-		if ((!HasComponent<Type>()) && (std::dynamic_pointer_cast<Component>(component) != nullptr))
+		if ((!HasComponent<Type>()) && (std::is_base_of<Component, Type>::value))	
 		{
-			m_Components.emplace_back(std::dynamic_pointer_cast<Component>(component));
+			m_Components.emplace_back(new Type{ this, std::forward<Arguments>(arguments)... });
 			return true;
 		}
 		else return false;
@@ -48,7 +46,7 @@ public:
 	template<typename Type>
 	bool RemoveComponent()
 	{
-		auto it = std::ranges::find_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
+		auto it = std::ranges::find_if(m_Components, [](const std::unique_ptr<Component> component) -> bool
 			{
 				return std::dynamic_pointer_cast<Type>(component) != nullptr;
 			}
@@ -63,41 +61,47 @@ public:
 	}
 
 	template<typename Type>
-	std::shared_ptr<Type> GetComponent()
+	Type* GetComponent()
 	{
-		auto it = std::ranges::find_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
+		auto it = std::ranges::find_if(m_Components, [](const std::unique_ptr<Component> component) -> bool
 			{
 				return std::dynamic_pointer_cast<Type>(component) != nullptr;
 			}
 		);
 
-		if (it != std::cend(m_Components)) return std::dynamic_pointer_cast<Type>(*it);
+		if (it != std::end(m_Components)) return dynamic_cast<Type*>(it->get());	
 		else return nullptr;
 	}
 
 	template<typename Type>
 	bool HasComponent()
 	{
-		auto it = std::ranges::find_if(m_Components, [](const std::shared_ptr<Component> component) -> bool
+		auto it = std::ranges::find_if(m_Components, [](const std::unique_ptr<Component>& component) -> bool
 			{
-				return std::dynamic_pointer_cast<Type>(component) != nullptr;
+				return dynamic_cast<Type*>(component.get()) != nullptr;
 			}
 		);
 
-		return it != std::cend(m_Components);
+		return it != std::end(m_Components);
 	}
 
 
 private:
 
-	void FlagWorldTransform();
-
 	Transform m_LocalTransform;
 	std::pair<bool, Transform> m_WorldTransform;
-	std::vector<std::shared_ptr<Component>> m_Components;
+	std::vector<std::unique_ptr<Component>> m_Components;
 	std::vector<GameObject*> m_Children;
 	GameObject* m_Parent;
-	
+
+	explicit GameObject() = default;	
+
+	GameObject(const GameObject& other) = delete;
+	GameObject(GameObject&& other) = delete;
+	GameObject& operator=(const GameObject& other) = delete;
+	GameObject& operator=(GameObject&& other) = delete;
+
+	void FlagWorldTransform();
 };
 
 #endif

@@ -1,11 +1,7 @@
 #define WIN32_LEAN_AND_MEAN 
 
 #include <stdexcept>
-#include <windows.h>
 #include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
 #include <thread>
 #include <memory>
 #include <iostream>
@@ -15,19 +11,16 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "Scene.h"
-#include "GameObject.h"
-#include "TextComponent.h"
-#include "FPSCounterComponent.h"
 #include "EventManager.h"
 #include "Locator.h"
 #include "Sound.h"
 
-Minigin::Minigin(const std::string& nameWindow) :
-	m_Window{},
-	m_TargetFrameRate{ 60 },
-	m_TargetFrameDuration{ 1000 / m_TargetFrameRate },
-	m_FixedFrameDuration{ 20 }
+const int Minigin::m_TargetFrameRate{ 60 };
+const std::chrono::milliseconds Minigin::m_FixedFrameDuration{ 20 };
+SDL_Window* Minigin::m_Window{ nullptr };
+const std::chrono::milliseconds Minigin::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
+
+void Minigin::Initialize(const std::string& nameWindow)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
@@ -57,14 +50,6 @@ Minigin::Minigin(const std::string& nameWindow) :
 	std::cout << "Use the escape key to exit the game." << std::endl;
 }
 
-Minigin::~Minigin()
-{
-	Renderer::GetInstance().Destroy();
-	SDL_DestroyWindow(m_Window);
-	Locator::DestroyAudio();	
-	SDL_Quit();
-}
-
 void Minigin::Run(const std::function<void()>& load)
 {
 	load();
@@ -87,7 +72,7 @@ void Minigin::Run(const std::function<void()>& load)
 		exit = inputManager.ProcessInput(deltaTime);
 		while (lag >= m_FixedFrameDuration)
 		{
-			sceneManager.FixedUpdate(m_FixedFrameDuration);
+			sceneManager.FixedUpdate();
 			lag -= m_FixedFrameDuration;
 		}
 		sceneManager.Update(deltaTime);
@@ -98,4 +83,12 @@ void Minigin::Run(const std::function<void()>& load)
 
 		std::this_thread::sleep_for(currentTime + m_TargetFrameDuration - std::chrono::high_resolution_clock::now());
 	}
+}
+
+void Minigin::Destroy()
+{
+	Renderer::GetInstance().Destroy();
+	SDL_DestroyWindow(m_Window);
+	Locator::DestroyAudio();
+	SDL_Quit();
 }

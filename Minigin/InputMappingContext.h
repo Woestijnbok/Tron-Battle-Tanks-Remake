@@ -5,6 +5,7 @@
 
 #include "InputAction.h"
 #include "unordered_set"
+#include "Component.h"
 
 class InputMappingContext
 {

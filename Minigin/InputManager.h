@@ -10,6 +10,7 @@
 
 #include "Singleton.h"
 #include "InputMappingContext.h"
+#include "Component.h"
 
 class InputManager final : public Singleton<InputManager>
 {

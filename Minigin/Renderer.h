@@ -5,6 +5,8 @@
 
 #include "Singleton.h"
 
+#include "Component.h"
+
 class Texture;
 struct ImGuiContext;
 struct ImPlotContext;

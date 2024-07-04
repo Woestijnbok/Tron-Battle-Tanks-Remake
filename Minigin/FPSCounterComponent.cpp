@@ -7,7 +7,7 @@
 #include "Texture.h"
 #include "GameObject.h"
 
-FPSCounterComponent::FPSCounterComponent(std::weak_ptr<GameObject> owner) :
+FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	Component{ owner },
 	m_Text{ "0.0 FPS" },
 	m_Font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) },
@@ -52,17 +52,11 @@ void FPSCounterComponent::Update(std::chrono::milliseconds deltaTime)
 	}
 }
 
-void FPSCounterComponent::FixedUpdate(std::chrono::milliseconds deltaTime)
-{
-	++deltaTime;
-}
-
 void FPSCounterComponent::Render() const
 {
-	std::shared_ptr<GameObject> owner = m_Owner.lock();
-	if ((owner != nullptr) and (m_Texture.get() != nullptr))
+	if ((m_Owner != nullptr) and (m_Texture.get() != nullptr))
 	{
-		auto position{ owner->GetWorldTransform().GetPosition() };
+		auto position{ m_Owner->GetWorldTransform().GetPosition() };
 		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
 	}
 }
