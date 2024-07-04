@@ -27,10 +27,14 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 	{
 		if (event.type == SDL_QUIT) 
 		{
-			return false;
+			return true;
 		}
 		if (event.type == SDL_KEYDOWN)
 		{
+			if (event.key.keysym.sym == SDLK_ESCAPE)
+			{
+				return true;
+			}
 			for (auto& mapping : m_InputMappingContexts)
 			{
 				for (const auto& inputAction : mapping.second->GetInputActions())
@@ -112,7 +116,7 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 
 	SDL_CONTROLLER_BUTTON_A;
 
-	return true;
+	return false;
 }
 
 void InputManager::AddInputMappingContext(GameObject* gameObject)

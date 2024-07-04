@@ -23,24 +23,22 @@
 #include "Locator.h"
 #include "Sound.h"
 
-Minigin::Minigin() :
+Minigin::Minigin(const std::string& nameWindow) :
 	m_Window{},
-	m_MaxFrameRate{ 60 },
-	m_MinFrameDuration{ CalculateMinFrameDuration(m_MaxFrameRate) },
-	m_FixedDuration{ 20 }
+	m_TargetFrameRate{ 60 },
+	m_TargetFrameDuration{ 1000 / m_TargetFrameRate },
+	m_FixedFrameDuration{ 20 }
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
 
-	m_Window = SDL_CreateWindow(
-		"Programming 4 assignment",
-		SDL_WINDOWPOS_CENTERED,
-		SDL_WINDOWPOS_CENTERED,
-		640,
-		480,
-		SDL_WINDOW_OPENGL
+	m_Window = SDL_CreateWindow
+	(
+		nameWindow.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480,
+		SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_MOUSE_GRABBED | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_INPUT_GRABBED
+		| SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MOUSE_CAPTURE
 	);
 
 	if (m_Window == nullptr) 
@@ -48,9 +46,15 @@ Minigin::Minigin() :
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
+	// Initialize engine features
 	Renderer::GetInstance().Init(m_Window);
 	ResourceManager::GetInstance().Init();
 	Locator::ProvideAudio(new SDLMixerAudio{});
+	SceneManager::GetInstance();
+	InputManager::GetInstance();
+	EventManager::GetInstance();
+
+	std::cout << "Use the escape key to exit the game." << std::endl;
 }
 
 Minigin::~Minigin()
@@ -65,25 +69,26 @@ void Minigin::Run(const std::function<void()>& load)
 {
 	load();
 
-	auto& renderer = Renderer::GetInstance();
-	auto& sceneManager = SceneManager::GetInstance();
-	auto& input = InputManager::GetInstance();
+	// Cashe engine features
+	auto& inputManager{ InputManager::GetInstance() };
+	auto& sceneManager{ SceneManager::GetInstance() };
+	auto& renderer{ Renderer::GetInstance() };
 
-	bool doContinue{ true };
+	bool exit{ false };
 	std::chrono::steady_clock::time_point lastTime{ std::chrono::high_resolution_clock::now() };
 	std::chrono::milliseconds lag{};
-	while (doContinue)
+	while (!exit)
 	{
 		const std::chrono::steady_clock::time_point currentTime{ std::chrono::high_resolution_clock::now() };
 		const std::chrono::milliseconds deltaTime{ std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime) };
 		lastTime = currentTime;
 		lag += deltaTime;
 
-		doContinue = input.ProcessInput(deltaTime);
-		while (lag >= m_FixedDuration)
+		exit = inputManager.ProcessInput(deltaTime);
+		while (lag >= m_FixedFrameDuration)
 		{
-			sceneManager.FixedUpdate(m_FixedDuration);
-			lag -= m_FixedDuration;
+			sceneManager.FixedUpdate(m_FixedFrameDuration);
+			lag -= m_FixedFrameDuration;
 		}
 		sceneManager.Update(deltaTime);
 		EventManager::GetInstance().Update();
@@ -91,13 +96,6 @@ void Minigin::Run(const std::function<void()>& load)
 		soundThread.detach();
 		renderer.Render();
 
-		const auto sleepTime{ currentTime + m_MinFrameDuration - std::chrono::high_resolution_clock::now() };
-		std::this_thread::sleep_for(sleepTime);
+		std::this_thread::sleep_for(currentTime + m_TargetFrameDuration - std::chrono::high_resolution_clock::now());
 	}
-}
-
-std::chrono::milliseconds Minigin::CalculateMinFrameDuration(int frameRate)
-{
-	if (frameRate <= 0) throw std::runtime_error("Invalid max frame rate!");
-	else return std::chrono::milliseconds(static_cast<long long>(1000) / frameRate);
 }

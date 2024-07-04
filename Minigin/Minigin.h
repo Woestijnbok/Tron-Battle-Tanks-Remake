@@ -16,7 +16,7 @@ class Minigin
 {
 public:
 
-	explicit Minigin();
+	explicit Minigin(const std::string& nameWindow);
 	~Minigin();
 
 	Minigin(const Minigin& other) = delete;
@@ -29,11 +29,9 @@ public:
 private:
 
 	SDL_Window* m_Window;
-	const int m_MaxFrameRate;
-	const std::chrono::milliseconds m_MinFrameDuration;
-	const std::chrono::milliseconds m_FixedDuration;
-
-	std::chrono::milliseconds CalculateMinFrameDuration(int frameRate);
+	const int m_TargetFrameRate;
+	const std::chrono::milliseconds m_TargetFrameDuration;
+	const std::chrono::milliseconds m_FixedFrameDuration;
 };
 
 #endif
