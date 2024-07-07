@@ -1,16 +1,12 @@
-#ifndef INPUT_MANAGER
-#define INPUT_MANAGER
+#pragma once
 
-#include <vector>
 #include <unordered_map>
-#include <optional>
-#include <SDL.h>
-#include <Windows.h>
 #include <Xinput.h>
 
 #include "Singleton.h"
-#include "InputMappingContext.h"
-#include "Component.h"
+
+class InputMappingContext;
+class GameObject;
 
 class InputManager final : public Singleton<InputManager>
 {
@@ -23,7 +19,7 @@ public:
 	InputManager& operator= (const InputManager&) = delete;
 	InputManager& operator= (const InputManager&&) = delete;
 
-	bool ProcessInput(std::chrono::milliseconds deltaTime);
+	bool ProcessInput();
 	void AddInputMappingContext(GameObject* gameObject);
 	InputMappingContext* GetInputMappingContext(GameObject* gameObject);
 
@@ -32,5 +28,3 @@ private:
 	XINPUT_STATE m_PreviousXState;
 	XINPUT_STATE m_CurrentXState;
 };
-
-#endif

@@ -1,14 +1,10 @@
-#ifndef COMPONENT
-#define COMPONENT
-
-#include <chrono>
+#pragma once
 
 class GameObject;
 
 class Component
 {
 public:
-
 	Component(GameObject* owner);
 	virtual ~Component() = default;
 
@@ -17,13 +13,16 @@ public:
 	Component& operator=(const Component& other) = delete;
 	Component& operator=(Component&& other) = delete;
 
-	virtual void Update(std::chrono::milliseconds deltaTime);
+	virtual void Update();
 	virtual void FixedUpdate();
+	virtual void LateUpdate();
 	virtual void Render() const;
 
 protected:
 
+	GameObject* GetOwner() const;
+
+private:
+
 	GameObject * const m_Owner;
 };
-
-#endif

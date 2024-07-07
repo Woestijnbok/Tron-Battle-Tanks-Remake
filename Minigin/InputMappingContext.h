@@ -1,11 +1,10 @@
-#ifndef INPUT_MAPPING_CONTEXT
-#define INPUT_MAPPING_CONTEXT
+#pragma once
 
 #include <type_traits>
+#include <unordered_set>
 
 #include "InputAction.h"
-#include "unordered_set"
-#include "Component.h"
+#include "Command.h"
 
 class InputMappingContext
 {
@@ -57,5 +56,3 @@ struct std::hash<InputMappingContext>
 {
     std::size_t operator()(const InputMappingContext& mapping) const;
 };
-
-#endif

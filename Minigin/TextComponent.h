@@ -1,10 +1,8 @@
-#ifndef TEXT_OBJECT
-#define TEXT_OBJECT
+#pragma once
 
 #include <string>
-#include <memory>
-#include <chrono>
 #include <vec2.hpp>
+#include <memory>
 
 #include "Component.h"
 
@@ -25,7 +23,7 @@ public:
 	TextComponent& operator=(const TextComponent& other) = delete;
 	TextComponent& operator=(TextComponent&& other) = delete;
 
-	virtual void Update(std::chrono::milliseconds deltaTime) override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
 	void SetText(const std::string& text);
@@ -40,5 +38,3 @@ private:
 	glm::vec2 m_Position;
 	bool m_SeperatePosition;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef TEXTURE2D
-#define TEXTURE2D
+#pragma once
 
 #include <vec2.hpp>
 
@@ -24,5 +23,3 @@ protected:
 
 	SDL_Texture* m_Texture;
 };
-
-#endif

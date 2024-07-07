@@ -1,14 +1,10 @@
-#ifndef FPS_COUNTER_COMPONENT
-#define FPS_COUNTER_COMPONENT
+#pragma once
 
-#include "chrono"
+#include <chrono>
 
 #include "Component.h"
-#include "Singleton.h"
 
-class Font;
-class Texture;
-class GameObject;
+class TextComponent;
 
 class FPSCounterComponent final : public Component
 {
@@ -22,19 +18,14 @@ public:
 	FPSCounterComponent& operator= (const FPSCounterComponent&) = delete;
 	FPSCounterComponent& operator= (const FPSCounterComponent&&) = delete;
 
-	virtual void Update(std::chrono::milliseconds deltaTime) override;
+	virtual void Update() override;
 	virtual void Render() const override;
 
-	const std::shared_ptr<Texture> GetTexture() const;
-	void SetText(const std::string& text);
+	TextComponent* GetTextComponent() const;
 
 private:
 
-	std::string m_Text;
-	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture> m_Texture;
+	TextComponent* m_TextComponent;
 	std::chrono::steady_clock::time_point m_LastTimePoint;
 	unsigned int m_FrameCounter;
 };
-
-#endif

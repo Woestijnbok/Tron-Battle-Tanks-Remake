@@ -1,7 +1,6 @@
 #include <stdexcept>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#include <format>
 
 #include "ResourceManager.h"
 #include "Renderer.h"

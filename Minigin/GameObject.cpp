@@ -1,18 +1,26 @@
-#include <string>
-#include <algorithm>
 #include <stdexcept>
-#include <memory>
 
 #include "GameObject.h"
-#include "ResourceManager.h"
 #include "Renderer.h"
-#include "Component.h"
+#include "Scene.h"
 
-void GameObject::Update(std::chrono::milliseconds deltaTime)
+GameObject::GameObject(Scene* scene) :
+	m_LocalTransform{},
+	m_WorldTransform{},
+	m_Components{},
+	m_Children{},
+	m_Parent{},
+	m_MarkedForDestroy{},
+	m_Scene{ scene }
+{
+
+}
+
+void GameObject::Update()
 {
 	for (auto& component : m_Components)
 	{
-		component->Update(deltaTime);
+		component->Update();
 	}
 }
 
@@ -21,6 +29,14 @@ void GameObject::FixedUpdate()
 	for (auto& component : m_Components)
 	{
 		component->FixedUpdate();
+	}
+}
+
+void GameObject::LateUpdate()
+{
+	for (auto& component : m_Components)
+	{
+		component->LateUpdate();	
 	}
 }
 
@@ -131,4 +147,19 @@ size_t GameObject::GetChildCount() const
 GameObject* GameObject::GetChild(size_t index) const 
 {
 	return m_Children.at(index);
+}
+
+void GameObject::Destroy()
+{
+	m_MarkedForDestroy = true;
+}
+
+void GameObject::SetActive(bool active)
+{
+	m_Scene->SetActiveGameObject(this, active);
+}
+
+bool GameObject::IsMarkedForDestroy() const
+{
+	return m_MarkedForDestroy;
 }

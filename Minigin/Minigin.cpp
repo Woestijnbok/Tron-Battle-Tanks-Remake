@@ -1,9 +1,9 @@
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 
+#include <Windows.h>
 #include <stdexcept>
 #include <SDL.h>
 #include <thread>
-#include <memory>
 #include <iostream>
 
 #include "Minigin.h"
@@ -14,10 +14,10 @@
 #include "EventManager.h"
 #include "Locator.h"
 #include "Sound.h"
+#include "TimeManager.h"	
 
-const int Minigin::m_TargetFrameRate{ 60 };
-const std::chrono::milliseconds Minigin::m_FixedFrameDuration{ 20 };
 SDL_Window* Minigin::m_Window{ nullptr };
+const int Minigin::m_TargetFrameRate{ 60 };
 const std::chrono::milliseconds Minigin::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
 
 void Minigin::Initialize(const std::string& nameWindow)
@@ -69,13 +69,16 @@ void Minigin::Run(const std::function<void()>& load)
 		lastTime = currentTime;
 		lag += deltaTime;
 
-		exit = inputManager.ProcessInput(deltaTime);
-		while (lag >= m_FixedFrameDuration)
+		TimeManager::SetDeltaTime(deltaTime);
+
+		exit = inputManager.ProcessInput();
+		while (lag >= TimeManager::GetFixedDeltaTime())
 		{
 			sceneManager.FixedUpdate();
-			lag -= m_FixedFrameDuration;
+			lag -= TimeManager::GetFixedDeltaTime();
 		}
-		sceneManager.Update(deltaTime);
+		sceneManager.Update();
+		sceneManager.LateUpdate();
 		EventManager::GetInstance().Update();
 		std::thread soundThread{ &Audio::Update, Locator::GetAudio() };
 		soundThread.detach();

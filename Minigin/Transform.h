@@ -1,7 +1,6 @@
-#ifndef TRANSFORM
-#define TRANSFORM
+#pragma once
 
-#include <glm.hpp>
+#include <vec3.hpp>	
 
 class Transform final
 {
@@ -25,5 +24,3 @@ private:
 
 	glm::vec3 m_Position;
 };
-
-#endif

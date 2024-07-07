@@ -2,71 +2,41 @@
 
 #include "FPSCounterComponent.h"
 #include "ResourceManager.h"
-#include "Renderer.h"
-#include "Font.h"
-#include "Texture.h"
-#include "GameObject.h"
+#include "TextComponent.h"
 
 FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	Component{ owner },
-	m_Text{ "0.0 FPS" },
-	m_Font{ ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) },
-	m_Texture{ nullptr },
+	m_TextComponent{ new TextComponent{ owner, "0.0 FPS", ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) } },
 	m_LastTimePoint{ std::chrono::high_resolution_clock::now() },
 	m_FrameCounter{ 0 }
 {
 
-}
+}	
 
-void FPSCounterComponent::Update(std::chrono::milliseconds deltaTime)
+void FPSCounterComponent::Update()
 {
-	deltaTime;
-
 	++m_FrameCounter;
-	const auto currentTime{ std::chrono::high_resolution_clock::now() };
 	const auto timeDifference{ std::chrono::high_resolution_clock::now() - m_LastTimePoint };
 
 	if (timeDifference >= std::chrono::seconds(1))
 	{
 		std::ostringstream stream{};
 		stream << m_FrameCounter << " FPS";
-		m_Text = stream.str();
+		m_TextComponent->SetText(stream.str());
 
-		// Updating the SDL texture
-		const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
-		const auto surf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);
-		if (surf == nullptr)
-		{
-			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
-		}
-		auto texture = SDL_CreateTextureFromSurface(Renderer::GetInstance().GetSDLRenderer(), surf);
-		if (texture == nullptr)
-		{
-			throw std::runtime_error(std::string("Create text texture from surface failed: ") + SDL_GetError());
-		}
-		SDL_FreeSurface(surf);
-		m_Texture = std::make_shared<Texture>(texture);
+		m_TextComponent->Update();
 
 		m_FrameCounter = 0;
-		m_LastTimePoint = currentTime;
+		m_LastTimePoint = std::chrono::high_resolution_clock::now();	
 	}
 }
 
 void FPSCounterComponent::Render() const
 {
-	if ((m_Owner != nullptr) and (m_Texture.get() != nullptr))
-	{
-		auto position{ m_Owner->GetWorldTransform().GetPosition() };
-		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
-	}
+	m_TextComponent->Render();	
 }
 
-const std::shared_ptr<Texture> FPSCounterComponent::GetTexture() const
+TextComponent* FPSCounterComponent::GetTextComponent() const
 {
-	return m_Texture;
-}
-
-void FPSCounterComponent::SetText(const std::string& text)
-{
-	m_Text = text;
+	return m_TextComponent;
 }

@@ -1,9 +1,10 @@
-#include "Sound.h"
-
+#include <SDL_mixer.h>
 #include <iostream>
 #include <thread>
 #include <SDL.h>
 #include <algorithm>
+
+#include "Sound.h"
 
 SoundRequest::SoundRequest(SoundAction action, SoundType type, const std::string& name) :
 	m_Action{ action },

@@ -1,15 +1,14 @@
-#ifndef RENDERER
-#define RENDERER
+#pragma once
 
-#include <SDL.h>
+#include <SDL_pixels.h>
 
 #include "Singleton.h"
-
-#include "Component.h"
 
 class Texture;
 struct ImGuiContext;
 struct ImPlotContext;
+struct SDL_Renderer;
+struct SDL_Window;		
 
 class Renderer final : public Singleton<Renderer>
 {
@@ -41,5 +40,3 @@ private:
 	ImGuiContext* m_ImGuiContext;
 	ImPlotContext* m_ImPlotContext;
 };
-
-#endif

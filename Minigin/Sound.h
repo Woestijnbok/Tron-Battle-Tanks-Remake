@@ -1,14 +1,12 @@
-#ifndef SOUND_AUDIO
-#define SOUND_AUDIO
+#pragma once
 
 #define SDL_MIXER_AUDIO_NUMBER_OF_CHANNELS 5
 
 #include <string>
-#include <SDL_mixer.h>
-#include <filesystem>
 #include <array>
 #include <queue>
 #include <mutex>
+#include <SDL_mixer.h>
 
 enum class SoundAction
 {
@@ -99,5 +97,3 @@ private:
 	void StopAllSoundsAndMusic();
 	void CheckSoundChannels();
 };
-
-#endif

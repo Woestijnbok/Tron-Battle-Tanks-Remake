@@ -1,21 +1,15 @@
-#ifndef SCENE_MANAGER
-#define SCENE_MANAGER
+#pragma once
 
 #include <vector>
 #include <string>
 #include <memory>
-#include <chrono>
 
 #include "Singleton.h"
-#include "Component.h"
-
-class Scene;
+#include "Scene.h"
 
 class SceneManager final : public Singleton<SceneManager>
 {
 public:
-
-	
 
 	~SceneManager() = default;
 
@@ -24,17 +18,19 @@ public:
 	SceneManager& operator= (const SceneManager&) = delete;
 	SceneManager& operator= (const SceneManager&&) = delete;
 
-	Scene* CreateScene(const std::string& name);
+	Scene* CreateScene(const std::string& name, bool active = true);
 	Scene* GetScene(const std::string& name);
-	void Update(std::chrono::milliseconds deltaTime);
+	void DeleteScene(const std::string& name);
+	void Update();
 	void FixedUpdate();
+	void LateUpdate();
 	void Render();
+	void SetActiveScene(Scene* scene, bool active);
 
 private:
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;
 	
-	std::vector<std::unique_ptr<Scene>> m_Scenes;
+	std::vector<std::unique_ptr<Scene>> m_ActiveScenes;
+	std::vector<std::unique_ptr<Scene>> m_InactiveScenes;
 };
-
-#endif

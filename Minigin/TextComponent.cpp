@@ -1,12 +1,11 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
 
-#include "implot.h"
 #include "TextComponent.h"
 #include "Renderer.h"
 #include "Font.h"
 #include "Texture.h"
-#include "GameObject.h"
+#include "GameObject.h"	
 
 TextComponent::TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font) :
 	Component{ owner },
@@ -30,12 +29,10 @@ TextComponent::TextComponent(GameObject* owner, const std::string& text, std::sh
 	m_SeperatePosition{ true }
 {
 
-}
+}	
 
-void TextComponent::Update(std::chrono::milliseconds deltaTime)
+void TextComponent::Update()
 {
-	++deltaTime;
-
 	if (m_NeedsUpdate)
 	{
 		const SDL_Color color = { 255,255,255,255 }; // only white text is supported now
@@ -57,9 +54,9 @@ void TextComponent::Update(std::chrono::milliseconds deltaTime)
 
 void TextComponent::Render() const
 {
-	if ((m_Owner != nullptr) and (m_Texture.get() != nullptr))
+	if ((GetOwner() != nullptr) and (m_Texture.get() != nullptr))
 	{
-		auto position{ (m_SeperatePosition) ? m_Position : m_Owner->GetWorldTransform().GetPosition() };
+		auto position{ (m_SeperatePosition) ? m_Position : GetOwner()->GetWorldTransform().GetPosition() };
 		Renderer::GetInstance().RenderTexture(*m_Texture.get(), position.x, position.y);
 	}
 }

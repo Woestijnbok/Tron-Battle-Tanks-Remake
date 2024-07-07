@@ -1,13 +1,10 @@
-#ifndef INPUT_ACTION
-#define INPUT_ACTION
+#pragma once
 
-#include <SDL.h>
+#include <SDL_keycode.h>
 #include <memory>
-#include <Windows.h>
-#include <Xinput.h>
 
-#include "Command.h"
-#include "Component.h"
+class GameObject;
+class Command;
 
 enum class InputTrigger
 {
@@ -32,7 +29,7 @@ public:
 	unsigned int GetXInputButton() const;
 	InputTrigger GetInputTrigger() const;
 	Command* GetCommand() const;
-	std::weak_ptr<GameObject> GetGameObject();
+	std::weak_ptr<GameObject> GetGameObject();	
 
 	bool operator==(const InputAction& rhs) const;
 	bool operator<(const InputAction& rhs) const;
@@ -52,5 +49,3 @@ struct std::hash<InputAction>
 {
 	std::size_t operator()(const InputAction& inputAction) const;
 };
-
-#endif // !INPUT_ACTION

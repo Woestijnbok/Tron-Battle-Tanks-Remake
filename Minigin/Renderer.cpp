@@ -1,8 +1,8 @@
 #include <stdexcept>
+#include <SDL.h>
 
 #include "Renderer.h"
 #include "SceneManager.h"
-#include "GameObject.h"
 #include "Texture.h"
 #include "imgui.h"
 #include "backends/imgui_impl_sdl2.h"

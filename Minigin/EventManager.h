@@ -1,5 +1,4 @@
-#ifndef EVENT_MANAGER
-#define EVENT_MANAGER
+#pragma once
 
 #include <vector>
 #include <string>
@@ -62,5 +61,3 @@ private:
 	std::map<EventType, std::vector<std::function<void(const Event&)>>> m_EventHandlers;
 	std::queue<Event> m_Events;
 };
-
-#endif

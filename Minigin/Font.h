@@ -1,5 +1,4 @@
-#ifndef FONT
-#define FONT
+#pragma once
 
 #include <string>
 
@@ -22,5 +21,3 @@ public:
 private:
 	_TTF_Font* m_Font;
 };
-
-#endif

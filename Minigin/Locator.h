@@ -1,5 +1,4 @@
-#ifndef SERVICE_LOCATER
-#define SERVICE_LOCATER
+#pragma once
 
 #include "Sound.h"
 
@@ -22,5 +21,3 @@ private:
 	static std::unique_ptr<Audio> m_Audio;
 
 };
-
-#endif

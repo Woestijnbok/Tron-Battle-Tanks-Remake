@@ -1,4 +1,5 @@
 #include "Command.h"
+#include "GameObject.h"
 
 GameObjectCommand::GameObjectCommand(GameObject* gameObject) :
 	Command(),

@@ -1,9 +1,9 @@
-#ifndef IMAGE_COMPONENT
-#define IMAGE_COMPONENT
+#pragma once
+
+#include <memory>
 
 #include "Component.h"
 
-class GameObject;
 class Texture;
 
 class ImageComponent final : public Component
@@ -19,12 +19,9 @@ public:
 	ImageComponent& operator= (const ImageComponent&&) = delete;
 
 	virtual void Render() const override;
-
 	const std::shared_ptr<Texture> GetTexture() const;
 
 private:
 
 	std::shared_ptr<Texture> m_Texture;
 };
-
-#endif

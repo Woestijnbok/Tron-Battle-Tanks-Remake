@@ -1,27 +1,26 @@
-#ifndef GAME_OBJECT
-#define GAME_OBJECT
+#pragma once
 
-#include <memory>
-#include <chrono>
 #include <algorithm>
 #include <type_traits>
+#include <memory>
+#include <vector>
 
 #include "Transform.h"
-#include "Scene.h"
+#include "Component.h"
 
-class Component;
-class Texture2D;
+class Scene;
 
 class GameObject final
 {
 public:
 
-	friend GameObject* Scene::CreateGameObject();	
-
+	//friend GameObject* Scene::CreateGameObject(bool active);	
+	explicit GameObject(Scene* scene);
 	~GameObject() = default;
 
-	void Update(std::chrono::milliseconds deltaTime);
+	void Update();
 	void FixedUpdate();
+	void LateUpdate();
 	void Render() const;
 	void SetLocalPosition(float x, float y);
 	const Transform& GetWorldTransform();
@@ -31,6 +30,9 @@ public:
 	void SetParent(GameObject* parent);
 	size_t GetChildCount() const;
 	GameObject* GetChild(size_t index) const;
+	void Destroy();
+	void SetActive(bool active);
+	bool IsMarkedForDestroy() const;
 
 	template<typename Type, typename... Arguments>
 	bool AddComponent(Arguments&&... arguments)	
@@ -93,8 +95,10 @@ private:
 	std::vector<std::unique_ptr<Component>> m_Components;
 	std::vector<GameObject*> m_Children;
 	GameObject* m_Parent;
+	bool m_MarkedForDestroy;
+	Scene * const m_Scene;
 
-	explicit GameObject() = default;	
+	
 
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;
@@ -103,5 +107,3 @@ private:
 
 	void FlagWorldTransform();
 };
-
-#endif

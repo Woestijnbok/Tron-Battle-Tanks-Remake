@@ -1,10 +1,6 @@
-#ifndef COMMAND
-#define COMMAND
+#pragma once
 
-#include <memory>
-
-#include "GameObject.h"
-#include "Component.h"
+class GameObject;
 
 class Command
 {
@@ -17,7 +13,7 @@ public:
 	Command& operator= (const Command&) = delete;
 	Command& operator= (const Command&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const = 0;
+	virtual void Execute() const = 0;
 
 protected:
 	
@@ -38,7 +34,7 @@ public:
 	GameObjectCommand& operator= (const GameObjectCommand&) = delete;
 	GameObjectCommand& operator= (const GameObjectCommand&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override = 0;
+	virtual void Execute() const override = 0;
 	GameObject* GetGameObject();
 
 protected:
@@ -48,5 +44,3 @@ private:
 
 
 };
-
-#endif

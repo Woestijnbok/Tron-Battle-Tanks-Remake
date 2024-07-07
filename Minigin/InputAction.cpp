@@ -1,4 +1,6 @@
 #include "InputAction.h"
+#include "Command.h"
+#include "GameObject.h"
 
 InputAction::InputAction(bool isController, unsigned int button, InputTrigger trigger, Command* command) :
 	m_IsControllerInputAction{ isController },

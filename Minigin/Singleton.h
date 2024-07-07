@@ -1,5 +1,4 @@
-#ifndef SINGLETON
-#define SINGLETON
+#pragma once
 
 template <typename Type>
 class Singleton
@@ -23,5 +22,3 @@ protected:
 
 	Singleton() = default;
 };
-
-#endif

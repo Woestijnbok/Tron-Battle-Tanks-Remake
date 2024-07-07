@@ -1,5 +1,4 @@
-#ifndef RESOURCE_MANAGER
-#define RESOURCE_MANAGER
+#pragma once
 
 #include <string>
 #include <memory>
@@ -8,7 +7,6 @@
 
 class Texture;
 class Font;
-class GameObject;
 
 class ResourceManager final : public Singleton<ResourceManager>
 {
@@ -31,5 +29,3 @@ private:
 
 	friend class Singleton<ResourceManager>;
 };
-
-#endif

@@ -1,6 +1,10 @@
 #include <iostream>
+#include <Windows.h>
+#include <SDL_events.h>
 
 #include "InputManager.h"
+#include "InputMappingContext.h"
+#include "Command.h"
 #include "backends/imgui_impl_sdl2.h"
 
 InputManager::~InputManager()
@@ -11,7 +15,7 @@ InputManager::~InputManager()
 	}
 }
 
-bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
+bool InputManager::ProcessInput()
 {
 	CopyMemory(&m_PreviousXState, &m_CurrentXState, sizeof(XINPUT_STATE));
 	ZeroMemory(&m_CurrentXState, sizeof(XINPUT_STATE));
@@ -43,7 +47,7 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 						(inputAction.GetInputTrigger() == InputTrigger::down) and
 						(!inputAction.IsControllerInputAction()))
 					{
-						inputAction.GetCommand()->Execute(deltaTime);
+						inputAction.GetCommand()->Execute();
 					}
 				}
 			}
@@ -58,7 +62,7 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 						(inputAction.GetInputTrigger() == InputTrigger::up) and
 						(!inputAction.IsControllerInputAction()))
 					{
-						inputAction.GetCommand()->Execute(deltaTime);
+						inputAction.GetCommand()->Execute();
 					}
 				}
 			}
@@ -74,7 +78,7 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 					(inputAction.GetInputTrigger() == InputTrigger::pressed) and
 					(!inputAction.IsControllerInputAction()))
 				{
-					inputAction.GetCommand()->Execute(deltaTime);
+					inputAction.GetCommand()->Execute();
 				}
 			}
 		}
@@ -94,19 +98,19 @@ bool InputManager::ProcessInput(std::chrono::milliseconds deltaTime)
 				case InputTrigger::up:
 					if (buttonsReleasedThisFrame & inputAction.GetXInputButton())
 					{
-						inputAction.GetCommand()->Execute(deltaTime);
+						inputAction.GetCommand()->Execute();
 					}
 					break;
 				case InputTrigger::pressed:
 					if (m_CurrentXState.Gamepad.wButtons & inputAction.GetXInputButton())
 					{
-						inputAction.GetCommand()->Execute(deltaTime);
+						inputAction.GetCommand()->Execute();
 					}
 					break;
 				case InputTrigger::down:
 					if (buttonsPressedThisFrame & inputAction.GetXInputButton())
 					{
-						inputAction.GetCommand()->Execute(deltaTime);
+						inputAction.GetCommand()->Execute();
 					}
 					break;
 				}

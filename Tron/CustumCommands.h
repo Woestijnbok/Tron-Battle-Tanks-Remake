@@ -1,5 +1,4 @@
-#ifndef CUSTOM_COMMANDS
-#define CUSTOM_COMMANDS
+#pragma once
 
 #include "Command.h"
 
@@ -14,7 +13,7 @@ public:
 	TestMusic1& operator= (const TestMusic1&) = delete;
 	TestMusic1& operator= (const TestMusic1&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+	virtual void Execute() const override;
 
 
 private:
@@ -33,7 +32,7 @@ public:
 	TestMusic2& operator= (const TestMusic2&) = delete;
 	TestMusic2& operator= (const TestMusic2&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+	virtual void Execute() const override;
 
 
 private:
@@ -52,7 +51,7 @@ public:
 	TestSoundEffect1& operator= (const TestSoundEffect1&) = delete;
 	TestSoundEffect1& operator= (const TestSoundEffect1&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+	virtual void Execute() const override;
 
 
 private:
@@ -71,7 +70,7 @@ public:
 	TestSoundEffect2& operator= (const TestSoundEffect2&) = delete;
 	TestSoundEffect2& operator= (const TestSoundEffect2&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+	virtual void Execute() const override;
 
 
 private:
@@ -90,7 +89,7 @@ public:
 	StopMusic& operator= (const StopMusic&) = delete;
 	StopMusic& operator= (const StopMusic&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+	virtual void Execute() const override;
 
 
 private:
@@ -109,12 +108,10 @@ public:
 	StopAll& operator= (const StopAll&) = delete;
 	StopAll& operator= (const StopAll&&) = delete;
 
-	virtual void Execute(std::chrono::milliseconds deltaTime) const override;
+	virtual void Execute() const override;
 
 
 private:
 
 
 };
-
-#endif

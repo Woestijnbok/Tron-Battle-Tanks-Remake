@@ -6,7 +6,7 @@ Component::Component(GameObject* owner) :
 	
 }
 
-void Component::Update(std::chrono::milliseconds /*deltaTime*/)
+void Component::Update()
 {
 
 }
@@ -16,7 +16,17 @@ void Component::FixedUpdate()
 
 }
 
+void Component::LateUpdate()
+{
+
+}
+
 void Component::Render() const
 {
 
+}
+
+GameObject* Component::GetOwner() const
+{
+	return m_Owner;
 }
