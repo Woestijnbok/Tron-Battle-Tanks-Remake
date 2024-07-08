@@ -1,16 +1,14 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
+#include <filesystem>
+#include <string>
 
 #include "Font.h"
 
-Font::Font(const std::string& path, unsigned int size) : 
-	m_Font{ nullptr }
+Font::Font(const std::filesystem::path& path, unsigned int size) : 
+	m_Font{ TTF_OpenFont(path.generic_string().c_str(), size) }	
 {
-	m_Font = TTF_OpenFont(path.c_str(), size);
-	if (m_Font == nullptr) 
-	{
-		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
-	}
+	if (m_Font == nullptr) throw std::runtime_error(std::string("Font::Font() - ") + SDL_GetError());	
 }
 
 Font::~Font()

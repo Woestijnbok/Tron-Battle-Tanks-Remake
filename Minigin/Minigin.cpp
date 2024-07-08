@@ -41,7 +41,7 @@ void Minigin::Initialize(const std::string& nameWindow)
 
 	// Initialize engine features
 	Renderer::GetInstance().Init(m_Window);
-	ResourceManager::GetInstance().Init();
+	ResourceManager::GetInstance();
 	Locator::ProvideAudio(new SDLMixerAudio{});
 	SceneManager::GetInstance();
 	InputManager::GetInstance();

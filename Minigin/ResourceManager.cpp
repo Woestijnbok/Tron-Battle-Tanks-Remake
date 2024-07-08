@@ -1,5 +1,4 @@
 #include <stdexcept>
-#include <SDL_image.h>
 #include <SDL_ttf.h>
 
 #include "ResourceManager.h"
@@ -7,29 +6,66 @@
 #include "Texture.h"
 #include "Font.h"
 
-void ResourceManager::Init()
+ResourceManager::ResourceManager() :	
+	Singleton<ResourceManager>{},	
+	m_TextureRootDirectory{ "../Resources/Textures" },	
+	m_FontRootDirectory{ "../Resources/Fonts" }	
 {
-	if (TTF_Init() != 0)
+	// Checking texture root directory
+	if (std::filesystem::exists(m_TextureRootDirectory))
 	{
-		throw std::runtime_error(std::string("Failed to load support for fonts: ") + SDL_GetError());
+		if (!std::filesystem::is_directory(m_TextureRootDirectory))
+		{
+			throw std::runtime_error("ResourceManager::ResourceManager() - texture root directory isn't a directory");
+		}
+	}
+	else throw std::runtime_error("ResourceManager::ResourceManager() - texture root directory doesn't exist");
+
+	// Checking font root directory
+	if (std::filesystem::exists(m_FontRootDirectory))
+	{
+		if (!std::filesystem::is_directory(m_FontRootDirectory))
+		{
+			throw std::runtime_error("ResourceManager::ResourceManager() - texture root directory isn't a directory");
+		}
+	}
+	else throw std::runtime_error("ResourceManager::ResourceManager() - texture root directory doesn't exist");
+
+	// Initializing ttf support
+	if (TTF_Init() == -1)
+	{
+		throw std::runtime_error(std::string("ResourceManager::ResourceManager() - ") + SDL_GetError());
 	}
 }
 
-std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::string& file) const
+std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::filesystem::path& path) const
 {
-	const std::string filePath{ "../Resources/Textures/" + file };
+	const std::filesystem::path fullPath{ m_TextureRootDirectory / path };
 
-	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), filePath.c_str());
-	if (texture == nullptr)
+	if (std::filesystem::exists(fullPath))
 	{
-		throw std::runtime_error(std::string("Failed to load texture: ") + SDL_GetError());
+		if (!std::filesystem::is_regular_file(fullPath))
+		{
+			throw std::runtime_error("ResourceManager::CreateTexture() - path given isn't a regular file");
+		}
 	}
-	return std::make_shared<Texture>(texture);
+	else throw std::runtime_error("ResourceManager::CreateTexture() - path given doesn't exist");
+
+	return std::make_shared<Texture>(fullPath);
 }
 
-std::shared_ptr<Font> ResourceManager::LoadFont(const std::string& file, unsigned int size) const
+std::shared_ptr<Font> ResourceManager::LoadFont(const std::filesystem::path& path, unsigned int size) const	
 {
-	const std::string filePath{ "../Resources/Fonts/" + file };
+	const std::filesystem::path fullPath{ m_FontRootDirectory / path };	
 
-	return std::make_shared<Font>(filePath, size);
+	if (std::filesystem::exists(fullPath))
+	{
+		if (!std::filesystem::is_regular_file(fullPath))
+		{
+			throw std::runtime_error("ResourceManager::CreateFont() - path given isn't a regular file");
+		}
+	}
+	else throw std::runtime_error("ResourceManager::CreateFont() - path given doesn't exist");
+
+	return std::make_shared<Font>(fullPath, size);	
 }

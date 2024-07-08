@@ -2,14 +2,23 @@
 
 #include <vec2.hpp>
 
+namespace std
+{
+	namespace filesystem
+	{
+		class path;
+	}
+}
+
 struct SDL_Texture;
 
 class Texture final
 {
 public:
 
+	explicit Texture(const std::filesystem::path& path);
 	explicit Texture(SDL_Texture* texture);
-	virtual ~Texture();
+	~Texture();
 
 	Texture(const Texture&) = delete;
 	Texture(Texture&&) = delete;
@@ -19,7 +28,7 @@ public:
 	SDL_Texture* GetSDLTexture() const;
 	glm::ivec2 GetSize() const;
 
-protected:
+private:
 
-	SDL_Texture* m_Texture;
+	SDL_Texture* const m_Texture;
 };
