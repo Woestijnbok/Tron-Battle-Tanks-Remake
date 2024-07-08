@@ -2,8 +2,8 @@
 
 Scene::Scene(const std::string& name) : 
 	ControllableObject{},
-	ObjectController{},
-	m_Name{ name }
+	ObjectController<GameObject>{},	
+	m_Name{ name }	
 {
 
 }

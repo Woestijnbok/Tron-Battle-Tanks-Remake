@@ -55,7 +55,7 @@ private:
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::FixedUpdate()
+void ObjectController<ObjectType>::FixedUpdate()
 {
 	m_InitialObjectCount = m_EnabledObjects.size();
 
@@ -71,7 +71,7 @@ inline void ObjectController<ObjectType>::FixedUpdate()
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::Update()
+void ObjectController<ObjectType>::Update()
 {
 	m_InitialObjectCount = m_EnabledObjects.size();
 
@@ -86,7 +86,7 @@ inline void ObjectController<ObjectType>::Update()
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::LateUpdate()
+void ObjectController<ObjectType>::LateUpdate()
 {
 	m_InitialObjectCount = m_EnabledObjects.size();
 
@@ -105,7 +105,7 @@ inline void ObjectController<ObjectType>::LateUpdate()
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::Render() const
+void ObjectController<ObjectType>::Render() const
 {
 	for (const auto& object : m_EnabledObjects)
 	{
@@ -115,7 +115,7 @@ inline void ObjectController<ObjectType>::Render() const
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::AddControllableObject(ObjectType* object)	
+void ObjectController<ObjectType>::AddControllableObject(ObjectType* object)	
 {
 	if (object->GetStatus() == ControllableObject::Status::Enabled)
 	{
@@ -129,14 +129,14 @@ inline void ObjectController<ObjectType>::AddControllableObject(ObjectType* obje
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline ObjectType* ObjectController<ObjectType>::GetControllableObject(const std::function<bool(ObjectType*)>& predicate)
+ObjectType* ObjectController<ObjectType>::GetControllableObject(const std::function<bool(ObjectType*)>& predicate)
 {
 	auto it
 	{ 
 		std::ranges::find_if
 		(
 			m_EnabledObjects, 
-			[](const std::unique_ptr<ObjectType>& object) -> bool 
+			[&predicate](const std::unique_ptr<ObjectType>& object) -> bool 
 			{ 
 				return predicate(object.get());
 			}
@@ -148,7 +148,7 @@ inline ObjectType* ObjectController<ObjectType>::GetControllableObject(const std
 		it = std::ranges::find_if
 		(
 			m_DisabledObjects,
-			[](const std::unique_ptr<ObjectType>& object) -> bool
+			[&predicate](const std::unique_ptr<ObjectType>& object) -> bool
 			{
 				return predicate(object.get());
 			}
@@ -161,7 +161,7 @@ inline ObjectType* ObjectController<ObjectType>::GetControllableObject(const std
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::CheckDestroyedObjects()
+void ObjectController<ObjectType>::CheckDestroyedObjects()
 {
 	m_EnabledObjects.erase
 	(
@@ -184,7 +184,7 @@ inline void ObjectController<ObjectType>::CheckDestroyedObjects()
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::CheckDisabledObjects()
+void ObjectController<ObjectType>::CheckDisabledObjects()
 {
 	auto it = std::remove_if
 	(
@@ -202,7 +202,7 @@ inline void ObjectController<ObjectType>::CheckDisabledObjects()
 
 template<typename ObjectType>
 	requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
-inline void ObjectController<ObjectType>::CheckEnabledObjects()
+void ObjectController<ObjectType>::CheckEnabledObjects()
 {
 	auto it = std::remove_if
 	(

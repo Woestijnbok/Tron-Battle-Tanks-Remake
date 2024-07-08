@@ -6,6 +6,7 @@
 
 GameObject::GameObject(Scene* scene) :
 	ControllableObject{},
+	ObjectController<Component>{},
 	m_LocalTransform{},
 	m_WorldTransform{},
 	m_Components{},
@@ -14,38 +15,6 @@ GameObject::GameObject(Scene* scene) :
 	m_Scene{ scene }
 {
 
-}
-
-void GameObject::Update()
-{
-	for (auto& component : m_Components)
-	{
-		component->Update();
-	}
-}
-
-void GameObject::FixedUpdate()
-{
-	for (auto& component : m_Components)
-	{
-		component->FixedUpdate();
-	}
-}
-
-void GameObject::LateUpdate()
-{
-	for (auto& component : m_Components)
-	{
-		component->LateUpdate();	
-	}
-}
-
-void GameObject::Render() const
-{
-	for (const auto& component : m_Components)
-	{
-		component->Render();
-	}
 }
 
 void GameObject::FlagWorldTransform()
