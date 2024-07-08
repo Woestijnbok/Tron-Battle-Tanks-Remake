@@ -11,7 +11,7 @@ class FPSCounterComponent final : public Component
 public:
 
 	FPSCounterComponent(GameObject* owner);
-	~FPSCounterComponent() = default;
+	~FPSCounterComponent();
 
 	FPSCounterComponent(const FPSCounterComponent&) = delete;
 	FPSCounterComponent(FPSCounterComponent&&) = delete;

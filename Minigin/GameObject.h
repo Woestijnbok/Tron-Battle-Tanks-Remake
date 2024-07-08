@@ -1,20 +1,24 @@
 #pragma once
 
 #include <algorithm>
+#include <concepts>
 #include <type_traits>
 #include <memory>
 #include <vector>
 
 #include "Transform.h"
 #include "Component.h"
+#include "ControllableObject.h"
 
 class Scene;
 
-class GameObject final
+template<typename Type>
+concept IsComponent = std::is_base_of_v<Component, Type>;	
+
+class GameObject final : public ControllableObject
 {
 public:
 
-	//friend GameObject* Scene::CreateGameObject(bool active);	
 	explicit GameObject(Scene* scene);
 	~GameObject() = default;
 
@@ -30,11 +34,10 @@ public:
 	void SetParent(GameObject* parent);
 	size_t GetChildCount() const;
 	GameObject* GetChild(size_t index) const;
-	void Destroy();
-	void SetActive(bool active);
-	bool IsMarkedForDestroy() const;
+
 
 	template<typename Type, typename... Arguments>
+		requires IsComponent<Type>
 	bool AddComponent(Arguments&&... arguments)	
 	{
 		if ((!HasComponent<Type>()) && (std::is_base_of<Component, Type>::value))	
@@ -46,6 +49,7 @@ public:
 	}
 
 	template<typename Type>
+		requires IsComponent<Type>
 	bool RemoveComponent()
 	{
 		auto it = std::ranges::find_if(m_Components, [](const std::unique_ptr<Component> component) -> bool
@@ -63,6 +67,7 @@ public:
 	}
 
 	template<typename Type>
+		requires IsComponent<Type>
 	Type* GetComponent()
 	{
 		auto it = std::ranges::find_if(m_Components, [](const std::unique_ptr<Component> component) -> bool
@@ -76,6 +81,7 @@ public:
 	}
 
 	template<typename Type>
+		requires IsComponent<Type>
 	bool HasComponent()
 	{
 		auto it = std::ranges::find_if(m_Components, [](const std::unique_ptr<Component>& component) -> bool
@@ -95,10 +101,7 @@ private:
 	std::vector<std::unique_ptr<Component>> m_Components;
 	std::vector<GameObject*> m_Children;
 	GameObject* m_Parent;
-	bool m_MarkedForDestroy;
 	Scene * const m_Scene;
-
-	
 
 	GameObject(const GameObject& other) = delete;
 	GameObject(GameObject&& other) = delete;

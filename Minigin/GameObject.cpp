@@ -5,12 +5,12 @@
 #include "Scene.h"
 
 GameObject::GameObject(Scene* scene) :
+	ControllableObject{},
 	m_LocalTransform{},
 	m_WorldTransform{},
 	m_Components{},
 	m_Children{},
 	m_Parent{},
-	m_MarkedForDestroy{},
 	m_Scene{ scene }
 {
 
@@ -147,19 +147,4 @@ size_t GameObject::GetChildCount() const
 GameObject* GameObject::GetChild(size_t index) const 
 {
 	return m_Children.at(index);
-}
-
-void GameObject::Destroy()
-{
-	m_MarkedForDestroy = true;
-}
-
-void GameObject::SetActive(bool active)
-{
-	m_Scene->SetActiveGameObject(this, active);
-}
-
-bool GameObject::IsMarkedForDestroy() const
-{
-	return m_MarkedForDestroy;
 }

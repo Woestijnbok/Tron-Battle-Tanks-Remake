@@ -11,7 +11,12 @@ FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	m_FrameCounter{ 0 }
 {
 
-}	
+}
+
+FPSCounterComponent::~FPSCounterComponent()
+{
+	delete m_TextComponent;
+}
 
 void FPSCounterComponent::Update()
 {

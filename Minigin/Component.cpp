@@ -1,6 +1,7 @@
 #include "Component.h"
 
 Component::Component(GameObject* owner) :
+	ControllableObject{},
 	m_Owner{ owner }
 {
 	

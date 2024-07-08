@@ -1,8 +1,10 @@
 #pragma once
 
+#include "ControllableObject.h"
+
 class GameObject;
 
-class Component
+class Component : public ControllableObject
 {
 public:
 	Component(GameObject* owner);

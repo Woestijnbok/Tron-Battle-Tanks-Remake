@@ -42,7 +42,7 @@
       <Filter>Data Types\Font</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">
-      <Filter>Game Object</Filter>
+      <Filter>Object\Game Object</Filter>
     </ClCompile>
     <ClCompile Include="InputAction.cpp">
       <Filter>Input</Filter>
@@ -88,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
       <Filter>Managers\Time Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ControllableObject.cpp">
+      <Filter>Object\Controllable Object</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectController.cpp">
+      <Filter>Object\Object Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,7 +141,7 @@
       <Filter>Data Types\Font</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Game Object</Filter>
+      <Filter>Object\Game Object</Filter>
     </ClInclude>
     <ClInclude Include="InputAction.h">
       <Filter>Input</Filter>
@@ -185,6 +191,12 @@
     <ClInclude Include="TimeManager.h">
       <Filter>Managers\Time Manager</Filter>
     </ClInclude>
+    <ClInclude Include="ControllableObject.h">
+      <Filter>Object\Controllable Object</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectController.h">
+      <Filter>Object\Object Controller</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
@@ -229,9 +241,6 @@
     <Filter Include="Input">
       <UniqueIdentifier>{70c3c9c4-b4e1-4afa-b846-c4d041b67187}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game Object">
-      <UniqueIdentifier>{d6fc41cc-0f98-4a6d-934a-afbea2d3e5f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Sound">
       <UniqueIdentifier>{a704ffb3-565f-4c84-b502-1c3f4f72d581}</UniqueIdentifier>
     </Filter>
@@ -258,6 +267,18 @@
     </Filter>
     <Filter Include="Managers\Time Manager">
       <UniqueIdentifier>{b1820fdc-37ae-40b4-b92b-9b586ee47517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object">
+      <UniqueIdentifier>{ad83fcc1-e777-4fc2-8fa7-6abaecb756bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Object Controller">
+      <UniqueIdentifier>{af181637-951d-4153-93e8-a2f19f997ce9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Controllable Object">
+      <UniqueIdentifier>{9ffa48d7-c1a6-4425-a5be-bed514e21118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Object\Game Object">
+      <UniqueIdentifier>{d6fc41cc-0f98-4a6d-934a-afbea2d3e5f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
