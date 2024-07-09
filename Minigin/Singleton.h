@@ -1,24 +1,27 @@
 #pragma once
 
-template <typename Type>
-class Singleton
+namespace Minigin
 {
-public:
-
-	virtual ~Singleton() = default;
-
-	Singleton(const Singleton& other) = delete;
-	Singleton(Singleton&& other) = delete;
-	Singleton& operator=(const Singleton& other) = delete;
-	Singleton& operator=(Singleton&& other) = delete;
-
-	static Type& GetInstance()
+	template <typename Type>
+	class Singleton
 	{
-		static Type instance{};
-		return instance;
-	}
+	public:
 
-protected:
+		virtual ~Singleton() = default;
 
-	Singleton() = default;
-};
+		Singleton(const Singleton& other) = delete;
+		Singleton(Singleton&& other) = delete;
+		Singleton& operator=(const Singleton& other) = delete;
+		Singleton& operator=(Singleton&& other) = delete;
+
+		static Type& GetInstance()
+		{
+			static Type instance{};
+			return instance;
+		}
+
+	protected:
+
+		Singleton() = default;
+	};
+}

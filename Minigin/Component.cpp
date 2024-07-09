@@ -1,10 +1,14 @@
+#include <stdexcept>
+
 #include "Component.h"
+
+using namespace Minigin;
 
 Component::Component(GameObject* owner) :
 	ControllableObject{},
 	m_Owner{ owner }
 {
-	
+	if (owner == nullptr) throw std::runtime_error("Owner::Owner() - Invalid owner passed");
 }
 
 void Component::Update()

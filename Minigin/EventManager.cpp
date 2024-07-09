@@ -1,5 +1,7 @@
 #include "EventManager.h"
 
+using namespace Minigin;
+
 Event::Event(EventType type, void* caller) :
 	m_Type{ type },
 	m_NumberArguments{  },

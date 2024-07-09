@@ -1,5 +1,7 @@
 #include "Scene.h"
 
+using namespace Minigin;
+
 Scene::Scene(const std::string& name) : 
 	ControllableObject{},
 	ObjectController<GameObject>{},	

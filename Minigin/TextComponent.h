@@ -5,36 +5,36 @@
 #include <memory>
 
 #include "Component.h"
+#include "Texture.h"
 
-class Font;
-class GameObject;
-class Texture;
-
-class TextComponent final : public Component
+namespace Minigin
 {
-public:
+	class Font;
+	class GameObject;
 
-	TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font);
-	TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font, glm::vec2 position);
-	virtual ~TextComponent() = default;
+	class TextComponent final : public Component
+	{
+	public:
 
-	TextComponent(const TextComponent& other) = delete;
-	TextComponent(TextComponent&& other) = delete;
-	TextComponent& operator=(const TextComponent& other) = delete;
-	TextComponent& operator=(TextComponent&& other) = delete;
+		TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font);
+		virtual ~TextComponent() = default;
 
-	virtual void Update() override;
-	virtual void Render() const override;
+		TextComponent(const TextComponent& other) = delete;
+		TextComponent(TextComponent&& other) = delete;
+		TextComponent& operator=(const TextComponent& other) = delete;
+		TextComponent& operator=(TextComponent&& other) = delete;
 
-	void SetText(const std::string& text);
-	const std::shared_ptr<Texture> GetTexture() const;
+		virtual void Update() override;
+		virtual void Render() const override;
 
-private:
+		void SetText(const std::string& text);
+		std::shared_ptr<Font> GetFont();
 
-	bool m_NeedsUpdate;
-	std::string m_Text;
-	std::shared_ptr<Font> m_Font;
-	std::shared_ptr<Texture> m_Texture;
-	glm::vec2 m_Position;
-	bool m_SeperatePosition;
-};
+	private:
+
+		bool m_NeedsUpdate;
+		std::string m_Text;
+		std::shared_ptr<Font> m_Font;
+		std::unique_ptr<Texture> m_Texture;
+	};
+}

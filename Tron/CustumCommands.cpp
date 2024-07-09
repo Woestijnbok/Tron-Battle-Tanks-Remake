@@ -5,6 +5,8 @@
 #include "GameObject.h"
 #include "Locator.h"
 
+using namespace Minigin;
+
 void TestMusic1::Execute() const
 {
 	Locator::GetAudio()->PlayMusic("test.mp3");

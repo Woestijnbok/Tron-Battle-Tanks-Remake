@@ -4,6 +4,8 @@
 #include "Texture.h"
 #include "Renderer.h"
 
+using namespace Minigin;
+
 Texture::Texture(const std::filesystem::path& path) :
 	m_Texture{ IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), path.generic_string().c_str()) }	
 {
@@ -19,6 +21,11 @@ Texture::Texture(SDL_Texture* texture) :
 Texture::~Texture()
 {
 	SDL_DestroyTexture(m_Texture);
+}
+
+void Texture::Render(float x, float y) const
+{
+	Renderer::GetInstance().RenderTexture(*this, x, y);
 }
 
 SDL_Texture* Texture::GetSDLTexture() const

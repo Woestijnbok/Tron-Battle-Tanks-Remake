@@ -1,5 +1,7 @@
 #include "Transform.h"
 
+using namespace Minigin;
+
 Transform::Transform(glm::vec3 position) :
 	m_Position{ position }
 {

@@ -12,23 +12,27 @@ namespace std
 
 struct SDL_Texture;
 
-class Texture final
+namespace Minigin
 {
-public:
+	class Texture final
+	{
+	public:
 
-	explicit Texture(const std::filesystem::path& path);
-	explicit Texture(SDL_Texture* texture);
-	~Texture();
+		explicit Texture(const std::filesystem::path& path);
+		explicit Texture(SDL_Texture* texture);
+		~Texture();
 
-	Texture(const Texture&) = delete;
-	Texture(Texture&&) = delete;
-	Texture& operator= (const Texture&) = delete;
-	Texture& operator= (const Texture&&) = delete;
+		Texture(const Texture&) = delete;
+		Texture(Texture&&) = delete;
+		Texture& operator= (const Texture&) = delete;
+		Texture& operator= (const Texture&&) = delete;
 
-	SDL_Texture* GetSDLTexture() const;
-	glm::ivec2 GetSize() const;
+		void Render(float x, float y) const;
+		SDL_Texture* GetSDLTexture() const;
+		glm::ivec2 GetSize() const;
 
-private:
+	private:
 
-	SDL_Texture* const m_Texture;
-};
+		SDL_Texture* const m_Texture;
+	};
+}

@@ -4,24 +4,27 @@
 
 #include "Component.h"
 
-class Texture;
-
-class ImageComponent final : public Component
+namespace Minigin
 {
-public:
+	class Texture;
 
-	ImageComponent(GameObject* owner, std::shared_ptr<Texture> texture);
-	virtual ~ImageComponent() = default;
+	class ImageComponent final : public Component
+	{
+	public:
 
-	ImageComponent(const ImageComponent&) = delete;
-	ImageComponent(ImageComponent&&) = delete;
-	ImageComponent& operator= (const ImageComponent&) = delete;
-	ImageComponent& operator= (const ImageComponent&&) = delete;
+		ImageComponent(GameObject* owner, std::shared_ptr<Texture> texture);
+		virtual ~ImageComponent() = default;
 
-	virtual void Render() const override;
-	const std::shared_ptr<Texture> GetTexture() const;
+		ImageComponent(const ImageComponent&) = delete;
+		ImageComponent(ImageComponent&&) = delete;
+		ImageComponent& operator= (const ImageComponent&) = delete;
+		ImageComponent& operator= (const ImageComponent&&) = delete;
 
-private:
+		virtual void Render() const override;
+		const std::shared_ptr<Texture> GetTexture() const;
 
-	std::shared_ptr<Texture> m_Texture;
-};
+	private:
+
+		std::shared_ptr<Texture> m_Texture;
+	};
+}

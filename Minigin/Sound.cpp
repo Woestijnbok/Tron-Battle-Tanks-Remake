@@ -6,6 +6,8 @@
 
 #include "Sound.h"
 
+using namespace Minigin;
+
 SoundRequest::SoundRequest(SoundAction action, SoundType type, const std::string& name) :
 	m_Action{ action },
 	m_Type{ type },

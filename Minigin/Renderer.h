@@ -4,39 +4,43 @@
 
 #include "Singleton.h"
 
-class Texture;
 struct ImGuiContext;
 struct ImPlotContext;
 struct SDL_Renderer;
-struct SDL_Window;		
+struct SDL_Window;	
 
-class Renderer final : public Singleton<Renderer>
+namespace Minigin
 {
-	
-public:
+	class Texture;
 
-	Renderer() = default;
-	~Renderer() = default;
+	class Renderer final : public Singleton<Renderer>
+	{
 
-	Renderer(const Renderer&) = delete;
-	Renderer(Renderer&&) = delete;
-	Renderer& operator= (const Renderer&) = delete;
-	Renderer& operator= (const Renderer&&) = delete;
+	public:
 
-	void Init(SDL_Window* window);
-	void Render() const;
-	void Destroy();
-	void RenderTexture(const Texture& texture, float x, float y) const;
-	void RenderTexture(const Texture& texture, float x, float y, float width, float height) const;
-	SDL_Renderer* GetSDLRenderer() const;
-	const SDL_Color& GetBackgroundColor() const;
-	void SetBackgroundColor(const SDL_Color& color);
+		Renderer() = default;
+		~Renderer() = default;
 
-private:
+		Renderer(const Renderer&) = delete;
+		Renderer(Renderer&&) = delete;
+		Renderer& operator= (const Renderer&) = delete;
+		Renderer& operator= (const Renderer&&) = delete;
 
-	SDL_Renderer* m_Renderer;
-	SDL_Window* m_Window;
-	SDL_Color m_ClearColor;
-	ImGuiContext* m_ImGuiContext;
-	ImPlotContext* m_ImPlotContext;
-};
+		void Init(SDL_Window* window);
+		void Render() const;
+		void Destroy();
+		void RenderTexture(const Texture& texture, float x, float y) const;
+		void RenderTexture(const Texture& texture, float x, float y, float width, float height) const;
+		SDL_Renderer* GetSDLRenderer() const;
+		const SDL_Color& GetBackgroundColor() const;
+		void SetBackgroundColor(const SDL_Color& color);
+
+	private:
+
+		SDL_Renderer* m_Renderer;
+		SDL_Window* m_Window;
+		SDL_Color m_ClearColor;
+		ImGuiContext* m_ImGuiContext;
+		ImPlotContext* m_ImPlotContext;
+	};
+}

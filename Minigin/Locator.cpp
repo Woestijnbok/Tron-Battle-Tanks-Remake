@@ -1,5 +1,7 @@
 #include "Locator.h"
 
+using namespace Minigin;
+
 std::unique_ptr<Audio> Locator::m_Audio{};
 
 void Locator::ProvideAudio(Audio* audio)

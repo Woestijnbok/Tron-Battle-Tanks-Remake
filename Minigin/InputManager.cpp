@@ -7,6 +7,8 @@
 #include "Command.h"
 #include "backends/imgui_impl_sdl2.h"
 
+using namespace Minigin;
+
 InputManager::~InputManager()
 {
 	for (auto& mapping : m_InputMappingContexts)

@@ -6,7 +6,7 @@
 #include <thread>
 #include <iostream>
 
-#include "Minigin.h"
+#include "Engine.h"
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "Renderer.h"
@@ -14,13 +14,15 @@
 #include "EventManager.h"
 #include "Locator.h"
 #include "Sound.h"
-#include "TimeManager.h"	
+#include "TimeManager.h"
 
-SDL_Window* Minigin::m_Window{ nullptr };
-const int Minigin::m_TargetFrameRate{ 60 };
-const std::chrono::milliseconds Minigin::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
+using namespace Minigin;
 
-void Minigin::Initialize(const std::string& nameWindow)
+SDL_Window* Engine::m_Window{ nullptr };
+const int Engine::m_TargetFrameRate{ 60 };
+const std::chrono::milliseconds Engine::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
+
+void Engine::Initialize(const std::string& nameWindow)
 {
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
@@ -50,7 +52,7 @@ void Minigin::Initialize(const std::string& nameWindow)
 	std::cout << "Use the escape key to exit the game." << std::endl;
 }
 
-void Minigin::Run(const std::function<void()>& load)
+void Engine::Run(const std::function<void()>& load)
 {
 	load();
 
@@ -88,7 +90,7 @@ void Minigin::Run(const std::function<void()>& load)
 	}
 }
 
-void Minigin::Destroy()
+void Engine::Destroy()
 {
 	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);

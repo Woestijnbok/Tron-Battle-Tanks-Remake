@@ -5,29 +5,32 @@
 
 #include "Singleton.h"
 
-class Texture;
-class Font;
-
-class ResourceManager final : public Singleton<ResourceManager>
+namespace Minigin
 {
-public:
+	class Texture;
+	class Font;
 
-	~ResourceManager() = default;
+	class ResourceManager final : public Singleton<ResourceManager>
+	{
+	public:
 
-	std::shared_ptr<Texture> LoadTexture(const std::filesystem::path& path) const;
-	std::shared_ptr<Font> LoadFont(const std::filesystem::path& path, unsigned int size) const;
+		~ResourceManager() = default;
 
-private:
+		std::shared_ptr<Texture> LoadTexture(const std::filesystem::path& path) const;
+		std::shared_ptr<Font> LoadFont(const std::filesystem::path& path, unsigned int size) const;
 
-	friend class Singleton<ResourceManager>;
+	private:
 
-	const std::filesystem::path m_TextureRootDirectory;
-	const std::filesystem::path m_FontRootDirectory;
+		friend class Singleton<ResourceManager>;
 
-	ResourceManager();
+		const std::filesystem::path m_TextureRootDirectory;
+		const std::filesystem::path m_FontRootDirectory;
 
-	ResourceManager(const ResourceManager&) = delete;
-	ResourceManager(ResourceManager&&) = delete;
-	ResourceManager& operator= (const ResourceManager&) = delete;
-	ResourceManager& operator= (const ResourceManager&&) = delete;
-};
+		ResourceManager();
+
+		ResourceManager(const ResourceManager&) = delete;
+		ResourceManager(ResourceManager&&) = delete;
+		ResourceManager& operator= (const ResourceManager&) = delete;
+		ResourceManager& operator= (const ResourceManager&&) = delete;
+	};
+}

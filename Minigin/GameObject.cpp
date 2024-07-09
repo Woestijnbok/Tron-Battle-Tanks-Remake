@@ -4,6 +4,8 @@
 #include "Renderer.h"
 #include "Scene.h"
 
+using namespace Minigin;
+
 GameObject::GameObject(Scene* scene) :
 	ControllableObject{},
 	ObjectController<Component>{},

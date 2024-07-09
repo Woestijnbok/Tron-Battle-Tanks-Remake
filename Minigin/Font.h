@@ -10,21 +10,24 @@ namespace std
 
 struct _TTF_Font;
 
-class Font final
+namespace Minigin
 {
-public:
-	
-	explicit Font(const std::filesystem::path& path, unsigned int size);
-	~Font();
+	class Font final
+	{
+	public:
 
-	Font(const Font&) = delete;
-	Font(Font&&) = delete;
-	Font& operator= (const Font&) = delete;
-	Font& operator= (const Font&&) = delete;
+		explicit Font(const std::filesystem::path& path, unsigned int size);
+		~Font();
 
-	_TTF_Font* GetFont() const;
-	
-private:
+		Font(const Font&) = delete;
+		Font(Font&&) = delete;
+		Font& operator= (const Font&) = delete;
+		Font& operator= (const Font&&) = delete;
 
-	_TTF_Font * const m_Font;
-};
+		_TTF_Font* GetSDLFont() const;
+
+	private:
+
+		_TTF_Font* const m_Font;
+	};
+}

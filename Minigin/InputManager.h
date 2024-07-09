@@ -5,26 +5,29 @@
 
 #include "Singleton.h"
 
-class InputMappingContext;
-class GameObject;
-
-class InputManager final : public Singleton<InputManager>
+namespace Minigin
 {
-public:
-	InputManager() = default;
-	~InputManager();
+	class InputMappingContext;
+	class GameObject;
 
-	InputManager(const InputManager&) = delete;
-	InputManager(InputManager&&) = delete;
-	InputManager& operator= (const InputManager&) = delete;
-	InputManager& operator= (const InputManager&&) = delete;
+	class InputManager final : public Singleton<InputManager>
+	{
+	public:
+		InputManager() = default;
+		~InputManager();
 
-	bool ProcessInput();
-	void AddInputMappingContext(GameObject* gameObject);
-	InputMappingContext* GetInputMappingContext(GameObject* gameObject);
+		InputManager(const InputManager&) = delete;
+		InputManager(InputManager&&) = delete;
+		InputManager& operator= (const InputManager&) = delete;
+		InputManager& operator= (const InputManager&&) = delete;
 
-private:
-	std::unordered_map<GameObject*, InputMappingContext*> m_InputMappingContexts;
-	XINPUT_STATE m_PreviousXState;
-	XINPUT_STATE m_CurrentXState;
-};
+		bool ProcessInput();
+		void AddInputMappingContext(GameObject* gameObject);
+		InputMappingContext* GetInputMappingContext(GameObject* gameObject);
+
+	private:
+		std::unordered_map<GameObject*, InputMappingContext*> m_InputMappingContexts;
+		XINPUT_STATE m_PreviousXState;
+		XINPUT_STATE m_CurrentXState;
+	};
+}

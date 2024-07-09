@@ -2,7 +2,7 @@
 
 #include "Command.h"
 
-class TestMusic1 final : public Command
+class TestMusic1 final : public Minigin::Command
 {
 public:
 	TestMusic1() = default;
@@ -21,7 +21,7 @@ private:
 
 };
 
-class TestMusic2 final : public Command
+class TestMusic2 final : public Minigin::Command
 {
 public:
 	TestMusic2() = default;
@@ -40,7 +40,7 @@ private:
 
 };
 
-class TestSoundEffect1 final : public Command
+class TestSoundEffect1 final : public Minigin::Command
 {
 public:
 	TestSoundEffect1() = default;
@@ -59,7 +59,7 @@ private:
 
 };
 
-class TestSoundEffect2 final : public Command
+class TestSoundEffect2 final : public Minigin::Command
 {
 public:
 	TestSoundEffect2() = default;
@@ -78,7 +78,7 @@ private:
 
 };
 
-class StopMusic final : public Command
+class StopMusic final : public Minigin::Command
 {
 public:
 	StopMusic() = default;
@@ -97,7 +97,7 @@ private:
 
 };
 
-class StopAll final : public Command
+class StopAll final : public Minigin::Command
 {
 public:
 	StopAll() = default;

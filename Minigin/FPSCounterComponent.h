@@ -1,31 +1,35 @@
 #pragma once
 
 #include <chrono>
+#include <memory>
 
 #include "Component.h"
 
-class TextComponent;
-
-class FPSCounterComponent final : public Component
+namespace Minigin
 {
-public:
+	class TextComponent;
 
-	FPSCounterComponent(GameObject* owner);
-	~FPSCounterComponent();
+	class FPSCounterComponent final : public Component
+	{
+	public:
 
-	FPSCounterComponent(const FPSCounterComponent&) = delete;
-	FPSCounterComponent(FPSCounterComponent&&) = delete;
-	FPSCounterComponent& operator= (const FPSCounterComponent&) = delete;
-	FPSCounterComponent& operator= (const FPSCounterComponent&&) = delete;
+		FPSCounterComponent(GameObject* owner);
+		~FPSCounterComponent() = default;
 
-	virtual void Update() override;
-	virtual void Render() const override;
+		FPSCounterComponent(const FPSCounterComponent&) = delete;
+		FPSCounterComponent(FPSCounterComponent&&) = delete;
+		FPSCounterComponent& operator= (const FPSCounterComponent&) = delete;
+		FPSCounterComponent& operator= (const FPSCounterComponent&&) = delete;
 
-	TextComponent* GetTextComponent() const;
+		virtual void Update() override;
+		virtual void Render() const override;
 
-private:
+		TextComponent* GetTextComponent() const;
 
-	TextComponent* m_TextComponent;
-	std::chrono::steady_clock::time_point m_LastTimePoint;
-	unsigned int m_FrameCounter;
-};
+	private:
+
+		std::unique_ptr<TextComponent> m_TextComponent;
+		std::chrono::steady_clock::time_point m_LastTimePoint;
+		unsigned int m_FrameCounter;
+	};
+}

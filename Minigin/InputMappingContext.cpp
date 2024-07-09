@@ -1,5 +1,7 @@
 #include "InputMappingContext.h"
 
+using namespace Minigin;
+
 InputMappingContext::InputMappingContext(GameObject* gameObject) :
 	m_GameObject{  gameObject },
 	m_LinkedToGameObjet{ gameObject != nullptr },

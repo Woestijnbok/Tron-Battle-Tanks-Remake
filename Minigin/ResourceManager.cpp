@@ -6,6 +6,8 @@
 #include "Texture.h"
 #include "Font.h"
 
+using namespace Minigin;
+
 ResourceManager::ResourceManager() :	
 	Singleton<ResourceManager>{},	
 	m_TextureRootDirectory{ "../Resources/Textures" },	

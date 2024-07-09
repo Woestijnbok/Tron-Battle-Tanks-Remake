@@ -1,46 +1,49 @@
 #pragma once
 
-class GameObject;
-
-class Command
+namespace Minigin
 {
-public:
-	Command() = default;
-	virtual ~Command() = default;
+	class GameObject;
 
-	Command(const Command&) = delete;
-	Command(Command&&) = delete;
-	Command& operator= (const Command&) = delete;
-	Command& operator= (const Command&&) = delete;
+	class Command
+	{
+	public:
+		Command() = default;
+		virtual ~Command() = default;
 
-	virtual void Execute() const = 0;
+		Command(const Command&) = delete;
+		Command(Command&&) = delete;
+		Command& operator= (const Command&) = delete;
+		Command& operator= (const Command&&) = delete;
 
-protected:
-	
+		virtual void Execute() const = 0;
 
-private:
-
-
-};
-
-class GameObjectCommand : public Command
-{
-public:
-	GameObjectCommand(GameObject* gameObject);
-	virtual ~GameObjectCommand() = default;
-
-	GameObjectCommand(const GameObjectCommand&) = delete;
-	GameObjectCommand(GameObjectCommand&&) = delete;
-	GameObjectCommand& operator= (const GameObjectCommand&) = delete;
-	GameObjectCommand& operator= (const GameObjectCommand&&) = delete;
-
-	virtual void Execute() const override = 0;
-	GameObject* GetGameObject();
-
-protected:
-	GameObject* m_GameObject;
-
-private:
+	protected:
 
 
-};
+	private:
+
+
+	};
+
+	class GameObjectCommand : public Command
+	{
+	public:
+		GameObjectCommand(GameObject* gameObject);
+		virtual ~GameObjectCommand() = default;
+
+		GameObjectCommand(const GameObjectCommand&) = delete;
+		GameObjectCommand(GameObjectCommand&&) = delete;
+		GameObjectCommand& operator= (const GameObjectCommand&) = delete;
+		GameObjectCommand& operator= (const GameObjectCommand&&) = delete;
+
+		virtual void Execute() const override = 0;
+		GameObject* GetGameObject();
+
+	protected:
+		GameObject* m_GameObject;
+
+	private:
+
+
+	};
+}

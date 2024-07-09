@@ -4,18 +4,15 @@
 #include "ResourceManager.h"
 #include "TextComponent.h"
 
+using namespace Minigin;
+
 FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	Component{ owner },
-	m_TextComponent{ new TextComponent{ owner, "0.0 FPS", ResourceManager::GetInstance().LoadFont("Lingua.otf", 36) } },
+	m_TextComponent{ std::make_unique<TextComponent>(owner, "0.0 FPS", ResourceManager::GetInstance().LoadFont("Lingua.otf", 36)) },
 	m_LastTimePoint{ std::chrono::high_resolution_clock::now() },
 	m_FrameCounter{ 0 }
 {
-
-}
-
-FPSCounterComponent::~FPSCounterComponent()
-{
-	delete m_TextComponent;
+	
 }
 
 void FPSCounterComponent::Update()
@@ -29,11 +26,11 @@ void FPSCounterComponent::Update()
 		stream << m_FrameCounter << " FPS";
 		m_TextComponent->SetText(stream.str());
 
-		m_TextComponent->Update();
-
 		m_FrameCounter = 0;
 		m_LastTimePoint = std::chrono::high_resolution_clock::now();	
 	}
+
+	m_TextComponent->Update();
 }
 
 void FPSCounterComponent::Render() const
@@ -43,5 +40,5 @@ void FPSCounterComponent::Render() const
 
 TextComponent* FPSCounterComponent::GetTextComponent() const
 {
-	return m_TextComponent;
+	return m_TextComponent.get();
 }

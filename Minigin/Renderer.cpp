@@ -9,6 +9,8 @@
 #include "backends/imgui_impl_sdlrenderer2.h"
 #include "implot.h"
 
+using namespace Minigin;
+
 int GetOpenGLDriverIndex()
 {
 	auto openglIndex = -1;

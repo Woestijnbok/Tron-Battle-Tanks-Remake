@@ -2,6 +2,8 @@
 #include "Command.h"
 #include "GameObject.h"
 
+using namespace Minigin;
+
 InputAction::InputAction(bool isController, unsigned int button, InputTrigger trigger, Command* command) :
 	m_IsControllerInputAction{ isController },
 	m_Button{ button },

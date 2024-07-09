@@ -2,29 +2,32 @@
 
 #include "ControllableObject.h"
 
-class GameObject;
-
-class Component : public ControllableObject
+namespace Minigin
 {
-public:
-	Component(GameObject* owner);
-	virtual ~Component() = default;
+	class GameObject;
 
-	Component(const Component& other) = delete;
-	Component(Component&& other) = delete;
-	Component& operator=(const Component& other) = delete;
-	Component& operator=(Component&& other) = delete;
+	class Component : public ControllableObject
+	{
+	public:
+		Component(GameObject* owner);
+		virtual ~Component() = default;
 
-	virtual void Update();
-	virtual void FixedUpdate();
-	virtual void LateUpdate();
-	virtual void Render() const;
+		Component(const Component& other) = delete;
+		Component(Component&& other) = delete;
+		Component& operator=(const Component& other) = delete;
+		Component& operator=(Component&& other) = delete;
 
-protected:
+		virtual void Update();
+		virtual void FixedUpdate();
+		virtual void LateUpdate();
+		virtual void Render() const;
 
-	GameObject* GetOwner() const;
+	protected:
 
-private:
+		GameObject* GetOwner() const;
 
-	GameObject * const m_Owner;
-};
+	private:
+
+		GameObject* const m_Owner;
+	};
+}

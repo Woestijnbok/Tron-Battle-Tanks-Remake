@@ -6,22 +6,25 @@
 #include "Scene.h"
 #include "ObjectController.h"	
 
-class SceneManager final : public Singleton<SceneManager>, public ObjectController<Scene>					
+namespace Minigin
 {
-public:
+	class SceneManager final : public Singleton<SceneManager>, public ObjectController<Scene>
+	{
+	public:
 
-	~SceneManager() = default;
+		~SceneManager() = default;
 
-	Scene* CreateScene(const std::string& name, bool enabled = true);
+		Scene* CreateScene(const std::string& name, bool enabled = true);
 
-private:
-	friend class Singleton<SceneManager>;	
+	private:
+		friend class Singleton<SceneManager>;
 
-	SceneManager() = default;
+		SceneManager() = default;
 
-	SceneManager(const SceneManager&) = delete;
-	SceneManager(SceneManager&&) = delete;
-	SceneManager& operator= (const SceneManager&) = delete;
-	SceneManager& operator= (const SceneManager&&) = delete;
+		SceneManager(const SceneManager&) = delete;
+		SceneManager(SceneManager&&) = delete;
+		SceneManager& operator= (const SceneManager&) = delete;
+		SceneManager& operator= (const SceneManager&&) = delete;
 
-};
+	};
+}

@@ -5,6 +5,8 @@
 
 #include "Font.h"
 
+using namespace Minigin;
+
 Font::Font(const std::filesystem::path& path, unsigned int size) : 
 	m_Font{ TTF_OpenFont(path.generic_string().c_str(), size) }	
 {
@@ -16,7 +18,7 @@ Font::~Font()
 	TTF_CloseFont(m_Font);
 }
 
-TTF_Font* Font::GetFont() const
+TTF_Font* Font::GetSDLFont() const
 {
 	return m_Font;
 }
