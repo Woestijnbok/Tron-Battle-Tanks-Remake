@@ -2,32 +2,32 @@
 
 using namespace Minigin;
 
-Transform::Transform(glm::vec3 position) :
+Transform::Transform(glm::vec2 position) noexcept :
 	m_Position{ position }
 {
 
 }
 
-Transform::Transform(const Transform& rhs) :
+Transform::Transform(const Transform& rhs) noexcept :
 	m_Position{ rhs.m_Position }
 {
 
 }
 
-Transform::Transform(Transform&& rhs) :
+Transform::Transform(Transform&& rhs) noexcept :
 	m_Position{ rhs.m_Position }
 {
 
 }
 
-Transform& Transform::operator=(const Transform& rhs)
+Transform& Transform::operator=(const Transform& rhs) noexcept
 {
 	m_Position = rhs.m_Position;
 
 	return *this;
 }
 
-Transform& Transform::operator=(const Transform&& rhs)
+Transform& Transform::operator=(const Transform&& rhs) noexcept
 {
 	m_Position = rhs.m_Position;
 
@@ -35,21 +35,22 @@ Transform& Transform::operator=(const Transform&& rhs)
 }
 
 
-const glm::vec3& Transform::GetPosition() const
+const glm::vec2& Transform::GetPosition() const
 {
 	return m_Position; 
 }
 
-void Transform::SetPosition(const float x, const float y, const float z)
+void Transform::SetPosition(const glm::vec2& position)
 {
-	m_Position.x = x;
-	m_Position.y = y;
-	m_Position.z = z;
+	m_Position = position;
 }
 
 Transform Transform::operator+(const Transform& rhs) const
 {
-	glm::vec3 position{ this->m_Position + rhs.m_Position };
+	return Transform{ m_Position + rhs.m_Position };
+}
 
-	return Transform{ position };
+Transform Minigin::Transform::operator-(const Transform& rhs) const
+{
+	return Transform{ m_Position - rhs.m_Position };
 }

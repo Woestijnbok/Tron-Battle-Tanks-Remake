@@ -24,12 +24,12 @@ namespace Minigin
 		explicit GameObject(Scene* scene);
 		~GameObject() = default;
 
-		void SetLocalPosition(float x, float y);
+		void SetLocalPosition(const glm::vec2& position);
 		const Transform& GetWorldTransform();
 		const Transform& GetLocalTransform() const;
 		void SetLocalTransform(const Transform& transform);
 		GameObject* GetParent() const;
-		void SetParent(GameObject* parent);
+		void SetParent(GameObject* parent, bool keepWorldTransform = true);
 		size_t GetChildCount() const;
 		GameObject* GetChild(size_t index) const;
 

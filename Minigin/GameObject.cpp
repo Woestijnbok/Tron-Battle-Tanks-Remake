@@ -22,7 +22,6 @@ GameObject::GameObject(Scene* scene) :
 void GameObject::FlagWorldTransform()
 {
 	m_WorldTransform.first = false;
-
 	for (GameObject* child : m_Children) child->FlagWorldTransform();
 }
 
@@ -56,9 +55,9 @@ void GameObject::SetLocalTransform(const Transform& transform)
 	FlagWorldTransform();
 }
 
-void GameObject::SetLocalPosition(float x, float y)
+void GameObject::SetLocalPosition(const glm::vec2& position)
 {
-	m_LocalTransform.SetPosition(x, y, 0.0f);
+	m_LocalTransform.SetPosition(position);
 	FlagWorldTransform();
 }
 
@@ -67,7 +66,7 @@ GameObject* GameObject::GetParent() const
 	return m_Parent;
 }
 
-void GameObject::SetParent(GameObject* parent)
+void GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 {
 	// Check if the new parent is valid
 	if ((m_Parent != parent) and 
@@ -97,11 +96,11 @@ void GameObject::SetParent(GameObject* parent)
 		// Fix our world and local position
 		if (parent == nullptr)
 		{
-			SetLocalTransform(GetWorldTransform());
+			if (keepWorldTransform) SetLocalTransform(GetWorldTransform());
 		}
 		else
 		{
-			FlagWorldTransform();
+			if(keepWorldTransform) SetLocalTransform(GetWorldTransform() - m_Parent->GetWorldTransform());
 		}
 	}
 	else

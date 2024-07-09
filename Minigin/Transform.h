@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vec3.hpp>	
+#include <vec2.hpp>	
 
 namespace Minigin
 {
@@ -8,22 +8,23 @@ namespace Minigin
 	{
 	public:
 
-		Transform() = default;
-		Transform(glm::vec3 position);
+		Transform() noexcept = default;
+		Transform(glm::vec2 position) noexcept;
 		~Transform() = default;
 
-		Transform(const Transform& rhs);
-		Transform(Transform&& rhs);
-		Transform& operator=(const Transform& rhs);
-		Transform& operator=(const Transform&& rhs);
+		Transform(const Transform& rhs) noexcept;
+		Transform(Transform&& rhs) noexcept;
+		Transform& operator=(const Transform& rhs) noexcept;
+		Transform& operator=(const Transform&& rhs) noexcept;
 
 		Transform operator+(const Transform& rhs) const;
+		Transform operator-(const Transform& rhs) const;
 
-		const glm::vec3& GetPosition() const;
-		void SetPosition(float x, float y, float z);
+		const glm::vec2& GetPosition() const;
+		void SetPosition(const glm::vec2& position);
 
 	private:
 
-		glm::vec3 m_Position;
+		glm::vec2 m_Position;
 	};
 }
