@@ -44,12 +44,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Object\Game Object</Filter>
     </ClCompile>
-    <ClCompile Include="InputAction.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
-    <ClCompile Include="InputMappingContext.cpp">
-      <Filter>Input</Filter>
-    </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
       <Filter>Managers\Resource Manager</Filter>
     </ClCompile>
@@ -94,6 +88,15 @@
     </ClCompile>
     <ClCompile Include="ObjectController.cpp">
       <Filter>Object\Object Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Input\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="InputAction.cpp">
+      <Filter>Input\Input Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Input\Keyboard</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,12 +146,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Object\Game Object</Filter>
     </ClInclude>
-    <ClInclude Include="InputAction.h">
-      <Filter>Input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputMappingContext.h">
-      <Filter>Input</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Managers\Resource Manager</Filter>
     </ClInclude>
@@ -196,6 +193,15 @@
     </ClInclude>
     <ClInclude Include="ObjectController.h">
       <Filter>Object\Object Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Input\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="InputAction.h">
+      <Filter>Input\Input Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Input\Keyboard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +285,15 @@
     </Filter>
     <Filter Include="Object\Game Object">
       <UniqueIdentifier>{d6fc41cc-0f98-4a6d-934a-afbea2d3e5f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Controller">
+      <UniqueIdentifier>{14875f8e-a131-46c9-86dd-9d3a6626cda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Input Action">
+      <UniqueIdentifier>{95532b77-fdf5-40b3-84ec-d29d0e91e82c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Keyboard">
+      <UniqueIdentifier>{869464e2-769d-4e4b-9498-5d611fba8d01}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

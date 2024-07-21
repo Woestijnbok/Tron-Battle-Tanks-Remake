@@ -1,138 +1,42 @@
-#include <iostream>
-#include <Windows.h>
-#include <SDL_events.h>
-
 #include "InputManager.h"
-#include "InputMappingContext.h"
-#include "Command.h"
-#include "backends/imgui_impl_sdl2.h"
 
 using namespace Minigin;
 
-InputManager::~InputManager()
+
+InputManager::InputManager() :		
+	m_Keyboard{},
+	m_Controllers{}	
 {
-	for (auto& mapping : m_InputMappingContexts)
-	{
-		delete mapping.second;
-	}
+
 }
+
+InputManager::~InputManager() = default;
 
 bool InputManager::ProcessInput()
 {
-	CopyMemory(&m_PreviousXState, &m_CurrentXState, sizeof(XINPUT_STATE));
-	ZeroMemory(&m_CurrentXState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentXState);
-
-	auto buttonChanges{ m_CurrentXState.Gamepad.wButtons ^ m_PreviousXState.Gamepad.wButtons };
-	auto buttonsPressedThisFrame{ buttonChanges & m_CurrentXState.Gamepad.wButtons };
-	auto buttonsReleasedThisFrame{ buttonChanges & (~m_CurrentXState.Gamepad.wButtons) };
-
-	SDL_Event event{};
-
-	while (SDL_PollEvent(&event)) 
+	if (m_Keyboard.ProcessInput()) return true;
+	else
 	{
-		if (event.type == SDL_QUIT) 
+		for (Controller& controller : m_Controllers)
 		{
-			return true;
-		}
-		if (event.type == SDL_KEYDOWN)
-		{
-			if (event.key.keysym.sym == SDLK_ESCAPE)
-			{
-				return true;
-			}
-			for (auto& mapping : m_InputMappingContexts)
-			{
-				for (const auto& inputAction : mapping.second->GetInputActions())
-				{
-					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and 
-						(inputAction.GetInputTrigger() == InputTrigger::down) and
-						(!inputAction.IsControllerInputAction()))
-					{
-						inputAction.GetCommand()->Execute();
-					}
-				}
-			}
-		}
-		if (event.type == SDL_KEYUP)
-		{
-			for (auto& mapping : m_InputMappingContexts)
-			{
-				for (const auto& inputAction : mapping.second->GetInputActions())
-				{
-					if ((event.key.keysym.sym == inputAction.GetSDLKeyCode()) and 
-						(inputAction.GetInputTrigger() == InputTrigger::up) and
-						(!inputAction.IsControllerInputAction()))
-					{
-						inputAction.GetCommand()->Execute();
-					}
-				}
-			}
+			controller.ProcessInput();	
 		}
 
-		const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-
-		for (auto& mapping : m_InputMappingContexts)
-		{
-			for (const auto& inputAction : mapping.second->GetInputActions())
-			{
-				if ((keyboardState[SDL_GetScancodeFromKey(inputAction.GetSDLKeyCode())]) and 
-					(inputAction.GetInputTrigger() == InputTrigger::pressed) and
-					(!inputAction.IsControllerInputAction()))
-				{
-					inputAction.GetCommand()->Execute();
-				}
-			}
-		}
-
-		ImGui_ImplSDL2_ProcessEvent(&event);
-		
+		return false;
 	}
-
-	for (auto& mapping : m_InputMappingContexts)
-	{
-		for (const auto& inputAction : mapping.second->GetInputActions())
-		{
-			if (inputAction.IsControllerInputAction())
-			{
-				switch (inputAction.GetInputTrigger())
-				{
-				case InputTrigger::up:
-					if (buttonsReleasedThisFrame & inputAction.GetXInputButton())
-					{
-						inputAction.GetCommand()->Execute();
-					}
-					break;
-				case InputTrigger::pressed:
-					if (m_CurrentXState.Gamepad.wButtons & inputAction.GetXInputButton())
-					{
-						inputAction.GetCommand()->Execute();
-					}
-					break;
-				case InputTrigger::down:
-					if (buttonsPressedThisFrame & inputAction.GetXInputButton())
-					{
-						inputAction.GetCommand()->Execute();
-					}
-					break;
-				}
-			}
-		}
-	}
-
-	SDL_CONTROLLER_BUTTON_A;
-
-	return false;
 }
 
-void InputManager::AddInputMappingContext(GameObject* gameObject)
+void Minigin::InputManager::AddController()
 {
-	m_InputMappingContexts.emplace(std::make_pair(gameObject, new InputMappingContext{ gameObject }));
-
-	gameObject;
+	m_Controllers.emplace_back(static_cast<unsigned int>(m_Controllers.size()));
 }
 
-InputMappingContext* InputManager::GetInputMappingContext(GameObject* gameObject)
+Keyboard& Minigin::InputManager::GetKeyboard()
 {
-	return m_InputMappingContexts[gameObject];
+	return m_Keyboard;
+}
+
+Controller& Minigin::InputManager::GetController(unsigned int index)
+{
+	return m_Controllers.at(static_cast<size_t>(index));	
 }

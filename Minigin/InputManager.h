@@ -1,33 +1,32 @@
 #pragma once
 
-#include <unordered_map>
-#include <Xinput.h>
+#include <vector>
 
 #include "Singleton.h"
+#include "Keyboard.h"
+#include "Controller.h"
 
 namespace Minigin
 {
-	class InputMappingContext;
-	class GameObject;
-
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		InputManager() = default;
+		InputManager();
 		~InputManager();
 
 		InputManager(const InputManager&) = delete;
-		InputManager(InputManager&&) = delete;
+		InputManager(InputManager&&) noexcept = delete;
 		InputManager& operator= (const InputManager&) = delete;
-		InputManager& operator= (const InputManager&&) = delete;
+		InputManager& operator= (const InputManager&&) noexcept = delete;
 
 		bool ProcessInput();
-		void AddInputMappingContext(GameObject* gameObject);
-		InputMappingContext* GetInputMappingContext(GameObject* gameObject);
+		void AddController();
+		Keyboard& GetKeyboard();
+		Controller& GetController(unsigned int index);
 
 	private:
-		std::unordered_map<GameObject*, InputMappingContext*> m_InputMappingContexts;
-		XINPUT_STATE m_PreviousXState;
-		XINPUT_STATE m_CurrentXState;
+		Keyboard m_Keyboard;
+		std::vector<Controller> m_Controllers;
+
 	};
 }

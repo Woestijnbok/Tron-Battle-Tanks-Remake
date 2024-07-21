@@ -40,10 +40,10 @@ namespace Minigin
 		GameObject* GetGameObject();
 
 	protected:
-		GameObject* m_GameObject;
+
 
 	private:
-
+		GameObject* m_GameObject;
 
 	};
 }

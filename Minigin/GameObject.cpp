@@ -84,9 +84,6 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 			}
 		}
 
-		// Set the given parent
-		m_Parent = parent;
-
 		// Add itself as a child to the given parent
 		if (parent != nullptr)
 		{
@@ -100,8 +97,11 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 		}
 		else
 		{
-			if(keepWorldTransform) SetLocalTransform(GetWorldTransform() - m_Parent->GetWorldTransform());
+			if(keepWorldTransform) SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());
 		}
+
+		// Set the given parent
+		m_Parent = parent;
 	}
 	else
 	{
