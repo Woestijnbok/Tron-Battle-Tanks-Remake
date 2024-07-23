@@ -26,13 +26,13 @@ namespace Minigin
 	class Audio
 	{
 	public:
-		Audio() = default;
+		explicit Audio() = default;
 		virtual ~Audio() = default;
 
 		Audio(const Audio&) = delete;
-		Audio(Audio&&) = delete;
+		Audio(Audio&&) noexcept = delete;
 		Audio& operator= (const Audio&) = delete;
-		Audio& operator= (const Audio&&) = delete;
+		Audio& operator= (const Audio&&) noexcept = delete;
 
 		virtual void Update() = 0;
 		virtual void PlayMusic(const std::string& name) = 0;
@@ -50,13 +50,13 @@ namespace Minigin
 	class SoundRequest final
 	{
 	public:
-		SoundRequest(SoundAction action, SoundType type, const std::string& name);
+		explicit SoundRequest(SoundAction action, SoundType type, const std::string& name);
 		virtual ~SoundRequest() = default;
 
 		SoundRequest(const SoundRequest&) = default;
-		SoundRequest(SoundRequest&&) = default;
+		SoundRequest(SoundRequest&&) noexcept = default;
 		SoundRequest& operator= (const SoundRequest&) = delete;
-		SoundRequest& operator= (const SoundRequest&&) = delete;
+		SoundRequest& operator= (const SoundRequest&&) noexcept = delete;
 
 		SoundAction GetSoundAction() const;
 		SoundType GetSoundType() const;
@@ -72,13 +72,13 @@ namespace Minigin
 	class SDLMixerAudio final : public Audio
 	{
 	public:
-		SDLMixerAudio();
+		explicit SDLMixerAudio();
 		virtual ~SDLMixerAudio();
 
 		SDLMixerAudio(const SDLMixerAudio&) = delete;
-		SDLMixerAudio(SDLMixerAudio&&) = delete;
+		SDLMixerAudio(SDLMixerAudio&&) noexcept = delete;
 		SDLMixerAudio& operator= (const SDLMixerAudio&) = delete;
-		SDLMixerAudio& operator= (const SDLMixerAudio&&) = delete;
+		SDLMixerAudio& operator= (const SDLMixerAudio&&) noexcept = delete;
 
 		virtual void Update() override;
 		virtual void PlayMusic(const std::string& name) override;

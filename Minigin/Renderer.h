@@ -1,46 +1,39 @@
 #pragma once
 
-#include <SDL_pixels.h>
+#include <memory>
+#include <filesystem>
 
 #include "Singleton.h"
 
-struct ImGuiContext;
-struct ImPlotContext;
-struct SDL_Renderer;
-struct SDL_Window;	
-
 namespace Minigin
 {
-	class Texture;
+	class Texture;					
+	class Font;
+	class Transform;
 
 	class Renderer final : public Singleton<Renderer>
 	{
-
 	public:
+		friend class Singleton<Renderer>;
 
-		Renderer() = default;
-		~Renderer() = default;
+		~Renderer();
 
 		Renderer(const Renderer&) = delete;
-		Renderer(Renderer&&) = delete;
+		Renderer(Renderer&&) noexcept = delete;
 		Renderer& operator= (const Renderer&) = delete;
-		Renderer& operator= (const Renderer&&) = delete;
+		Renderer& operator= (const Renderer&&) noexcept = delete;
 
-		void Init(SDL_Window* window);
 		void Render() const;
 		void Destroy();
-		void RenderTexture(const Texture& texture, float x, float y) const;
-		void RenderTexture(const Texture& texture, float x, float y, float width, float height) const;
-		SDL_Renderer* GetSDLRenderer() const;
-		const SDL_Color& GetBackgroundColor() const;
-		void SetBackgroundColor(const SDL_Color& color);
+		Texture* CreateTexture(const std::filesystem::path& path) const;
+		Texture* CreateTexture(Font* font, const std::string& text) const;	
+		void RenderTexture(const Texture& texture, const Transform& transform) const;
 
 	private:
+		class Impl;
+		std::unique_ptr<Impl> m_Pimpl;	
 
-		SDL_Renderer* m_Renderer;
-		SDL_Window* m_Window;
-		SDL_Color m_ClearColor;
-		ImGuiContext* m_ImGuiContext;
-		ImPlotContext* m_ImPlotContext;
+		explicit Renderer();
+
 	};
 }

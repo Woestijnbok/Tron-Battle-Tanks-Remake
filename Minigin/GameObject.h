@@ -20,9 +20,13 @@ namespace Minigin
 	class GameObject final : public ControllableObject, public ObjectController<Component>
 	{
 	public:
-
 		explicit GameObject(Scene* scene);
 		~GameObject() = default;
+
+		GameObject(const GameObject& other) = delete;	
+		GameObject(GameObject&& other) noexcept = delete;	
+		GameObject& operator=(const GameObject& other) = delete;	
+		GameObject& operator=(GameObject&& other) noexcept = delete;	
 
 		void SetLocalPosition(const glm::vec2& position);
 		const Transform& GetWorldTransform();
@@ -42,18 +46,12 @@ namespace Minigin
 		Type* GetComponent();
 
 	private:
-
 		Transform m_LocalTransform;
 		std::pair<bool, Transform> m_WorldTransform;
 		std::vector<std::unique_ptr<Component>> m_Components;
 		std::vector<GameObject*> m_Children;
 		GameObject* m_Parent;
 		Scene* const m_Scene;
-
-		GameObject(const GameObject& other) = delete;
-		GameObject(GameObject&& other) = delete;
-		GameObject& operator=(const GameObject& other) = delete;
-		GameObject& operator=(GameObject&& other) = delete;
 
 		void FlagWorldTransform();
 	};
@@ -62,7 +60,7 @@ namespace Minigin
 		requires IsComponent<Type>
 	Type* GameObject::CreateComponent(Arguments && ...arguments)
 	{
-		if (GetComponent<Type>() == nullptr)
+		if (GetComponent<Type>() == nullptr)	
 		{
 			Component* component{ new Type{ this, std::forward<Arguments>(arguments)... } };
 			AddControllableObject(component);
@@ -80,9 +78,9 @@ namespace Minigin
 		{
 			GetControllableObject
 			(
-				[](Component* component) -> bool
+				[](Component* comp) -> bool	
 				{
-					return dynamic_cast<Type*>(component) != nullptr;
+					return typeid(*comp) == typeid(Type);
 				}
 			)
 		};

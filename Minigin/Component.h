@@ -9,13 +9,13 @@ namespace Minigin
 	class Component : public ControllableObject
 	{
 	public:
-		Component(GameObject* owner);
+		explicit Component(GameObject* owner);
 		virtual ~Component() = default;
 
 		Component(const Component& other) = delete;
-		Component(Component&& other) = delete;
+		Component(Component&& other) noexcept = delete;
 		Component& operator=(const Component& other) = delete;
-		Component& operator=(Component&& other) = delete;
+		Component& operator=(Component&& other) noexcept = delete;
 
 		virtual void Update();
 		virtual void FixedUpdate();
@@ -23,11 +23,10 @@ namespace Minigin
 		virtual void Render() const;
 
 	protected:
-
 		GameObject* GetOwner() const;
 
 	private:
-
 		GameObject* const m_Owner;
+
 	};
 }

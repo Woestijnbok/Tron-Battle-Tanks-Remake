@@ -11,7 +11,8 @@ namespace Minigin
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
-		InputManager();
+		friend class Singleton<InputManager>;	
+
 		~InputManager();
 
 		InputManager(const InputManager&) = delete;
@@ -27,6 +28,8 @@ namespace Minigin
 	private:
 		Keyboard m_Keyboard;
 		std::vector<Controller> m_Controllers;
+
+		explicit InputManager();
 
 	};
 }

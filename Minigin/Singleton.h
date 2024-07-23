@@ -6,13 +6,12 @@ namespace Minigin
 	class Singleton
 	{
 	public:
-
 		virtual ~Singleton() = default;
 
 		Singleton(const Singleton& other) = delete;
-		Singleton(Singleton&& other) = delete;
+		Singleton(Singleton&& other)  noexcept = delete;
 		Singleton& operator=(const Singleton& other) = delete;
-		Singleton& operator=(Singleton&& other) = delete;
+		Singleton& operator=(Singleton&& other) noexcept = delete;
 
 		static Type& GetInstance()
 		{
@@ -21,7 +20,10 @@ namespace Minigin
 		}
 
 	protected:
+		explicit Singleton() = default;
 
-		Singleton() = default;
+	private:
+
+
 	};
 }

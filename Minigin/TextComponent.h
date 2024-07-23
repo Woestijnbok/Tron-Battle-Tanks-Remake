@@ -1,28 +1,25 @@
 #pragma once
 
 #include <string>
-#include <vec2.hpp>
 #include <memory>
 
 #include "Component.h"
-#include "Texture.h"
 
 namespace Minigin
 {
 	class Font;
-	class GameObject;
+	class Text;	
 
 	class TextComponent final : public Component
 	{
 	public:
-
-		TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font);
-		virtual ~TextComponent() = default;
+		explicit TextComponent(GameObject* owner, const std::string& text, std::shared_ptr<Font> font);
+		virtual ~TextComponent();
 
 		TextComponent(const TextComponent& other) = delete;
-		TextComponent(TextComponent&& other) = delete;
+		TextComponent(TextComponent&& other) noexcept = delete;
 		TextComponent& operator=(const TextComponent& other) = delete;
-		TextComponent& operator=(TextComponent&& other) = delete;
+		TextComponent& operator=(TextComponent&& other) noexcept = delete;
 
 		virtual void Update() override;
 		virtual void Render() const override;
@@ -31,10 +28,7 @@ namespace Minigin
 		std::shared_ptr<Font> GetFont();
 
 	private:
+		std::unique_ptr<Text> m_Text;
 
-		bool m_NeedsUpdate;
-		std::string m_Text;
-		std::shared_ptr<Font> m_Font;
-		std::unique_ptr<Texture> m_Texture;
 	};
 }

@@ -7,9 +7,8 @@ namespace Minigin
 	class Transform final
 	{
 	public:
-
-		Transform() noexcept = default;
-		Transform(glm::vec2 position) noexcept;
+		explicit Transform() noexcept = default;
+		explicit Transform(glm::vec2 position) noexcept;
 		~Transform() = default;
 
 		Transform(const Transform& rhs) noexcept;
@@ -24,7 +23,7 @@ namespace Minigin
 		void SetPosition(const glm::vec2& position);
 
 	private:
-
 		glm::vec2 m_Position;
+
 	};
 }

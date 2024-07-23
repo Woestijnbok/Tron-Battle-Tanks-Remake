@@ -7,15 +7,15 @@ namespace Minigin
 	class Command
 	{
 	public:
-		Command() = default;
+		explicit Command() = default;
 		virtual ~Command() = default;
 
 		Command(const Command&) = delete;
-		Command(Command&&) = delete;
+		Command(Command&&) noexcept = delete;
 		Command& operator= (const Command&) = delete;
-		Command& operator= (const Command&&) = delete;
+		Command& operator= (const Command&&) noexcept = delete;
 
-		virtual void Execute() const = 0;
+		virtual void Execute() = 0;
 
 	protected:
 
@@ -28,15 +28,16 @@ namespace Minigin
 	class GameObjectCommand : public Command
 	{
 	public:
-		GameObjectCommand(GameObject* gameObject);
+		explicit GameObjectCommand(GameObject* gameObject);
 		virtual ~GameObjectCommand() = default;
 
 		GameObjectCommand(const GameObjectCommand&) = delete;
-		GameObjectCommand(GameObjectCommand&&) = delete;
+		GameObjectCommand(GameObjectCommand&&) noexcept = delete;
 		GameObjectCommand& operator= (const GameObjectCommand&) = delete;
-		GameObjectCommand& operator= (const GameObjectCommand&&) = delete;
+		GameObjectCommand& operator= (const GameObjectCommand&&) noexcept = delete;
 
-		virtual void Execute() const override = 0;
+		virtual void Execute() override = 0;
+
 		GameObject* GetGameObject();
 
 	protected:

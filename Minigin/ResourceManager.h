@@ -13,24 +13,23 @@ namespace Minigin
 	class ResourceManager final : public Singleton<ResourceManager>
 	{
 	public:
+		friend class Singleton<ResourceManager>;
 
 		~ResourceManager() = default;
+
+		ResourceManager(const ResourceManager&) = delete;
+		ResourceManager(ResourceManager&&) noexcept = delete;
+		ResourceManager& operator= (const ResourceManager&) = delete;
+		ResourceManager& operator= (const ResourceManager&&) noexcept = delete;
 
 		std::shared_ptr<Texture> LoadTexture(const std::filesystem::path& path) const;
 		std::shared_ptr<Font> LoadFont(const std::filesystem::path& path, unsigned int size) const;
 
 	private:
-
-		friend class Singleton<ResourceManager>;
-
 		const std::filesystem::path m_TextureRootDirectory;
 		const std::filesystem::path m_FontRootDirectory;
 
-		ResourceManager();
+		explicit ResourceManager();
 
-		ResourceManager(const ResourceManager&) = delete;
-		ResourceManager(ResourceManager&&) = delete;
-		ResourceManager& operator= (const ResourceManager&) = delete;
-		ResourceManager& operator= (const ResourceManager&&) = delete;
 	};
 }

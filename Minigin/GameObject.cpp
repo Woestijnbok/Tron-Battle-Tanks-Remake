@@ -73,6 +73,16 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 		(std::ranges::none_of(m_Children, [parent](GameObject* child) -> bool { return child == parent; })) and
 		(parent != this))
 	{
+		// Fix our world and local position
+		if (parent == nullptr)
+		{
+			SetLocalTransform(GetWorldTransform());
+		}
+		else
+		{
+			if (keepWorldTransform) SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());	
+		}
+
 		// Remove itself from the previous parent
 		if (m_Parent != nullptr)
 		{
@@ -84,24 +94,14 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 			}
 		}
 
+		// Set the given parent
+		m_Parent = parent;
+
 		// Add itself as a child to the given parent
 		if (parent != nullptr)
 		{
 			parent->m_Children.push_back(this);
 		}
-
-		// Fix our world and local position
-		if (parent == nullptr)
-		{
-			if (keepWorldTransform) SetLocalTransform(GetWorldTransform());
-		}
-		else
-		{
-			if(keepWorldTransform) SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());
-		}
-
-		// Set the given parent
-		m_Parent = parent;
 	}
 	else
 	{

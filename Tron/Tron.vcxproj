@@ -171,11 +171,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CustumCommands.cpp" />
+    <ClCompile Include="CustomCommands.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="TestObserver.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustumCommands.h" />
+    <ClInclude Include="CustomCommands.h" />
+    <ClInclude Include="TestObserver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

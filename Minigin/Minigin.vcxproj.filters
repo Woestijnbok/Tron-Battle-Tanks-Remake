@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="EventManager.cpp">
-      <Filter>Managers\Event Manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
@@ -98,12 +95,15 @@
     <ClCompile Include="Keyboard.cpp">
       <Filter>Input\Keyboard</Filter>
     </ClCompile>
+    <ClCompile Include="Subject.cpp">
+      <Filter>Subject</Filter>
+    </ClCompile>
+    <ClCompile Include="Text.cpp">
+      <Filter>Data Types\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="EventManager.h">
-      <Filter>Managers\Event Manager</Filter>
-    </ClInclude>
     <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -203,13 +203,16 @@
     <ClInclude Include="Keyboard.h">
       <Filter>Input\Keyboard</Filter>
     </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Subject</Filter>
+    </ClInclude>
+    <ClInclude Include="Text.h">
+      <Filter>Data Types\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Managers">
       <UniqueIdentifier>{00d64441-a795-470f-afb9-f29366e4c0b0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Event Manager">
-      <UniqueIdentifier>{8b7859a4-0c0f-4c3e-b139-85e79d06ec28}</UniqueIdentifier>
     </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{9f7a4a1f-a376-444e-9ee0-ce3ce0bd560e}</UniqueIdentifier>
@@ -274,6 +277,15 @@
     <Filter Include="Managers\Time Manager">
       <UniqueIdentifier>{b1820fdc-37ae-40b4-b92b-9b586ee47517}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Input\Controller">
+      <UniqueIdentifier>{14875f8e-a131-46c9-86dd-9d3a6626cda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Input Action">
+      <UniqueIdentifier>{95532b77-fdf5-40b3-84ec-d29d0e91e82c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Keyboard">
+      <UniqueIdentifier>{869464e2-769d-4e4b-9498-5d611fba8d01}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Object">
       <UniqueIdentifier>{ad83fcc1-e777-4fc2-8fa7-6abaecb756bc}</UniqueIdentifier>
     </Filter>
@@ -286,14 +298,11 @@
     <Filter Include="Object\Game Object">
       <UniqueIdentifier>{d6fc41cc-0f98-4a6d-934a-afbea2d3e5f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input\Controller">
-      <UniqueIdentifier>{14875f8e-a131-46c9-86dd-9d3a6626cda3}</UniqueIdentifier>
+    <Filter Include="Subject">
+      <UniqueIdentifier>{9b7bf596-33f7-4dd3-976f-c2abdcb17873}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Input\Input Action">
-      <UniqueIdentifier>{95532b77-fdf5-40b3-84ec-d29d0e91e82c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Input\Keyboard">
-      <UniqueIdentifier>{869464e2-769d-4e4b-9498-5d611fba8d01}</UniqueIdentifier>
+    <Filter Include="Data Types\Text">
+      <UniqueIdentifier>{a06f74c0-e44c-4506-b94b-b6eb8ef6b9ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

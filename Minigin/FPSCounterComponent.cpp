@@ -1,19 +1,20 @@
-#include <SDL_ttf.h>
-
 #include "FPSCounterComponent.h"
+#include "Text.h"
+#include "GameObject.h"
 #include "ResourceManager.h"
-#include "TextComponent.h"
 
 using namespace Minigin;
 
 FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	Component{ owner },
-	m_TextComponent{ std::make_unique<TextComponent>(owner, "0.0 FPS", ResourceManager::GetInstance().LoadFont("Lingua.otf", 36)) },
 	m_LastTimePoint{ std::chrono::high_resolution_clock::now() },
-	m_FrameCounter{ 0 }
+	m_FrameCounter{ 0 },
+	m_Text{ std::make_unique<Text>("0.0 FPS", ResourceManager::GetInstance().LoadFont("Lingua.otf", 36)) }	
 {
 	
 }
+
+FPSCounterComponent::~FPSCounterComponent() = default;
 
 void FPSCounterComponent::Update()
 {
@@ -24,21 +25,16 @@ void FPSCounterComponent::Update()
 	{
 		std::ostringstream stream{};
 		stream << m_FrameCounter << " FPS";
-		m_TextComponent->SetText(stream.str());
+		m_Text->SetText(stream.str());		
 
 		m_FrameCounter = 0;
-		m_LastTimePoint = std::chrono::high_resolution_clock::now();	
+		m_LastTimePoint = std::chrono::high_resolution_clock::now();
 	}
 
-	m_TextComponent->Update();
+	m_Text->Update();	
 }
 
 void FPSCounterComponent::Render() const
 {
-	m_TextComponent->Render();	
-}
-
-TextComponent* FPSCounterComponent::GetTextComponent() const
-{
-	return m_TextComponent.get();
+	m_Text->Render(GetOwner()->GetWorldTransform());
 }

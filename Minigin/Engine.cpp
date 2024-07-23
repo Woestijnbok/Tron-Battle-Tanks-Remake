@@ -11,7 +11,6 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "EventManager.h"
 #include "Locator.h"
 #include "Sound.h"
 #include "TimeManager.h"
@@ -42,12 +41,11 @@ void Engine::Initialize(const std::string& nameWindow)
 	}
 
 	// Initialize engine features
-	Renderer::GetInstance().Init(m_Window);
+	Renderer::GetInstance();
 	ResourceManager::GetInstance();
 	Locator::ProvideAudio(new SDLMixerAudio{});
 	SceneManager::GetInstance();
 	InputManager::GetInstance();
-	EventManager::GetInstance();
 
 	std::cout << "Use the escape key to exit the game." << std::endl;
 }
@@ -81,7 +79,6 @@ void Engine::Run(const std::function<void()>& load)
 		}
 		sceneManager.Update();
 		sceneManager.LateUpdate();
-		EventManager::GetInstance().Update();
 		std::thread soundThread{ &Audio::Update, Locator::GetAudio() };
 		soundThread.detach();
 		renderer.Render();
@@ -96,4 +93,9 @@ void Engine::Destroy()
 	SDL_DestroyWindow(m_Window);
 	Locator::DestroyAudio();
 	SDL_Quit();
+}
+
+SDL_Window* Minigin::Engine::GetWindow()
+{
+	return m_Window;
 }

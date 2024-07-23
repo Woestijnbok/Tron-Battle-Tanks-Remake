@@ -7,8 +7,7 @@ namespace Minigin
 	class TimeManager final
 	{
 	public:
-
-		TimeManager() = delete;
+		explicit TimeManager() = delete;
 		~TimeManager() = delete;
 
 		TimeManager(const TimeManager& other) = delete;
@@ -21,7 +20,6 @@ namespace Minigin
 		static std::chrono::milliseconds GetFixedDeltaTime();
 
 	private:
-
 		static std::chrono::milliseconds m_DeltaTime;
 		static const std::chrono::milliseconds m_FixedDeltaTime;
 

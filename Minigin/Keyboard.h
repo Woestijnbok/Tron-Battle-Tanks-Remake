@@ -53,7 +53,7 @@ namespace Minigin
 			Left
 		};
 
-		Keyboard();
+		explicit Keyboard();
 		~Keyboard();
 
 		Keyboard(const Keyboard& other) = delete;

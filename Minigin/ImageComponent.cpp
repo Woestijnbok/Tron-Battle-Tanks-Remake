@@ -14,8 +14,7 @@ ImageComponent::ImageComponent(GameObject* owner, std::shared_ptr<Texture> textu
 
 void ImageComponent::Render() const
 {
-	auto position{ GetOwner()->GetWorldTransform().GetPosition() };
-	m_Texture->Render(position.x, position.y);
+	m_Texture->Render(GetOwner()->GetWorldTransform());
 }
 
 const std::shared_ptr<Texture> ImageComponent::GetTexture() const

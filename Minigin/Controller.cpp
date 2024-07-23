@@ -10,7 +10,7 @@ using namespace Minigin;
 class Controller::Impl
 {
 public:
-	Impl(unsigned int index);	
+	explicit Impl(unsigned int index);	
 	~Impl() = default;		
 
 	Impl(const Impl& other) = delete;

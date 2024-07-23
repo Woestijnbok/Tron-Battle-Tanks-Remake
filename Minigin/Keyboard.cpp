@@ -10,7 +10,7 @@ using namespace Minigin;
 class Keyboard::Impl
 {
 public:
-	Impl() = default;
+	explicit Impl() = default;
 	~Impl() = default;
 
 	Impl(const Impl& other) = delete;

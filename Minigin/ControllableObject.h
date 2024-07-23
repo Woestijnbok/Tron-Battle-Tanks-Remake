@@ -5,7 +5,6 @@ namespace Minigin
 	class ControllableObject
 	{
 	public:
-
 		enum class Status
 		{
 			Enabled,
@@ -17,17 +16,15 @@ namespace Minigin
 		ControllableObject::Status GetStatus() const;
 
 	protected:
-
-		ControllableObject() = default;
+		explicit ControllableObject() = default;
 		~ControllableObject() = default;
 
 		ControllableObject(const ControllableObject&) = delete;
-		ControllableObject(ControllableObject&&) = delete;
+		ControllableObject(ControllableObject&&) noexcept = delete;
 		ControllableObject& operator= (const ControllableObject&) = delete;
-		ControllableObject& operator= (const ControllableObject&&) = delete;
+		ControllableObject& operator= (const ControllableObject&&) noexcept = delete;
 
 	private:
-
 		ControllableObject::Status m_Status;
 
 	};

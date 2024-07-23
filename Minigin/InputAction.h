@@ -16,13 +16,13 @@ namespace Minigin
 			Down        // When key is down.
 		};
 
-		InputAction(unsigned int button, InputAction::Trigger trigger, Command* command);
+		explicit InputAction(unsigned int button, InputAction::Trigger trigger, Command* command);
 		~InputAction() = default;
 
 		InputAction(const InputAction&) = delete;
 		InputAction(InputAction&&) noexcept = default;
 		InputAction& operator= (const InputAction&) = delete;
-		InputAction& operator= (const InputAction&&) = delete;
+		InputAction& operator= (const InputAction&&) noexcept = delete;
 
 		unsigned int GetButton() const;
 		InputAction::Trigger GetTrigger() const;

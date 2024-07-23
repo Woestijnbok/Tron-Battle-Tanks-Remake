@@ -28,23 +28,28 @@ namespace Minigin
 	};
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	class ObjectController
 	{
 	public:
-
 		void FixedUpdate();
 		void Update();
 		void LateUpdate();
 		void Render() const;
 
 	protected:
+		explicit ObjectController() = default;
+		~ObjectController() = default;
+
+		ObjectController(const ObjectController&) = delete;
+		ObjectController(ObjectController&&) noexcept = delete;
+		ObjectController& operator= (const ObjectController&) = delete;
+		ObjectController& operator= (const ObjectController&&) noexcept = delete;
 
 		void AddControllableObject(ObjectType* object);
 		ObjectType* GetControllableObject(const std::function<bool(ObjectType*)>& predicate);
 
 	private:
-
 		size_t m_InitialObjectCount;
 		std::vector<std::unique_ptr<ObjectType>> m_EnabledObjects;
 		std::vector<std::unique_ptr<ObjectType>> m_DisabledObjects;
@@ -56,7 +61,7 @@ namespace Minigin
 	};
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::FixedUpdate()
 	{
 		m_InitialObjectCount = m_EnabledObjects.size();
@@ -72,7 +77,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::Update()
 	{
 		m_InitialObjectCount = m_EnabledObjects.size();
@@ -87,7 +92,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::LateUpdate()
 	{
 		m_InitialObjectCount = m_EnabledObjects.size();
@@ -106,7 +111,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::Render() const
 	{
 		for (const auto& object : m_EnabledObjects)
@@ -116,7 +121,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::AddControllableObject(ObjectType* object)
 	{
 		if (object->GetStatus() == ControllableObject::Status::Enabled)
@@ -130,10 +135,10 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	ObjectType* ObjectController<ObjectType>::GetControllableObject(const std::function<bool(ObjectType*)>& predicate)
 	{
-		auto it
+		auto enabledItertator
 		{
 			std::ranges::find_if
 			(
@@ -145,24 +150,37 @@ namespace Minigin
 			)
 		};
 
-		if (it == std::end(m_EnabledObjects))
+		if (enabledItertator != std::end(m_EnabledObjects)) 
 		{
-			it = std::ranges::find_if
-			(
-				m_DisabledObjects,
-				[&predicate](const std::unique_ptr<ObjectType>& object) -> bool
-				{
-					return predicate(object.get());
-				}
-			);
+			return enabledItertator->get();
 		}
+		else
+		{
+			auto disabledIterator
+			{
+				std::ranges::find_if
+				(
+					m_DisabledObjects,
+					[&predicate](const std::unique_ptr<ObjectType>& object) -> bool
+					{
+						return predicate(object.get());
+					}
+				)
+			};
 
-		if (it == std::end(m_DisabledObjects)) return nullptr;
-		else return it->get();
+			if (disabledIterator != std::end(m_DisabledObjects))
+			{
+				return disabledIterator->get();
+			}
+			else
+			{
+				return nullptr;
+			}
+		}
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::CheckDestroyedObjects()
 	{
 		m_EnabledObjects.erase
@@ -185,7 +203,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::CheckDisabledObjects()
 	{
 		auto it = std::remove_if
@@ -203,7 +221,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::CheckEnabledObjects()
 	{
 		auto it = std::remove_if

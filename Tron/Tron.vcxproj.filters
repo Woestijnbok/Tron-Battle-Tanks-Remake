@@ -8,12 +8,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="CustumCommands.cpp">
+    <ClCompile Include="CustomCommands.cpp">
+      <Filter>Old stuff</Filter>
+    </ClCompile>
+    <ClCompile Include="TestObserver.cpp">
       <Filter>Old stuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustumCommands.h">
+    <ClInclude Include="CustomCommands.h">
+      <Filter>Old stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="TestObserver.h">
       <Filter>Old stuff</Filter>
     </ClInclude>
   </ItemGroup>

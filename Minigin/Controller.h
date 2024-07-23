@@ -27,7 +27,7 @@ namespace Minigin
 			Back
 		};
 
-		Controller(unsigned int index);
+		explicit Controller(unsigned int index);
 		~Controller();
 
 		Controller(const Controller& other) = delete;

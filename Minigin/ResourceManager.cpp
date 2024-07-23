@@ -12,8 +12,8 @@ ResourceManager::ResourceManager() :
 	Singleton<ResourceManager>{},	
 	m_TextureRootDirectory{ "../Resources/Textures" },	
 	m_FontRootDirectory{ "../Resources/Fonts" }	
-{
-	// Checking texture root directory
+{	
+	// Checking texture root directory	
 	if (std::filesystem::exists(m_TextureRootDirectory))
 	{
 		if (!std::filesystem::is_directory(m_TextureRootDirectory))
@@ -53,7 +53,7 @@ std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::filesystem::pat
 	}
 	else throw std::runtime_error("ResourceManager::CreateTexture() - path given doesn't exist");
 
-	return std::make_shared<Texture>(fullPath);
+	return std::shared_ptr<Texture>(Renderer::GetInstance().CreateTexture(fullPath));		
 }
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const std::filesystem::path& path, unsigned int size) const	

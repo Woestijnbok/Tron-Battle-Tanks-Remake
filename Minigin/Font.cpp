@@ -1,7 +1,5 @@
 #include <stdexcept>
 #include <SDL_ttf.h>
-#include <filesystem>
-#include <string>
 
 #include "Font.h"
 
@@ -18,7 +16,7 @@ Font::~Font()
 	TTF_CloseFont(m_Font);
 }
 
-TTF_Font* Font::GetSDLFont() const
+TTF_Font* Font::GetFont() const
 {
 	return m_Font;
 }
