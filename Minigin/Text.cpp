@@ -21,7 +21,7 @@ void Text::Update()
 {
 	if (m_NeedsUpdate)
 	{
-		m_Texture.reset(Renderer::GetInstance().CreateTexture(m_Font.get(), m_Text));
+		m_Texture.reset(Renderer::Instance()->CreateTexture(m_Font.get(), m_Text));
 		m_NeedsUpdate = false;
 	}
 }

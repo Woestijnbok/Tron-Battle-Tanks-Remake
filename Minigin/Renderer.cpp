@@ -19,7 +19,7 @@ class Renderer::Impl
 {
 public:
 	explicit Impl();
-	~Impl() = default;
+	~Impl();
 
 	Impl(const Impl& other) = delete;
 	Impl(Impl&& other) noexcept = delete;
@@ -27,7 +27,6 @@ public:
 	Impl& operator=(Impl&& other) noexcept = delete;
 
 	void Render() const;
-	void Destroy();
 	Texture* CreateTexture(const std::filesystem::path& path) const;
 	Texture* CreateTexture(Font* font, const std::string& text);
 	void RenderTexture(const Texture& texture, const Transform& transform) const;
@@ -61,6 +60,26 @@ Renderer::Impl::Impl() :
 	m_ImPlotContext = ImPlot::CreateContext();
 	ImGui_ImplSDL2_InitForSDLRenderer(m_Window, m_Renderer);
 	ImGui_ImplSDLRenderer2_Init(m_Renderer);
+
+	// Initializing ttf support
+	if (TTF_Init() == -1)
+	{
+		throw std::runtime_error(std::string("ResourceManager::ResourceManager() - ") + SDL_GetError());
+	}
+}
+
+Renderer::Impl::~Impl()
+{
+	ImGui_ImplSDLRenderer2_Shutdown();	
+	ImGui_ImplSDL2_Shutdown();	
+	ImPlot::DestroyContext(m_ImPlotContext);	
+	ImGui::DestroyContext(m_ImGuiContext);	
+
+	if (m_Renderer != nullptr)	
+	{
+		SDL_DestroyRenderer(m_Renderer);	
+		m_Renderer = nullptr;
+	}	
 }
 
 void Renderer::Impl::Render() const
@@ -73,25 +92,11 @@ void Renderer::Impl::Render() const
 	ImGui_ImplSDLRenderer2_NewFrame();
 	ImGui::NewFrame();
 
-	SceneManager::GetInstance().Render();
+	SceneManager::Instance()->Render();	
 	ImGui::Render();
 	ImGui_ImplSDLRenderer2_RenderDrawData(ImGui::GetDrawData(), m_Renderer);
 
 	SDL_RenderPresent(m_Renderer);
-}
-
-void Renderer::Impl::Destroy()
-{
-	ImGui_ImplSDLRenderer2_Shutdown();
-	ImGui_ImplSDL2_Shutdown();
-	ImPlot::DestroyContext(m_ImPlotContext);
-	ImGui::DestroyContext(m_ImGuiContext);
-
-	if (m_Renderer != nullptr)
-	{
-		SDL_DestroyRenderer(m_Renderer);
-		m_Renderer = nullptr;
-	}
 }
 
 Texture* Renderer::Impl::CreateTexture(const std::filesystem::path& path) const
@@ -160,6 +165,7 @@ int Renderer::Impl::GetDriverIndex() const
 }
 
 Renderer::Renderer() :
+	Singleton{},
 	m_Pimpl{ std::make_unique<Renderer::Impl>() }
 {
 
@@ -170,11 +176,6 @@ Renderer::~Renderer() = default;
 void Renderer::Render() const
 {
 	m_Pimpl->Render();
-}
-
-void Renderer::Destroy()
-{
-	m_Pimpl->Destroy();
 }
 
 Texture* Renderer::CreateTexture(const std::filesystem::path& path) const

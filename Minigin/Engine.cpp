@@ -11,8 +11,7 @@
 #include "SceneManager.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
-#include "Locator.h"
-#include "Sound.h"
+#include "AudioManager.h"
 #include "TimeManager.h"
 
 using namespace Minigin;
@@ -20,9 +19,12 @@ using namespace Minigin;
 SDL_Window* Engine::m_Window{ nullptr };
 const int Engine::m_TargetFrameRate{ 60 };
 const std::chrono::milliseconds Engine::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
+bool Engine::m_Initialized{ false };
 
 void Engine::Initialize(const std::string& nameWindow)
 {
+	if (m_Initialized) return;
+
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) 
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
@@ -41,11 +43,14 @@ void Engine::Initialize(const std::string& nameWindow)
 	}
 
 	// Initialize engine features
-	Renderer::GetInstance();
-	ResourceManager::GetInstance();
-	Locator::ProvideAudio(new SDLMixerAudio{});
-	SceneManager::GetInstance();
-	InputManager::GetInstance();
+	Renderer::Instance();
+	AudioManager::Instance();	
+	ResourceManager::Instance();
+	SceneManager::Instance();
+	InputManager::Instance();
+	TimeManager::Instance();
+
+	m_Initialized = true;
 
 	std::cout << "Use the escape key to exit the game." << std::endl;
 }
@@ -55,9 +60,14 @@ void Engine::Run(const std::function<void()>& load)
 	load();
 
 	// Cashe engine features
-	auto& inputManager{ InputManager::GetInstance() };
-	auto& sceneManager{ SceneManager::GetInstance() };
-	auto& renderer{ Renderer::GetInstance() };
+	auto inputManager{ InputManager::Instance() };
+	auto sceneManager{ SceneManager::Instance() };
+	auto renderer{ Renderer::Instance() };
+	auto timeManager{ TimeManager::Instance() };
+	auto audioManager{ AudioManager::Instance() };
+
+	std::thread audioThread{ &AudioManager::Update, audioManager };			
+	audioThread.detach();			
 
 	bool exit{ false };
 	std::chrono::steady_clock::time_point lastTime{ std::chrono::high_resolution_clock::now() };
@@ -68,30 +78,36 @@ void Engine::Run(const std::function<void()>& load)
 		const std::chrono::milliseconds deltaTime{ std::chrono::duration_cast<std::chrono::milliseconds>(currentTime - lastTime) };
 		lastTime = currentTime;
 		lag += deltaTime;
+		timeManager->SetDeltaTime(deltaTime);
 
-		TimeManager::SetDeltaTime(deltaTime);
+		exit = inputManager->ProcessInput();	
 
-		exit = inputManager.ProcessInput();
-		while (lag >= TimeManager::GetFixedDeltaTime())
+		while (lag >= timeManager->GetFixedDeltaTime())	
 		{
-			sceneManager.FixedUpdate();
-			lag -= TimeManager::GetFixedDeltaTime();
+			sceneManager->FixedUpdate();	
+			lag -= timeManager->GetFixedDeltaTime();	
 		}
-		sceneManager.Update();
-		sceneManager.LateUpdate();
-		std::thread soundThread{ &Audio::Update, Locator::GetAudio() };
-		soundThread.detach();
-		renderer.Render();
+		sceneManager->Update();	
+		sceneManager->LateUpdate();	
+
+		renderer->Render();	
 
 		std::this_thread::sleep_for(currentTime + m_TargetFrameDuration - std::chrono::high_resolution_clock::now());
 	}
+
+	audioManager->StopRunning();
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));	
 }
 
 void Engine::Destroy()
 {
-	Renderer::GetInstance().Destroy();
+	Renderer::Destroy();
 	SDL_DestroyWindow(m_Window);
-	Locator::DestroyAudio();
+	AudioManager::Destroy();
+	ResourceManager::Destroy();
+	SceneManager::Destroy();
+	InputManager::Destroy();
+	TimeManager::Destroy();
 	SDL_Quit();
 }
 

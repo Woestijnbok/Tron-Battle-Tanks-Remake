@@ -2,26 +2,31 @@
 
 #include <chrono>
 
+#include "Singleton.h"
+
 namespace Minigin
 {
-	class TimeManager final
+	class TimeManager final : public Singleton<TimeManager>
 	{
 	public:
-		explicit TimeManager() = delete;
-		~TimeManager() = delete;
+		friend class Singleton<TimeManager>;
+
+		~TimeManager() = default;
 
 		TimeManager(const TimeManager& other) = delete;
 		TimeManager(TimeManager&& other) = delete;
 		TimeManager& operator=(const TimeManager& other) = delete;
 		TimeManager& operator=(TimeManager&& other) = delete;
 
-		static void SetDeltaTime(std::chrono::milliseconds delta);
-		static std::chrono::duration<float> GetDeltaTime();
-		static std::chrono::milliseconds GetFixedDeltaTime();
+		void SetDeltaTime(std::chrono::milliseconds delta);
+		std::chrono::duration<float> GetDeltaTime();
+		std::chrono::milliseconds GetFixedDeltaTime();
 
 	private:
-		static std::chrono::milliseconds m_DeltaTime;
-		static const std::chrono::milliseconds m_FixedDeltaTime;
+		std::chrono::milliseconds m_DeltaTime;	
+		const std::chrono::milliseconds m_FixedDeltaTime;	
+
+		explicit TimeManager();
 
 	};
 }

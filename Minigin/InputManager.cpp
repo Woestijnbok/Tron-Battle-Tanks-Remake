@@ -3,7 +3,8 @@
 using namespace Minigin;
 
 
-InputManager::InputManager() :		
+InputManager::InputManager() :
+	Singleton{},
 	m_Keyboard{},
 	m_Controllers{}	
 {

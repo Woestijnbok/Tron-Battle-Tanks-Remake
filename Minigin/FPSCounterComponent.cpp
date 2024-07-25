@@ -9,7 +9,7 @@ FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	Component{ owner },
 	m_LastTimePoint{ std::chrono::high_resolution_clock::now() },
 	m_FrameCounter{ 0 },
-	m_Text{ std::make_unique<Text>("0.0 FPS", ResourceManager::GetInstance().LoadFont("Lingua.otf", 36)) }	
+	m_Text{ std::make_unique<Text>("0.0 FPS", ResourceManager::Instance()->LoadFont("Lingua.otf", 36)) }		
 {
 	
 }

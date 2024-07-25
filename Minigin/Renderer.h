@@ -24,7 +24,6 @@ namespace Minigin
 		Renderer& operator= (const Renderer&&) noexcept = delete;
 
 		void Render() const;
-		void Destroy();
 		Texture* CreateTexture(const std::filesystem::path& path) const;
 		Texture* CreateTexture(Font* font, const std::string& text) const;	
 		void RenderTexture(const Texture& texture, const Transform& transform) const;

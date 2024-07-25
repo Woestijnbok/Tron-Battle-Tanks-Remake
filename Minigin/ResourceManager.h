@@ -24,10 +24,14 @@ namespace Minigin
 
 		std::shared_ptr<Texture> LoadTexture(const std::filesystem::path& path) const;
 		std::shared_ptr<Font> LoadFont(const std::filesystem::path& path, unsigned int size) const;
+		const std::filesystem::path& GetTextureRootPath() const;	
+		const std::filesystem::path& GetFontRootPath() const;
+		const std::filesystem::path& GetAudioRootPath() const;
 
 	private:
 		const std::filesystem::path m_TextureRootDirectory;
 		const std::filesystem::path m_FontRootDirectory;
+		const std::filesystem::path m_AudioRootDirectory;
 
 		explicit ResourceManager();
 

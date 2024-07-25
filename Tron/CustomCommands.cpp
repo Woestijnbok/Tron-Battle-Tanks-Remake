@@ -3,39 +3,39 @@
 
 #include "CustomCommands.h"
 #include "GameObject.h"
-#include "Locator.h"
+#include "AudioManager.h"
 #include "TestObserver.h"
 
 using namespace Minigin;
 
 void TestMusic1::Execute()
 {
-	Locator::GetAudio()->PlayMusic("test.mp3");
+	AudioManager::Instance()->PlayMusic("test.mp3");	
 }
 
 void TestMusic2::Execute()
 {
-	Locator::GetAudio()->PlayMusic("harmony.mp3");
+	AudioManager::Instance()->PlayMusic("harmony.mp3");	
 }
 
 void TestSoundEffect1::Execute()
 {
-	Locator::GetAudio()->PlaySound("sweep.wav");
+	AudioManager::Instance()->PlayEffect("sweep.wav");	
 }
 
 void TestSoundEffect2::Execute()
 {
-	Locator::GetAudio()->PlaySound("game over.wav");
+	AudioManager::Instance()->PlayEffect("game over.wav");		
 }
 
 void StopMusic::Execute()
 {
-	Locator::GetAudio()->StopMusic();
+	AudioManager::Instance()->StopMusic();	
 }
 
 void StopAll::Execute()
 {
-	Locator::GetAudio()->StopAll();
+	AudioManager::Instance()->StopAll();
 }
 
 TestLenAbi::TestLenAbi(GameObject* object) :

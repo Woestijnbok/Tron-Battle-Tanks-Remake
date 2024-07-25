@@ -9,9 +9,10 @@
 using namespace Minigin;
 
 ResourceManager::ResourceManager() :	
-	Singleton<ResourceManager>{},	
+	Singleton{},	
 	m_TextureRootDirectory{ "../Resources/Textures" },	
-	m_FontRootDirectory{ "../Resources/Fonts" }	
+	m_FontRootDirectory{ "../Resources/Fonts" },
+	m_AudioRootDirectory{ "../Resources/Audio" }
 {	
 	// Checking texture root directory	
 	if (std::filesystem::exists(m_TextureRootDirectory))
@@ -28,16 +29,20 @@ ResourceManager::ResourceManager() :
 	{
 		if (!std::filesystem::is_directory(m_FontRootDirectory))
 		{
-			throw std::runtime_error("ResourceManager::ResourceManager() - texture root directory isn't a directory");
+			throw std::runtime_error("ResourceManager::ResourceManager() - font root directory isn't a directory");
 		}
 	}
-	else throw std::runtime_error("ResourceManager::ResourceManager() - texture root directory doesn't exist");
+	else throw std::runtime_error("ResourceManager::ResourceManager() - font root directory doesn't exist");
 
-	// Initializing ttf support
-	if (TTF_Init() == -1)
+	// Checking audio root directory
+	if (std::filesystem::exists(m_AudioRootDirectory))
 	{
-		throw std::runtime_error(std::string("ResourceManager::ResourceManager() - ") + SDL_GetError());
+		if (!std::filesystem::is_directory(m_AudioRootDirectory))
+		{
+			throw std::runtime_error("ResourceManager::ResourceManager() - audio root directory isn't a directory");
+		}
 	}
+	else throw std::runtime_error("ResourceManager::ResourceManager() - audio root directory doesn't exist");
 }
 
 std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::filesystem::path& path) const
@@ -53,7 +58,7 @@ std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::filesystem::pat
 	}
 	else throw std::runtime_error("ResourceManager::CreateTexture() - path given doesn't exist");
 
-	return std::shared_ptr<Texture>(Renderer::GetInstance().CreateTexture(fullPath));		
+	return std::shared_ptr<Texture>(Renderer::Instance()->CreateTexture(fullPath));		
 }
 
 std::shared_ptr<Font> ResourceManager::LoadFont(const std::filesystem::path& path, unsigned int size) const	
@@ -70,4 +75,19 @@ std::shared_ptr<Font> ResourceManager::LoadFont(const std::filesystem::path& pat
 	else throw std::runtime_error("ResourceManager::CreateFont() - path given doesn't exist");
 
 	return std::make_shared<Font>(fullPath, size);	
+}
+
+const std::filesystem::path& ResourceManager::GetTextureRootPath() const
+{
+	return m_TextureRootDirectory;
+}
+
+const std::filesystem::path& ResourceManager::GetFontRootPath() const
+{
+	return m_FontRootDirectory;
+}
+
+const std::filesystem::path& ResourceManager::GetAudioRootPath() const
+{
+	return m_AudioRootDirectory;
 }

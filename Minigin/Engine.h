@@ -32,6 +32,7 @@ namespace Minigin
 		static SDL_Window* m_Window;
 		static const int m_TargetFrameRate;
 		static const std::chrono::milliseconds m_TargetFrameDuration;
+		static bool m_Initialized;
 
 	};
 }

@@ -2,8 +2,13 @@
 
 using namespace Minigin;
 
-std::chrono::milliseconds TimeManager::m_DeltaTime{ 0 };
-const std::chrono::milliseconds TimeManager::m_FixedDeltaTime{ 20 };
+TimeManager::TimeManager() :
+	Singleton{},
+	m_DeltaTime{ 0 },
+	m_FixedDeltaTime{ 20 }
+{
+
+}
 
 void TimeManager::SetDeltaTime(std::chrono::milliseconds delta)
 {

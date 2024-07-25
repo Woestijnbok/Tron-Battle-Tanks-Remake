@@ -19,7 +19,7 @@ Texture::~Texture()
 
 void Texture::Render(const Transform& transform) const
 {
-	Renderer::GetInstance().RenderTexture(*this, transform);
+	Renderer::Instance()->RenderTexture(*this, transform);
 }
 
 SDL_Texture* Texture::GetTexture() const

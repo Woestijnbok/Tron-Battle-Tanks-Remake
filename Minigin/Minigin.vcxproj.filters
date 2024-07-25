@@ -33,7 +33,7 @@
       <Filter>Components\Image Component</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Managers\Input Manager</Filter>
+      <Filter>Singletons\Input Manager</Filter>
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Data Types\Font</Filter>
@@ -42,22 +42,19 @@
       <Filter>Object\Game Object</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
-      <Filter>Managers\Resource Manager</Filter>
+      <Filter>Singletons\Resource Manager</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Renderer</Filter>
+      <Filter>Singletons\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="SceneManager.cpp">
-      <Filter>Managers\Scene Manager</Filter>
+      <Filter>Singletons\Scene Manager</Filter>
     </ClCompile>
     <ClCompile Include="TextComponent.cpp">
       <Filter>Components\Text Component</Filter>
     </ClCompile>
-    <ClCompile Include="Sound.cpp">
-      <Filter>Sound</Filter>
-    </ClCompile>
-    <ClCompile Include="Locator.cpp">
-      <Filter>Locator</Filter>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Singletons\Audio Manager</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Scene</Filter>
@@ -78,7 +75,7 @@
       <Filter>imgui\backends</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
-      <Filter>Managers\Time Manager</Filter>
+      <Filter>Singletons\Time Manager</Filter>
     </ClCompile>
     <ClCompile Include="ControllableObject.cpp">
       <Filter>Object\Controllable Object</Filter>
@@ -96,7 +93,7 @@
       <Filter>Input\Keyboard</Filter>
     </ClCompile>
     <ClCompile Include="Subject.cpp">
-      <Filter>Subject</Filter>
+      <Filter>Observer &amp; Subject</Filter>
     </ClCompile>
     <ClCompile Include="Text.cpp">
       <Filter>Data Types\Text</Filter>
@@ -138,7 +135,7 @@
       <Filter>Components\Image Component</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Managers\Input Manager</Filter>
+      <Filter>Singletons\Input Manager</Filter>
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Data Types\Font</Filter>
@@ -147,28 +144,22 @@
       <Filter>Object\Game Object</Filter>
     </ClInclude>
     <ClInclude Include="ResourceManager.h">
-      <Filter>Managers\Resource Manager</Filter>
+      <Filter>Singletons\Resource Manager</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>Renderer</Filter>
+      <Filter>Singletons\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Managers\Scene Manager</Filter>
+      <Filter>Singletons\Scene Manager</Filter>
     </ClInclude>
     <ClInclude Include="TextComponent.h">
       <Filter>Components\Text Component</Filter>
     </ClInclude>
-    <ClInclude Include="Sound.h">
-      <Filter>Sound</Filter>
-    </ClInclude>
-    <ClInclude Include="Locator.h">
-      <Filter>Locator</Filter>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Singletons\Audio Manager</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Singleton.h">
-      <Filter>Data Types</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Data Types\Texture</Filter>
@@ -186,7 +177,7 @@
       <Filter>imgui\backends</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">
-      <Filter>Managers\Time Manager</Filter>
+      <Filter>Singletons\Time Manager</Filter>
     </ClInclude>
     <ClInclude Include="ControllableObject.h">
       <Filter>Object\Controllable Object</Filter>
@@ -204,16 +195,16 @@
       <Filter>Input\Keyboard</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
-      <Filter>Subject</Filter>
+      <Filter>Observer &amp; Subject</Filter>
     </ClInclude>
     <ClInclude Include="Text.h">
       <Filter>Data Types\Text</Filter>
     </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Managers">
-      <UniqueIdentifier>{00d64441-a795-470f-afb9-f29366e4c0b0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="imgui">
       <UniqueIdentifier>{9f7a4a1f-a376-444e-9ee0-ce3ce0bd560e}</UniqueIdentifier>
     </Filter>
@@ -228,12 +219,6 @@
     </Filter>
     <Filter Include="Components\Image Component">
       <UniqueIdentifier>{c594663e-4f94-41b4-9209-66ad3b5950e8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Input Manager">
-      <UniqueIdentifier>{44099e95-4628-4c9b-82b5-193b6fd2ea22}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Scene Manager">
-      <UniqueIdentifier>{46bd5a21-96dc-4d02-bba8-f13d462cc535}</UniqueIdentifier>
     </Filter>
     <Filter Include="Data Types">
       <UniqueIdentifier>{d03e03b1-0216-458e-9ecd-24b622dbbe85}</UniqueIdentifier>
@@ -250,20 +235,8 @@
     <Filter Include="Input">
       <UniqueIdentifier>{70c3c9c4-b4e1-4afa-b846-c4d041b67187}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sound">
-      <UniqueIdentifier>{a704ffb3-565f-4c84-b502-1c3f4f72d581}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Resource Manager">
-      <UniqueIdentifier>{ce2ce5da-4ef7-48d9-b564-c11424d2a5cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Renderer">
-      <UniqueIdentifier>{56d2f64e-b16e-4efd-982e-ea573cc27b4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Text Component">
       <UniqueIdentifier>{74312c38-072a-4a6d-a34d-33a8c9d875bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Locator">
-      <UniqueIdentifier>{9a735c14-e277-4d91-8124-0f92fd8b1653}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scene">
       <UniqueIdentifier>{c9f4a7c2-db78-4ca2-9c5a-d64c8533ece6}</UniqueIdentifier>
@@ -273,9 +246,6 @@
     </Filter>
     <Filter Include="imgui\backends">
       <UniqueIdentifier>{1c84caa6-0055-4a5b-b118-a8d66922a0c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Managers\Time Manager">
-      <UniqueIdentifier>{b1820fdc-37ae-40b4-b92b-9b586ee47517}</UniqueIdentifier>
     </Filter>
     <Filter Include="Input\Controller">
       <UniqueIdentifier>{14875f8e-a131-46c9-86dd-9d3a6626cda3}</UniqueIdentifier>
@@ -298,11 +268,32 @@
     <Filter Include="Object\Game Object">
       <UniqueIdentifier>{d6fc41cc-0f98-4a6d-934a-afbea2d3e5f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Subject">
-      <UniqueIdentifier>{9b7bf596-33f7-4dd3-976f-c2abdcb17873}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Data Types\Text">
       <UniqueIdentifier>{a06f74c0-e44c-4506-b94b-b6eb8ef6b9ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons">
+      <UniqueIdentifier>{00d64441-a795-470f-afb9-f29366e4c0b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Input Manager">
+      <UniqueIdentifier>{44099e95-4628-4c9b-82b5-193b6fd2ea22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Scene Manager">
+      <UniqueIdentifier>{46bd5a21-96dc-4d02-bba8-f13d462cc535}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Resource Manager">
+      <UniqueIdentifier>{ce2ce5da-4ef7-48d9-b564-c11424d2a5cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Renderer">
+      <UniqueIdentifier>{56d2f64e-b16e-4efd-982e-ea573cc27b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Observer &amp; Subject">
+      <UniqueIdentifier>{9b7bf596-33f7-4dd3-976f-c2abdcb17873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Time Manager">
+      <UniqueIdentifier>{b1820fdc-37ae-40b4-b92b-9b586ee47517}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons\Audio Manager">
+      <UniqueIdentifier>{a704ffb3-565f-4c84-b502-1c3f4f72d581}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
