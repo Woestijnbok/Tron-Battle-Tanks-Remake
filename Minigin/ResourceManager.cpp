@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "Font.h"
+#include "Sprite.h"
 
 using namespace Minigin;
 
@@ -75,6 +76,22 @@ std::shared_ptr<Font> ResourceManager::LoadFont(const std::filesystem::path& pat
 	else throw std::runtime_error("ResourceManager::CreateFont() - path given doesn't exist");
 
 	return std::make_shared<Font>(fullPath, size);	
+}
+
+std::shared_ptr<Sprite> Minigin::ResourceManager::LoadSprite(const std::filesystem::path& path, int frames, int rows, int collumns)
+{
+	const std::filesystem::path fullPath{ m_TextureRootDirectory / path };	
+
+	if (std::filesystem::exists(fullPath))	
+	{
+		if (!std::filesystem::is_regular_file(fullPath))	
+		{
+			throw std::runtime_error("ResourceManager::CreateFont() - path given isn't a regular file");	
+		}
+	}
+	else throw std::runtime_error("ResourceManager::CreateFont() - path given doesn't exist");	
+
+	return std::make_shared<Sprite>(Renderer::Instance()->CreateTexture(fullPath), frames, rows, collumns);
 }
 
 const std::filesystem::path& ResourceManager::GetTextureRootPath() const

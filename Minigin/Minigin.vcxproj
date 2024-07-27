@@ -217,6 +217,9 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="AudioManager.h" />
     <ClInclude Include="ControllableObject.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteComponent.h" />
+    <ClInclude Include="State.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="TextComponent.h" />
@@ -252,6 +255,9 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="ControllableObject.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteComponent.cpp" />
+    <ClCompile Include="State.cpp" />
     <ClCompile Include="Subject.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="TextComponent.cpp" />

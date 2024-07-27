@@ -2,27 +2,43 @@
 
 using namespace Minigin;
 
-Transform::Transform(glm::vec2 position) noexcept :
-	m_Position{ position }
+Transform::Transform() :
+	m_Position{},
+	m_Rotation{},
+	m_Scale{ 1.0f, 1.0f }
 {
 
 }
 
-Transform::Transform(const Transform& rhs) noexcept :
-	m_Position{ rhs.m_Position }
+Transform::Transform(glm::ivec2 position, glm::ivec2 rotation, glm::vec2 scale) :
+	m_Position{ position },
+	m_Rotation{ rotation },
+	m_Scale{ scale }
+{
+
+}	
+
+Transform::Transform(const Transform& rhs) :
+	m_Position{ rhs.m_Position },
+	m_Rotation{ rhs.m_Rotation },
+	m_Scale{ rhs.m_Scale }
 {
 
 }
 
 Transform::Transform(Transform&& rhs) noexcept :
-	m_Position{ rhs.m_Position }
+	m_Position{ rhs.m_Position },	
+	m_Rotation{ rhs.m_Rotation },	
+	m_Scale{ rhs.m_Scale }	
 {
 
 }
 
-Transform& Transform::operator=(const Transform& rhs) noexcept
+Transform& Transform::operator=(const Transform& rhs)
 {
 	m_Position = rhs.m_Position;
+	m_Rotation = rhs.m_Rotation;
+	m_Scale = rhs.m_Scale;
 
 	return *this;
 }
@@ -30,27 +46,39 @@ Transform& Transform::operator=(const Transform& rhs) noexcept
 Transform& Transform::operator=(const Transform&& rhs) noexcept
 {
 	m_Position = rhs.m_Position;
+	m_Rotation = rhs.m_Rotation;
+	m_Scale = rhs.m_Scale;
 
 	return *this;
 }
 
 
-const glm::vec2& Transform::GetPosition() const
+const glm::ivec2& Transform::GetPosition() const
 {
 	return m_Position; 
 }
 
-void Transform::SetPosition(const glm::vec2& position)
+const glm::ivec2& Transform::GetRotation() const
+{
+	return m_Rotation;
+}
+
+const glm::vec2& Transform::GetScale() const
+{
+	return m_Scale;
+}
+
+void Transform::SetPosition(const glm::ivec2& position)
 {
 	m_Position = position;
 }
 
-Transform Transform::operator+(const Transform& rhs) const
+void Transform::SetRotation(const glm::ivec2& rotation)
 {
-	return Transform{ m_Position + rhs.m_Position };
+	m_Rotation = rotation;
 }
 
-Transform Minigin::Transform::operator-(const Transform& rhs) const
+void Transform::SetScale(const glm::vec2& scale)
 {
-	return Transform{ m_Position - rhs.m_Position };
+	m_Scale = scale;
 }

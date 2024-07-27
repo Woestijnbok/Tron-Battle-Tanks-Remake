@@ -12,6 +12,7 @@
 #include "backends/imgui_impl_sdlrenderer2.h"
 #include "implot.h"
 #include "Engine.h"
+#include "Sprite.h"
 
 using namespace Minigin;
 
@@ -30,6 +31,7 @@ public:
 	Texture* CreateTexture(const std::filesystem::path& path) const;
 	Texture* CreateTexture(Font* font, const std::string& text);
 	void RenderTexture(const Texture& texture, const Transform& transform) const;
+	void RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const;
 
 private:
 	SDL_Renderer* m_Renderer;
@@ -128,12 +130,45 @@ Texture* Renderer::Impl::CreateTexture(Font* font, const std::string& text)
 
 void Renderer::Impl::RenderTexture(const Texture& texture, const Transform& transform) const
 {
-	SDL_Rect dst{};
-	dst.x = static_cast<int>(transform.GetPosition().x);	
-	dst.y = static_cast<int>(transform.GetPosition().y);
+	const glm::ivec2 position{ transform.GetPosition() };
+	const glm::vec2 scale{ transform.GetScale() };	
+	const glm::ivec2 textureSize{ texture.GetSize() };
 
-	SDL_QueryTexture(texture.GetTexture(), nullptr, nullptr, &dst.w, &dst.h);
-	SDL_RenderCopy(m_Renderer, texture.GetTexture(), nullptr, &dst);
+	const SDL_Rect destination
+	{
+		position.x,
+		position.y,	
+		static_cast<int>(textureSize.x * scale.x),
+		static_cast<int>(textureSize.y * scale.y)	
+	};
+
+	SDL_RenderCopy(m_Renderer, texture.GetTexture(), nullptr, &destination);
+}
+
+void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const
+{
+	const glm::ivec2 frameSize{ sprite.GetFrameSize() };
+	const int collumns{ sprite.GetCollumns() };
+	const glm::ivec2 position{ transform.GetPosition() };
+	const glm::vec2 scale{ transform.GetScale() };		
+
+	const SDL_Rect source
+	{
+		(frame % collumns) * frameSize.x,	
+		(frame / collumns) * frameSize.y,				
+		frameSize.x,	
+		frameSize.y	
+	};
+	
+	const SDL_Rect destination
+	{
+		position.x,	
+		position.y,	
+		static_cast<int>(frameSize.x * scale.x),	
+		static_cast<int>(frameSize.y * scale.y)	
+	};
+
+	SDL_RenderCopy(m_Renderer, sprite.GetSheet()->GetTexture(), &source, &destination);
 }
 
 //void Renderer::Impl::RenderTexture(const Texture& texture, float x, float y, float width, float height) const
@@ -191,4 +226,9 @@ Texture* Renderer::CreateTexture(Font* font, const std::string& text) const
 void Renderer::RenderTexture(const Texture& texture, const Transform& transform) const
 {
 	m_Pimpl->RenderTexture(texture, transform);
+}
+
+void Renderer::RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const
+{
+	m_Pimpl->RenderSprite(sprite, frame, transform);
 }

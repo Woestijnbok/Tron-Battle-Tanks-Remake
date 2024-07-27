@@ -7,9 +7,10 @@ using namespace Minigin;
 
 FPSCounterComponent::FPSCounterComponent(GameObject* owner) :
 	Component{ owner },
-	m_LastTimePoint{ std::chrono::high_resolution_clock::now() },
+	m_LastTimePoint{},
 	m_FrameCounter{ 0 },
-	m_Text{ std::make_unique<Text>("0.0 FPS", ResourceManager::Instance()->LoadFont("Lingua.otf", 36)) }		
+	m_Text{ std::make_unique<Text>("0.0 FPS", ResourceManager::Instance()->LoadFont("Lingua.otf", 36)) },
+	m_Running{ false }
 {
 	
 }
@@ -18,8 +19,14 @@ FPSCounterComponent::~FPSCounterComponent() = default;
 
 void FPSCounterComponent::Update()
 {
+	if (!m_Running) 
+	{
+		m_Running = true;
+		m_LastTimePoint = std::chrono::steady_clock::now();	
+	}
+
 	++m_FrameCounter;
-	const auto timeDifference{ std::chrono::high_resolution_clock::now() - m_LastTimePoint };
+	const auto timeDifference{ std::chrono::steady_clock::now() - m_LastTimePoint };	
 
 	if (timeDifference >= std::chrono::seconds(1))
 	{
@@ -28,7 +35,7 @@ void FPSCounterComponent::Update()
 		m_Text->SetText(stream.str());		
 
 		m_FrameCounter = 0;
-		m_LastTimePoint = std::chrono::high_resolution_clock::now();
+		m_LastTimePoint = std::chrono::steady_clock::now();	
 	}
 
 	m_Text->Update();	

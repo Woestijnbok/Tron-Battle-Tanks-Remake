@@ -98,6 +98,15 @@
     <ClCompile Include="Text.cpp">
       <Filter>Data Types\Text</Filter>
     </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>State</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Data Types\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteComponent.cpp">
+      <Filter>Components\Sprite Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
@@ -203,6 +212,15 @@
     <ClInclude Include="Singleton.h">
       <Filter>Singletons</Filter>
     </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>State</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Data Types\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteComponent.h">
+      <Filter>Components\Sprite Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -294,6 +312,15 @@
     </Filter>
     <Filter Include="Singletons\Audio Manager">
       <UniqueIdentifier>{a704ffb3-565f-4c84-b502-1c3f4f72d581}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="State">
+      <UniqueIdentifier>{80d13f64-814a-494c-ae78-a3eeb4c96d19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data Types\Sprite">
+      <UniqueIdentifier>{50cd04cd-db81-4212-98dc-ab54b5664094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Sprite Component">
+      <UniqueIdentifier>{02f51a27-bd16-40c2-9c7e-f8f349a88a30}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

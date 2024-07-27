@@ -10,6 +10,7 @@ namespace Minigin
 	class Texture;					
 	class Font;
 	class Transform;
+	class Sprite;
 
 	class Renderer final : public Singleton<Renderer>
 	{
@@ -27,6 +28,7 @@ namespace Minigin
 		Texture* CreateTexture(const std::filesystem::path& path) const;
 		Texture* CreateTexture(Font* font, const std::string& text) const;	
 		void RenderTexture(const Texture& texture, const Transform& transform) const;
+		void RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const;
 
 	private:
 		class Impl;

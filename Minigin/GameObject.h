@@ -28,10 +28,12 @@ namespace Minigin
 		GameObject& operator=(const GameObject& other) = delete;	
 		GameObject& operator=(GameObject&& other) noexcept = delete;	
 
-		void SetLocalPosition(const glm::vec2& position);
+		void SetLocalTransform(const Transform& transform);
+		void SetLocalPosition(const glm::ivec2& position);
+		void SetLocalRotation(const glm::ivec2& rotation);
+		void SetLocalScale(const glm::vec2& scale);	
 		const Transform& GetWorldTransform();
 		const Transform& GetLocalTransform() const;
-		void SetLocalTransform(const Transform& transform);
 		GameObject* GetParent() const;
 		void SetParent(GameObject* parent, bool keepWorldTransform = true);
 		size_t GetChildCount() const;

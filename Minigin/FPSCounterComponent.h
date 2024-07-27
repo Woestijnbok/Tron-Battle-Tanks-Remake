@@ -27,6 +27,7 @@ namespace Minigin
 		std::chrono::steady_clock::time_point m_LastTimePoint;
 		unsigned int m_FrameCounter;
 		std::unique_ptr<Text> m_Text;
+		bool m_Running;
 
 	};
 }

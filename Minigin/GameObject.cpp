@@ -35,7 +35,16 @@ const Transform& GameObject::GetWorldTransform()
 		}
 		else
 		{
-			m_WorldTransform.second = m_Parent->GetWorldTransform() + m_LocalTransform;
+			const Transform parentWorld{ m_Parent->GetWorldTransform() };
+
+			const Transform newWorld
+			{
+				parentWorld.GetPosition() + m_LocalTransform.GetPosition(),
+				parentWorld.GetRotation() + m_LocalTransform.GetRotation(),
+				parentWorld.GetScale() * m_LocalTransform.GetScale()
+			};
+
+			m_WorldTransform.second = newWorld;		
 		}
 
 		m_WorldTransform.first = true;
@@ -55,9 +64,21 @@ void GameObject::SetLocalTransform(const Transform& transform)
 	FlagWorldTransform();
 }
 
-void GameObject::SetLocalPosition(const glm::vec2& position)
+void GameObject::SetLocalPosition(const glm::ivec2& position)
 {
 	m_LocalTransform.SetPosition(position);
+	FlagWorldTransform();
+}
+
+void GameObject::SetLocalRotation(const glm::ivec2& rotation)
+{
+	m_LocalTransform.SetRotation(rotation);
+	FlagWorldTransform();
+}
+
+void GameObject::SetLocalScale(const glm::vec2& scale)
+{
+	m_LocalTransform.SetScale(scale);
 	FlagWorldTransform();
 }
 
@@ -80,7 +101,19 @@ void GameObject::SetParent(GameObject* parent, bool keepWorldTransform)
 		}
 		else
 		{
-			if (keepWorldTransform) SetLocalTransform(GetWorldTransform() - parent->GetWorldTransform());	
+			if (keepWorldTransform)
+			{
+				const Transform oldWorld{ GetWorldTransform() };
+				const Transform newParentWorld{ parent->GetWorldTransform() };
+				const Transform newLocal
+				{
+					oldWorld.GetPosition() - newParentWorld.GetPosition(),
+					oldWorld.GetRotation() - newParentWorld.GetRotation(),	
+					oldWorld.GetScale() / newParentWorld.GetScale()	
+				};
+
+				SetLocalTransform(newLocal);
+			}
 		}
 
 		// Remove itself from the previous parent

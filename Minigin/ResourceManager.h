@@ -9,6 +9,7 @@ namespace Minigin
 {
 	class Texture;
 	class Font;
+	class Sprite;		
 
 	class ResourceManager final : public Singleton<ResourceManager>
 	{
@@ -24,6 +25,7 @@ namespace Minigin
 
 		std::shared_ptr<Texture> LoadTexture(const std::filesystem::path& path) const;
 		std::shared_ptr<Font> LoadFont(const std::filesystem::path& path, unsigned int size) const;
+		std::shared_ptr<Sprite> LoadSprite(const std::filesystem::path& path, int frames, int rows, int collumns);
 		const std::filesystem::path& GetTextureRootPath() const;	
 		const std::filesystem::path& GetFontRootPath() const;
 		const std::filesystem::path& GetAudioRootPath() const;
