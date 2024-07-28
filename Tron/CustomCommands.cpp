@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "AudioManager.h"
 #include "TestObserver.h"
+#include "SpriteComponent.h"
 
 using namespace Minigin;
 
@@ -48,3 +49,14 @@ void TestLenAbi::Execute()
 {
 	GetGameObject()->GetComponent<TestObserverComponent>()->TestTester();
 }
+
+SpriteChange::SpriteChange(GameObject* object) :
+	GameObjectCommand{ object }
+{
+
+}
+
+void SpriteChange::Execute()
+{
+	GetGameObject()->GetComponent<SpriteComponent>()->SetSprite("Running Backwards");
+}	

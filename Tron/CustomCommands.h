@@ -134,3 +134,22 @@ private:
 
 
 };
+
+class SpriteChange final : public Minigin::GameObjectCommand
+{
+public:
+	SpriteChange(Minigin::GameObject* object);
+	virtual ~SpriteChange() = default;
+
+	SpriteChange(const SpriteChange&) = delete;
+	SpriteChange(SpriteChange&&) = delete;
+	SpriteChange& operator= (const SpriteChange&) = delete;
+	SpriteChange& operator= (const SpriteChange&&) = delete;
+
+	virtual void Execute() override;
+
+
+private:
+
+
+};

@@ -1,3 +1,5 @@
+#include <exception>
+
 #include "SpriteComponent.h"
 #include "Sprite.h"
 #include "Renderer.h"
@@ -5,13 +7,13 @@
 
 using namespace Minigin;
 
-SpriteComponent::SpriteComponent(GameObject* owner, std::shared_ptr<Sprite> sprite, std::chrono::milliseconds frameTime) :
+SpriteComponent::SpriteComponent(GameObject* owner) :
 	Component{ owner },
-	m_Sprite{ sprite },
-	m_FrameTime{ frameTime },
+	m_Sprites{},
+	m_CurrentSpriteName{},
 	m_LastTimePoint{},
 	m_Frame{ 0 },
-	m_Running{ false }
+	m_UpdateTimePoint{ true }
 {
 
 }
@@ -20,29 +22,52 @@ SpriteComponent::~SpriteComponent() = default;
 
 void SpriteComponent::Update()
 {
-	if (!m_Running)
+	if (m_CurrentSpriteName.empty()) return;
+
+	if (m_UpdateTimePoint)
 	{
-		m_Running = true;
+		m_UpdateTimePoint = false;	
 		m_LastTimePoint = std::chrono::steady_clock::now();
 	}
 
 	const auto timeDifference{ std::chrono::steady_clock::now() - m_LastTimePoint };			
 
-	if (timeDifference >= m_FrameTime)
+	if (timeDifference >= m_Sprites.at(m_CurrentSpriteName).second)
 	{
 		m_LastTimePoint = std::chrono::steady_clock::now();	
-		m_Frame = (m_Frame + 1) % m_Sprite->GetFrames();	
+		m_Frame = (m_Frame + 1) % m_Sprites.at(m_CurrentSpriteName).first->GetFrames();	
 	}
 }
 
 void SpriteComponent::Render() const		
 {
-	Renderer::Instance()->RenderSprite(*m_Sprite.get(), m_Frame, GetOwner()->GetWorldTransform());
+	if (m_CurrentSpriteName.empty()) return;	
+
+	Renderer::Instance()->RenderSprite(*m_Sprites.at(m_CurrentSpriteName).first.get(), m_Frame, GetOwner()->GetWorldTransform());	
 }
 
-std::shared_ptr<Sprite> SpriteComponent::GetSprite() const
+void SpriteComponent::AddSprite(const std::shared_ptr<Sprite>& sprite, const std::chrono::milliseconds frameTime, const std::string& name)
 {
-	return m_Sprite;	
+	m_Sprites.emplace(name, std::make_pair(sprite, frameTime));
+}
+
+void SpriteComponent::SetSprite(const std::string& name)
+{
+	if (m_Sprites.find(name) != m_Sprites.end())
+	{
+		m_CurrentSpriteName = name;
+		m_UpdateTimePoint = true;
+		m_Frame = 0;
+	}
+	else
+	{
+		throw std::exception("SpriteComponent::SetSprite() - No sprite found with the given name.");
+	}
+}
+
+std::shared_ptr<Sprite> SpriteComponent::GetSprite(const std::string& name) const
+{
+	return m_Sprites.at(name).first;
 }
 
 void Minigin::SpriteComponent::Reset()

@@ -2,6 +2,8 @@
 
 #include <memory>
 #include <chrono>
+#include <string>
+#include <unordered_map>
 
 #include "Component.h"
 
@@ -12,7 +14,7 @@ namespace Minigin
 	class SpriteComponent : public Component
 	{
 	public:
-		explicit SpriteComponent(GameObject* owner, std::shared_ptr<Sprite> sprite, std::chrono::milliseconds frameTime);	
+		explicit SpriteComponent(GameObject* owner);	
 		~SpriteComponent();
 
 		SpriteComponent(const SpriteComponent&) = delete;
@@ -23,14 +25,16 @@ namespace Minigin
 		virtual void Update() override;
 		virtual void Render() const override;
 
-		std::shared_ptr<Sprite> GetSprite() const;
+		void AddSprite(const std::shared_ptr<Sprite>& sprite, const std::chrono::milliseconds frameTime, const std::string& name);
+		void SetSprite(const std::string& name);	
+		std::shared_ptr<Sprite> GetSprite(const std::string& name) const;	
 		void Reset();
 
 	private:
-		std::shared_ptr<Sprite> m_Sprite;
-		std::chrono::milliseconds m_FrameTime;
+		std::unordered_map<std::string, std::pair<std::shared_ptr<Sprite>, std::chrono::milliseconds>> m_Sprites;
+		std::string m_CurrentSpriteName;	
 		std::chrono::steady_clock::time_point m_LastTimePoint;
 		int m_Frame;
-		bool m_Running;
+		bool m_UpdateTimePoint;
 	};
 }
