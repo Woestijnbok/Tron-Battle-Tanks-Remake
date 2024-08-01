@@ -3,8 +3,8 @@
 #include <concepts>
 #include <type_traits>
 #include <vector>
-#include <memory>
 #include <functional>
+#include <iterator>
 
 #include "ControllableObject.h"
 
@@ -39,7 +39,7 @@ namespace Minigin
 
 	protected:
 		explicit ObjectController() = default;
-		~ObjectController() = default;
+		~ObjectController();
 
 		ObjectController(const ObjectController&) = delete;
 		ObjectController(ObjectController&&) noexcept = delete;
@@ -47,18 +47,35 @@ namespace Minigin
 		ObjectController& operator= (const ObjectController&&) noexcept = delete;
 
 		void AddControllableObject(ObjectType* object);
-		ObjectType* GetControllableObject(const std::function<bool(ObjectType*)>& predicate);
+		ObjectType* GetControllableObject(const std::function<bool(ObjectType*)>& predicate) const;
 
 	private:
 		size_t m_InitialObjectCount;
-		std::vector<std::unique_ptr<ObjectType>> m_EnabledObjects;
-		std::vector<std::unique_ptr<ObjectType>> m_DisabledObjects;
+		std::vector<ObjectType*> m_EnabledObjects;
+		std::vector<ObjectType*> m_DisabledObjects;
 
 		void CheckDestroyedObjects();
 		void CheckDisabledObjects();
 		void CheckEnabledObjects();
 
 	};
+
+	template<typename ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+	ObjectController<ObjectType>::~ObjectController()
+	{
+		for (ObjectType*& object : m_EnabledObjects)
+		{
+			delete object;
+			object = nullptr;
+		}
+
+		for (ObjectType*& object : m_DisabledObjects)
+		{
+			delete object;
+			object = nullptr;
+		}
+	}
 
 	template<typename ObjectType>
 		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
@@ -114,7 +131,7 @@ namespace Minigin
 		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
 	void ObjectController<ObjectType>::Render() const
 	{
-		for (const auto& object : m_EnabledObjects)
+		for (ObjectType* object : m_EnabledObjects)
 		{
 			object->Render();
 		}
@@ -126,33 +143,33 @@ namespace Minigin
 	{
 		if (object->GetStatus() == ControllableObject::Status::Enabled)
 		{
-			m_EnabledObjects.emplace_back(object);
+			m_EnabledObjects.push_back(object);	
 		}
 		else
 		{
-			m_DisabledObjects.emplace_back(object);
+			m_DisabledObjects.push_back(object);
 		}
 	}
 
 	template<typename ObjectType>
 		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
-	ObjectType* ObjectController<ObjectType>::GetControllableObject(const std::function<bool(ObjectType*)>& predicate)
+	ObjectType* ObjectController<ObjectType>::GetControllableObject(const std::function<bool(ObjectType*)>& predicate) const
 	{
 		auto enabledItertator
 		{
 			std::ranges::find_if
 			(
 				m_EnabledObjects,
-				[&predicate](const std::unique_ptr<ObjectType>& object) -> bool
+				[&predicate](ObjectType* object) -> bool	
 				{
-					return predicate(object.get());
+					return predicate(object);
 				}
 			)
 		};
 
 		if (enabledItertator != std::end(m_EnabledObjects)) 
 		{
-			return enabledItertator->get();
+			return *enabledItertator;
 		}
 		else
 		{
@@ -161,16 +178,16 @@ namespace Minigin
 				std::ranges::find_if
 				(
 					m_DisabledObjects,
-					[&predicate](const std::unique_ptr<ObjectType>& object) -> bool
+					[&predicate](ObjectType* object) -> bool	
 					{
-						return predicate(object.get());
+						return predicate(object);
 					}
 				)
 			};
 
 			if (disabledIterator != std::end(m_DisabledObjects))
 			{
-				return disabledIterator->get();
+				return *disabledIterator;
 			}
 			else
 			{
@@ -187,7 +204,7 @@ namespace Minigin
 		(
 			std::remove_if
 			(
-				std::begin(m_EnabledObjects), std::end(m_EnabledObjects), [](const std::unique_ptr<ObjectType>& object) -> bool { return object->GetStatus() == ControllableObject::Status::Destroyed; }
+				std::begin(m_EnabledObjects), std::end(m_EnabledObjects), [](ObjectType* object) -> bool { return object->GetStatus() == ControllableObject::Status::Destroyed; }
 			)
 			, m_EnabledObjects.end()
 		);
@@ -196,7 +213,7 @@ namespace Minigin
 		(
 			std::remove_if
 			(
-				std::begin(m_DisabledObjects), std::end(m_DisabledObjects), [](const std::unique_ptr<ObjectType>& object) -> bool { return object->GetStatus() == ControllableObject::Status::Destroyed; }
+				std::begin(m_DisabledObjects), std::end(m_DisabledObjects), [](ObjectType* object) -> bool { return object->GetStatus() == ControllableObject::Status::Destroyed; }	
 			)
 			, m_DisabledObjects.end()
 		);
@@ -210,13 +227,20 @@ namespace Minigin
 		(
 			std::begin(m_EnabledObjects),
 			std::end(m_EnabledObjects),
-			[](const std::unique_ptr<ObjectType>& object) -> bool { return object->GetStatus() == ControllableObject::Status::Disabled; }
+			[this](ObjectType* object) -> bool
+			{
+				if (object->GetStatus() == ControllableObject::Status::Disabled)
+				{
+					m_DisabledObjects.push_back(object);
+					return true;
+				}
+				else return false;
+			}
 		);
 
 		if (it != m_EnabledObjects.end())
 		{
-			m_DisabledObjects.push_back(std::move(*it));
-			m_EnabledObjects.erase(it);
+			m_EnabledObjects.erase(it, std::end(m_EnabledObjects));
 		}
 	}
 
@@ -225,16 +249,23 @@ namespace Minigin
 	void ObjectController<ObjectType>::CheckEnabledObjects()
 	{
 		auto it = std::remove_if
-		(
-			std::begin(m_DisabledObjects),
-			std::end(m_DisabledObjects),
-			[](const std::unique_ptr<ObjectType>& object) -> bool { return object->GetStatus() == ControllableObject::Status::Enabled; }
+		(	
+			std::begin(m_DisabledObjects),	
+			std::end(m_DisabledObjects),	
+			[this](ObjectType* object) -> bool
+			{
+				if (object->GetStatus() == ControllableObject::Status::Enabled)
+				{
+					m_EnabledObjects.push_back(object);
+					return true;
+				}
+				return false;
+			}
 		);
 
 		if (it != m_DisabledObjects.end())
 		{
-			m_EnabledObjects.push_back(std::move(*it));
-			m_DisabledObjects.erase(it);
+			m_DisabledObjects.erase(it, std::end(m_DisabledObjects));
 		}
 	}
 }

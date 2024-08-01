@@ -10,7 +10,7 @@ Text::Text(const std::string& text, std::shared_ptr<Font> font) :
 	m_NeedsUpdate{ true },
 	m_Text{ text },
 	m_Font{ std::move(font) },
-	m_Texture{ nullptr }
+	m_Texture{ Renderer::Instance()->CreateTexture(m_Font.get(), m_Text) }		
 {
 
 }

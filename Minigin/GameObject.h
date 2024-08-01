@@ -45,7 +45,7 @@ namespace Minigin
 
 		template<typename Type>
 			requires IsComponent<Type>
-		Type* GetComponent();
+		Type* GetComponent() const;
 
 	private:
 		Transform m_LocalTransform;
@@ -74,7 +74,7 @@ namespace Minigin
 
 	template<typename Type>
 		requires IsComponent<Type>
-	Type* GameObject::GetComponent()
+	Type* GameObject::GetComponent() const
 	{
 		Component* component
 		{

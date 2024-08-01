@@ -21,6 +21,7 @@ namespace Minigin
 		SceneManager& operator= (const SceneManager&&) noexcept = delete;
 
 		Scene* CreateScene(const std::string& name, bool enabled = true);
+		Scene* GetScene(const std::string& name) const;
 
 	private:
 		explicit SceneManager() = default;

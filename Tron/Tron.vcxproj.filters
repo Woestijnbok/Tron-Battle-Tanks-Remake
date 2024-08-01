@@ -5,6 +5,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{09d95e45-921a-4971-9d4e-bd6941e12f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Menu Components">
+      <UniqueIdentifier>{08ef4148-0ce8-40dc-80fd-18fe0b22a1d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -14,6 +20,9 @@
     <ClCompile Include="TestObserver.cpp">
       <Filter>Old stuff</Filter>
     </ClCompile>
+    <ClCompile Include="MenuComponent.cpp">
+      <Filter>Components\Menu Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomCommands.h">
@@ -21,6 +30,9 @@
     </ClInclude>
     <ClInclude Include="TestObserver.h">
       <Filter>Old stuff</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuComponent.h">
+      <Filter>Components\Menu Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

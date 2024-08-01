@@ -171,16 +171,6 @@ void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transfo
 	SDL_RenderCopy(m_Renderer, sprite.GetSheet()->GetTexture(), &source, &destination);
 }
 
-//void Renderer::Impl::RenderTexture(const Texture& texture, float x, float y, float width, float height) const
-//{
-//	SDL_Rect dst{};
-//	dst.x = static_cast<int>(x);
-//	dst.y = static_cast<int>(y);
-//	dst.w = static_cast<int>(width);
-//	dst.h = static_cast<int>(height);
-//	SDL_RenderCopy(m_Renderer, texture.GetTexture(), nullptr, &dst);
-//}
-
 int Renderer::Impl::GetDriverIndex() const
 {
 	int index{ -1 };

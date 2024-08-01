@@ -10,3 +10,19 @@ Scene* SceneManager::CreateScene(const std::string& name, bool enabled)
 
 	return scene;
 }
+
+Scene* SceneManager::GetScene(const std::string& name) const
+{
+	Scene* scene	
+	{
+		GetControllableObject
+		(
+			[&name](const Scene* element) -> bool
+			{
+				return element->GetName() == name;
+			}
+		)
+	};
+
+	return scene;	
+}
