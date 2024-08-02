@@ -70,7 +70,7 @@ void GameObject::SetLocalPosition(const glm::ivec2& position)
 	FlagWorldTransform();
 }
 
-void GameObject::SetLocalRotation(const glm::ivec2& rotation)
+void GameObject::SetLocalRotation(int rotation)
 {
 	m_LocalTransform.SetRotation(rotation);
 	FlagWorldTransform();

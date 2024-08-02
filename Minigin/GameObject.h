@@ -30,7 +30,7 @@ namespace Minigin
 
 		void SetLocalTransform(const Transform& transform);
 		void SetLocalPosition(const glm::ivec2& position);
-		void SetLocalRotation(const glm::ivec2& rotation);
+		void SetLocalRotation(int rotation);
 		void SetLocalScale(const glm::vec2& scale);	
 		const Transform& GetWorldTransform();
 		const Transform& GetLocalTransform() const;

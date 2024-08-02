@@ -8,8 +8,14 @@
     <Filter Include="Components">
       <UniqueIdentifier>{09d95e45-921a-4971-9d4e-bd6941e12f9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Menu Components">
+    <Filter Include="Components\Tile Manager">
+      <UniqueIdentifier>{57289254-5b49-4530-a834-d47362519b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Menu">
       <UniqueIdentifier>{08ef4148-0ce8-40dc-80fd-18fe0b22a1d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tile Manager\Tile">
+      <UniqueIdentifier>{6de0acb1-ff93-4f8b-b15c-5e1fd116a1e2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,7 +27,13 @@
       <Filter>Old stuff</Filter>
     </ClCompile>
     <ClCompile Include="MenuComponent.cpp">
-      <Filter>Components\Menu Components</Filter>
+      <Filter>Components\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="TileManagerComponent.cpp">
+      <Filter>Components\Tile Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Components\Tile Manager\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -32,7 +44,13 @@
       <Filter>Old stuff</Filter>
     </ClInclude>
     <ClInclude Include="MenuComponent.h">
-      <Filter>Components\Menu Components</Filter>
+      <Filter>Components\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="TileManagerComponent.h">
+      <Filter>Components\Tile Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Components\Tile Manager\Tile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

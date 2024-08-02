@@ -2,6 +2,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#include <cmath>
 
 #include "Renderer.h"
 #include "SceneManager.h"
@@ -131,18 +132,28 @@ Texture* Renderer::Impl::CreateTexture(Font* font, const std::string& text)
 void Renderer::Impl::RenderTexture(const Texture& texture, const Transform& transform) const
 {
 	const glm::ivec2 position{ transform.GetPosition() };
-	const glm::vec2 scale{ transform.GetScale() };	
+	const glm::vec2 scale{ transform.GetScale() };
 	const glm::ivec2 textureSize{ texture.GetSize() };
 
 	const SDL_Rect destination
 	{
 		position.x,
 		position.y,	
-		static_cast<int>(textureSize.x * scale.x),
-		static_cast<int>(textureSize.y * scale.y)	
+		static_cast<int>(textureSize.x * std::abs(scale.x)),
+		static_cast<int>(textureSize.y * std::abs(scale.y))	
 	};
 
-	SDL_RenderCopy(m_Renderer, texture.GetTexture(), nullptr, &destination);
+	int angle{ transform.GetRotation() };
+
+	SDL_RendererFlip rendererFlip{ SDL_RendererFlip::SDL_FLIP_NONE };
+
+	if ((scale.x < 0) and (scale.y < 0)) angle += 180;
+	else if (scale.x < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
+	else if (scale.y < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;	
+
+	angle = (angle % 360 + 360) % 360;	
+
+	SDL_RenderCopyEx(m_Renderer, texture.GetTexture(), nullptr, &destination, static_cast<double>(angle), nullptr, rendererFlip);
 }
 
 void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const
@@ -168,7 +179,17 @@ void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transfo
 		static_cast<int>(frameSize.y * scale.y)	
 	};
 
-	SDL_RenderCopy(m_Renderer, sprite.GetSheet()->GetTexture(), &source, &destination);
+	int angle{ transform.GetRotation() };	
+
+	SDL_RendererFlip rendererFlip{ SDL_RendererFlip::SDL_FLIP_NONE };	
+
+	if ((scale.x < 0) and (scale.y < 0)) angle += 180;	
+	else if (scale.x < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_VERTICAL;	
+	else if (scale.y < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;	
+
+	angle = (angle % 360 + 360) % 360;
+
+	SDL_RenderCopyEx(m_Renderer, sprite.GetSheet()->GetTexture(), &source, &destination, static_cast<double>(angle), nullptr, rendererFlip);
 }
 
 int Renderer::Impl::GetDriverIndex() const

@@ -7,11 +7,11 @@
 
 #include "Component.h"
 
-class MenuComponent : public Minigin::Component
+class MenuComponent final : public Minigin::Component
 {
 public:
 	explicit MenuComponent(Minigin::GameObject* owner, const glm::ivec2& buttonSize, int spacing);
-	~MenuComponent() = default;
+	virtual ~MenuComponent() = default;	
 
 	MenuComponent(const MenuComponent&) = delete;
 	MenuComponent(MenuComponent&&) noexcept = delete;

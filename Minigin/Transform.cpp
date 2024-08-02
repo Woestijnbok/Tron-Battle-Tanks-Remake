@@ -10,7 +10,7 @@ Transform::Transform() :
 
 }
 
-Transform::Transform(glm::ivec2 position, glm::ivec2 rotation, glm::vec2 scale) :
+Transform::Transform(glm::ivec2 position, int rotation, glm::vec2 scale) :
 	m_Position{ position },
 	m_Rotation{ rotation },
 	m_Scale{ scale }
@@ -58,7 +58,7 @@ const glm::ivec2& Transform::GetPosition() const
 	return m_Position; 
 }
 
-const glm::ivec2& Transform::GetRotation() const
+int Transform::GetRotation() const
 {
 	return m_Rotation;
 }
@@ -73,7 +73,7 @@ void Transform::SetPosition(const glm::ivec2& position)
 	m_Position = position;
 }
 
-void Transform::SetRotation(const glm::ivec2& rotation)
+void Transform::SetRotation(int rotation)
 {
 	m_Rotation = rotation;
 }
