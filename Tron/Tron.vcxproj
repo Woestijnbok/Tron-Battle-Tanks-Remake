@@ -171,17 +171,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CustomCommands.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuComponent.cpp" />
-    <ClCompile Include="TestObserver.cpp" />
+    <ClCompile Include="MoveCommand.cpp" />
+    <ClCompile Include="TankComponent.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TileManagerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomCommands.h" />
     <ClInclude Include="MenuComponent.h" />
-    <ClInclude Include="TestObserver.h" />
+    <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="TankComponent.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileManagerComponent.h" />
   </ItemGroup>

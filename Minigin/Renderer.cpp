@@ -40,6 +40,7 @@ private:
 	SDL_Color m_ClearColor;
 	ImGuiContext* m_ImGuiContext;
 	ImPlotContext* m_ImPlotContext;
+	int m_WindowHeight;
 
 	int GetDriverIndex() const;
 
@@ -50,7 +51,8 @@ Renderer::Impl::Impl() :
 	m_Window{ Engine::GetWindow() },
 	m_ClearColor{},
 	m_ImGuiContext{},
-	m_ImPlotContext{}
+	m_ImPlotContext{},
+	m_WindowHeight{ Engine::GetWindowSize().y }
 {
 	m_Renderer = SDL_CreateRenderer(m_Window, GetDriverIndex(), SDL_RENDERER_ACCELERATED);
 	if (m_Renderer == nullptr)
@@ -128,32 +130,30 @@ Texture* Renderer::Impl::CreateTexture(Font* font, const std::string& text)
 	return new Texture{ texture };	
 }
 
-
 void Renderer::Impl::RenderTexture(const Texture& texture, const Transform& transform) const
 {
 	const glm::ivec2 position{ transform.GetPosition() };
-	const glm::vec2 scale{ transform.GetScale() };
+	const glm::ivec2 renderPosition{ position.x, m_WindowHeight - position.y };
+	int angle{ transform.GetRotation() };	
+	const glm::vec2 scale{ transform.GetScale() };	
+	SDL_RendererFlip flip{ SDL_RendererFlip::SDL_FLIP_NONE };	
 	const glm::ivec2 textureSize{ texture.GetSize() };
 
 	const SDL_Rect destination
 	{
-		position.x,
-		position.y,	
+		renderPosition.x - static_cast<int>((textureSize.x * std::abs(scale.x)) / 2),
+		renderPosition.y - static_cast<int>(textureSize.y * std::abs(scale.y)) + static_cast<int>((textureSize.y * std::abs(scale.y)) / 2),
 		static_cast<int>(textureSize.x * std::abs(scale.x)),
-		static_cast<int>(textureSize.y * std::abs(scale.y))	
+		static_cast<int>(textureSize.y * std::abs(scale.y))
 	};
 
-	int angle{ transform.GetRotation() };
-
-	SDL_RendererFlip rendererFlip{ SDL_RendererFlip::SDL_FLIP_NONE };
-
-	if ((scale.x < 0) and (scale.y < 0)) angle += 180;
-	else if (scale.x < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_VERTICAL;
-	else if (scale.y < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;	
+	if ((scale.x < 0) and (scale.y < 0)) angle += 180;	
+	else if (scale.x < 0) flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;	
+	else if (scale.y < 0) flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;	
 
 	angle = (angle % 360 + 360) % 360;	
 
-	SDL_RenderCopyEx(m_Renderer, texture.GetTexture(), nullptr, &destination, static_cast<double>(angle), nullptr, rendererFlip);
+	SDL_RenderCopyEx(m_Renderer, texture.GetTexture(), nullptr, &destination, static_cast<double>(angle), nullptr, flip);	
 }
 
 void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const
@@ -161,7 +161,10 @@ void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transfo
 	const glm::ivec2 frameSize{ sprite.GetFrameSize() };
 	const int collumns{ sprite.GetCollumns() };
 	const glm::ivec2 position{ transform.GetPosition() };
+	const glm::ivec2 renderPosition{ position.x, m_WindowHeight - position.y };
+	int angle{ transform.GetRotation() };	
 	const glm::vec2 scale{ transform.GetScale() };		
+	SDL_RendererFlip flip{ SDL_RendererFlip::SDL_FLIP_NONE };		
 
 	const SDL_Rect source
 	{
@@ -173,23 +176,19 @@ void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transfo
 	
 	const SDL_Rect destination
 	{
-		position.x,	
-		position.y,	
-		static_cast<int>(frameSize.x * scale.x),	
-		static_cast<int>(frameSize.y * scale.y)	
+		renderPosition.x - static_cast<int>((frameSize.x * std::abs(scale.x)) / 2),	
+		renderPosition.y - static_cast<int>(frameSize.y * std::abs(scale.y)) + static_cast<int>((frameSize.y * std::abs(scale.y)) / 2),	
+		static_cast<int>(frameSize.x * std::abs(scale.x)),	
+		static_cast<int>(frameSize.y * std::abs(scale.y))	
 	};
 
-	int angle{ transform.GetRotation() };	
-
-	SDL_RendererFlip rendererFlip{ SDL_RendererFlip::SDL_FLIP_NONE };	
-
 	if ((scale.x < 0) and (scale.y < 0)) angle += 180;	
-	else if (scale.x < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_VERTICAL;	
-	else if (scale.y < 0) rendererFlip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;	
+	else if (scale.x < 0) flip = SDL_RendererFlip::SDL_FLIP_HORIZONTAL;	
+	else if (scale.y < 0) flip = SDL_RendererFlip::SDL_FLIP_VERTICAL;	
 
 	angle = (angle % 360 + 360) % 360;
 
-	SDL_RenderCopyEx(m_Renderer, sprite.GetSheet()->GetTexture(), &source, &destination, static_cast<double>(angle), nullptr, rendererFlip);
+	SDL_RenderCopyEx(m_Renderer, sprite.GetSheet()->GetTexture(), &source, &destination, static_cast<double>(angle), nullptr, flip);	
 }
 
 int Renderer::Impl::GetDriverIndex() const

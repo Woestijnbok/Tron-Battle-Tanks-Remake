@@ -6,7 +6,7 @@
 
 using namespace Minigin;
 
-GameObject::GameObject(Scene* scene) :
+GameObject::GameObject(Scene* scene, const std::string& name) :
 	ControllableObject{},
 	ObjectController<Component>{},
 	m_LocalTransform{},
@@ -14,7 +14,8 @@ GameObject::GameObject(Scene* scene) :
 	m_Components{},
 	m_Children{},
 	m_Parent{},
-	m_Scene{ scene }
+	m_Scene{ scene },
+	m_Name{ name }
 {
 
 }
@@ -150,4 +151,14 @@ size_t GameObject::GetChildCount() const
 GameObject* GameObject::GetChild(size_t index) const 
 {
 	return m_Children.at(index);
+}
+
+const std::string& GameObject::GetName() const
+{
+	return m_Name;
+}
+
+Scene* GameObject::GetScene() const
+{
+	return m_Scene;
 }

@@ -26,8 +26,6 @@ private:
 	const ImVec2 m_WindowSize;	
 	const ImVec2 m_StartPosition;
 
-	ImVec2 CalculateWindowSize() const;
 	ImVec2 CalculateStartPosition() const;
-
 	void SoloMenuClicked() const;
 };

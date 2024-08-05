@@ -21,6 +21,13 @@ namespace Minigin
 		Text& operator=(Text&& other) noexcept = delete;
 
 		void Update();
+		/*
+		* @brief renders self centered around the give transform.
+		*
+		* @param The scale makes the text possibly strectch or shrink and flip with negative values.
+		* The position will be the center point of the text.
+		* The rotation will dictate the rotation of the text around the center of itself.
+		*/
 		void Render(const Transform& transform) const;	
 		void SetText(const std::string& text);
 		std::shared_ptr<Font> GetFont() const;

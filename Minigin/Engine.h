@@ -7,6 +7,7 @@
 #include <string>
 #include <functional>
 #include <chrono>
+#include <vec2.hpp>
 
 struct SDL_Window;
 
@@ -27,8 +28,10 @@ namespace Minigin
 		static void Run(const std::function<void()>& load);
 		static void Destroy();
 		static SDL_Window* GetWindow();
+		static glm::ivec2 GetWindowSize();	
 
 	private:
+		static glm::ivec2 m_WindowSize;
 		static SDL_Window* m_Window;
 		static const int m_TargetFrameRate;
 		static const std::chrono::milliseconds m_TargetFrameDuration;

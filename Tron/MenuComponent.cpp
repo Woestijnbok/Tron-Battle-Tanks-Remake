@@ -10,7 +10,7 @@ MenuComponent::MenuComponent(Minigin::GameObject* owner, const glm::ivec2& butto
 	Component{ owner },
     m_ButtonSize{ float(buttonSize.x), float(buttonSize.y) },   
     m_Spacing{ spacing },
-    m_WindowSize{ CalculateWindowSize() },
+    m_WindowSize{ static_cast<float>(Engine::GetWindowSize().x), static_cast<float>(Engine::GetWindowSize().y) },
     m_StartPosition{ CalculateStartPosition() }
 {   
     
@@ -47,14 +47,6 @@ void MenuComponent::Render() const
     }
 
     ImGui::End();
-}   
-
-ImVec2 MenuComponent::CalculateWindowSize() const
-{
-    int width{}, height{};
-    SDL_GetWindowSize(Engine::GetWindow(), &width, &height);
-
-    return ImVec2{ float(width), float(height) };
 }
 
 ImVec2 MenuComponent::CalculateStartPosition() const    

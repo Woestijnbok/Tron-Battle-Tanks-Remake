@@ -16,6 +16,7 @@
 
 using namespace Minigin;
 
+glm::ivec2 Engine::m_WindowSize{ 640, 480 };
 SDL_Window* Engine::m_Window{ nullptr };
 const int Engine::m_TargetFrameRate{ 60 };
 const std::chrono::milliseconds Engine::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
@@ -32,7 +33,7 @@ void Engine::Initialize(const std::string& nameWindow)
 
 	m_Window = SDL_CreateWindow
 	(
-		nameWindow.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480,
+		nameWindow.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_WindowSize.x, m_WindowSize.y,
 		SDL_WINDOW_MOUSE_FOCUS | SDL_WINDOW_MOUSE_GRABBED | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_INPUT_GRABBED
 		| SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_MOUSE_CAPTURE
 	);
@@ -114,4 +115,9 @@ void Engine::Destroy()
 SDL_Window* Minigin::Engine::GetWindow()
 {
 	return m_Window;
+}
+
+glm::ivec2 Minigin::Engine::GetWindowSize()
+{
+	return m_WindowSize;
 }

@@ -5,6 +5,7 @@
 #include <type_traits>
 #include <memory>
 #include <vector>
+#include <string>
 
 #include "Transform.h"
 #include "Component.h"
@@ -20,7 +21,7 @@ namespace Minigin
 	class GameObject final : public ControllableObject, public ObjectController<Component>
 	{
 	public:
-		explicit GameObject(Scene* scene);
+		explicit GameObject(Scene* scene, const std::string& name);
 		~GameObject() = default;
 
 		GameObject(const GameObject& other) = delete;	
@@ -38,6 +39,8 @@ namespace Minigin
 		void SetParent(GameObject* parent, bool keepWorldTransform = true);
 		size_t GetChildCount() const;
 		GameObject* GetChild(size_t index) const;
+		const std::string& GetName() const;
+		Scene* GetScene() const;
 
 		template<typename Type, typename... Arguments>
 			requires IsComponent<Type>
@@ -48,6 +51,7 @@ namespace Minigin
 		Type* GetComponent() const;
 
 	private:
+		const std::string m_Name;
 		Transform m_LocalTransform;
 		std::pair<bool, Transform> m_WorldTransform;
 		std::vector<std::unique_ptr<Component>> m_Components;

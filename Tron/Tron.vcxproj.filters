@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Old stuff">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Components">
       <UniqueIdentifier>{09d95e45-921a-4971-9d4e-bd6941e12f9b}</UniqueIdentifier>
     </Filter>
@@ -17,15 +13,18 @@
     <Filter Include="Components\Tile Manager\Tile">
       <UniqueIdentifier>{6de0acb1-ff93-4f8b-b15c-5e1fd116a1e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Tank">
+      <UniqueIdentifier>{bf177b77-bb93-4605-873c-b0f06642f79f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands">
+      <UniqueIdentifier>{7de0e0b8-4d84-457e-926f-19ed64fbcda0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\MoveCommand">
+      <UniqueIdentifier>{4a97870c-5fc0-476e-890f-3716551cce2c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="CustomCommands.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
-    <ClCompile Include="TestObserver.cpp">
-      <Filter>Old stuff</Filter>
-    </ClCompile>
     <ClCompile Include="MenuComponent.cpp">
       <Filter>Components\Menu</Filter>
     </ClCompile>
@@ -35,14 +34,14 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Components\Tile Manager\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="TankComponent.cpp">
+      <Filter>Components\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveCommand.cpp">
+      <Filter>Commands\MoveCommand</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CustomCommands.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
-    <ClInclude Include="TestObserver.h">
-      <Filter>Old stuff</Filter>
-    </ClInclude>
     <ClInclude Include="MenuComponent.h">
       <Filter>Components\Menu</Filter>
     </ClInclude>
@@ -51,6 +50,12 @@
     </ClInclude>
     <ClInclude Include="Tile.h">
       <Filter>Components\Tile Manager\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="TankComponent.h">
+      <Filter>Components\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveCommand.h">
+      <Filter>Commands\MoveCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
