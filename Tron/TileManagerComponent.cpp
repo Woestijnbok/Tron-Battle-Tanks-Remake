@@ -106,7 +106,7 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 				if (row > 0)
 				{
 					// check if at right edge
-					if (static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1).CanPass(Tile::Side::Left);
+					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1).CanPass(Tile::Side::Left);	
 					else canMove = m_Tiles.at(row - 1).at(collumn).CanPass(Tile::Side::Left);
 				}
 			}
@@ -114,7 +114,7 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 			else
 			{
 				// check if at right edge
-				if (static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1).CanPass(Tile::Side::Left);
+				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1).CanPass(Tile::Side::Left);
 				else canMove = m_Tiles.at(row).at(collumn).CanPass(Tile::Side::Left);
 			}
 		}
