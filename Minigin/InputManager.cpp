@@ -2,22 +2,21 @@
 
 using namespace Minigin;
 
-
 InputManager::InputManager() :
-	Singleton{},
-	m_Keyboard{},
+	m_Mouse{},	
+	m_Keyboard{},	
 	m_Controllers{}	
 {
-
+	m_Keyboard.SetMouse(&m_Mouse);
 }
-
-InputManager::~InputManager() = default;
 
 bool InputManager::ProcessInput()
 {
 	if (m_Keyboard.ProcessInput()) return true;
 	else
 	{
+		m_Mouse.ProcessInput();
+
 		for (Controller& controller : m_Controllers)
 		{
 			controller.ProcessInput();	
@@ -35,6 +34,11 @@ void Minigin::InputManager::AddController()
 Keyboard& Minigin::InputManager::GetKeyboard()
 {
 	return m_Keyboard;
+}
+
+Mouse& Minigin::InputManager::GetMouse()
+{
+	return m_Mouse;
 }
 
 Controller& Minigin::InputManager::GetController(unsigned int index)

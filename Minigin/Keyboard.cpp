@@ -4,6 +4,8 @@
 #include "backends/imgui_impl_sdl2.h"
 #include "Keyboard.h"
 #include "Command.h"
+#include "InputManager.h"
+#include "Engine.h"
 
 using namespace Minigin;
 
@@ -19,14 +21,15 @@ public:
 	Impl& operator=(Impl&& other) noexcept = delete;
 
 	bool ProcessInput();
-	void AddInputAction(Key key, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate, bool swizzle);	
+	void AddInputAction(Key key, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 	void ClearInputActions();
+	void SetMouse(Mouse* mouse);	
 
 private:
 	std::vector<InputAction> m_InputActions;
+	Mouse* m_Mouse;
 
 	unsigned int ConvertKey(Keyboard::Key key) const;
-	void FireInputAction(const InputAction& inputAction) const;
 
 };
 
@@ -36,64 +39,78 @@ bool Keyboard::Impl::ProcessInput()
 
 	while (SDL_PollEvent(&event))
 	{
-		if (event.type == SDL_QUIT)
+		switch (event.type)
 		{
+		case SDL_QUIT:
 			return true;
-		}
-
-		if (event.type == SDL_KEYDOWN)
-		{
-			if (event.key.keysym.sym == SDLK_ESCAPE)
+			break;
+		case SDL_MOUSEMOTION:
+			m_Mouse->MouseMoved();
+			m_Mouse->SetMousePosition(glm::ivec2{ static_cast<int>(event.motion.x), Engine::GetWindowSize().y - static_cast<int>(event.motion.y) });	
+			break;
+		case SDL_MOUSEBUTTONDOWN:
+			m_Mouse->SetMousePosition(glm::ivec2{ static_cast<int>(event.button.x), Engine::GetWindowSize().y - static_cast<int>(event.button.y) });
+			if (event.button.button == SDL_BUTTON_LEFT)	m_Mouse->MouseClicked(true);
+			else m_Mouse->MouseClicked(false);
+			break;
+		case SDL_KEYDOWN:	
+			if (event.key.keysym.sym == SDLK_ESCAPE)	
 			{
 				return true;
 			}
 
-			for (const InputAction& inputAction : m_InputActions)
+			for (const InputAction& inputAction : m_InputActions)	
 			{
 				if ((event.key.keysym.sym == static_cast<SDL_KeyCode>(inputAction.GetButton())) and	
-					(inputAction.GetTrigger() == InputAction::Trigger::Pressed))		
+					(inputAction.GetTrigger() == InputAction::Trigger::Pressed))	
 				{
-					FireInputAction(inputAction);
+					inputAction.GetCommand()->Execute();	
 				}
 			}
-		}
-
-		if (event.type == SDL_KEYUP)
-		{
-			for (const InputAction& inputAction : m_InputActions)		
+			break;
+		case SDL_KEYUP:
+			for (const InputAction& inputAction : m_InputActions)	
 			{
 				if ((event.key.keysym.sym == static_cast<SDL_KeyCode>(inputAction.GetButton())) and	
 					(inputAction.GetTrigger() == InputAction::Trigger::Up))	
 				{
-					FireInputAction(inputAction);		
+					inputAction.GetCommand()->Execute();	
 				}
 			}
-		}
-
-		const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);
-		for (const InputAction& inputAction : m_InputActions)
-		{
-			if ((keyboardState[SDL_GetScancodeFromKey(static_cast<SDL_KeyCode>(inputAction.GetButton()))]) and
-				(inputAction.GetTrigger() == InputAction::Trigger::Down))	
-			{
-				FireInputAction(inputAction);		
-			}
+			break;
+		default:
+			break;
 		}
 
 		ImGui_ImplSDL2_ProcessEvent(&event);
 	}
 
+	const Uint8* keyboardState = SDL_GetKeyboardState(nullptr);	
+	for (const InputAction& inputAction : m_InputActions)	
+	{
+		if ((keyboardState[SDL_GetScancodeFromKey(static_cast<SDL_KeyCode>(inputAction.GetButton()))]) and	
+			(inputAction.GetTrigger() == InputAction::Trigger::Down))	
+		{	
+			inputAction.GetCommand()->Execute();	
+		}
+	}
+
 	return false;
 }
 
-void Keyboard::Impl::AddInputAction(Key key, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate, bool swizzle)
+void Keyboard::Impl::AddInputAction(Key key, InputAction::Trigger trigger, const std::shared_ptr<Command>& command)
 {
-	m_InputActions.emplace_back(ConvertKey(key), valueType, trigger, command, negate, swizzle);
+	m_InputActions.emplace_back(ConvertKey(key), trigger, command);
 }
 
 void Keyboard::Impl::ClearInputActions()
 {
 	m_InputActions.clear();
+}
+
+void Keyboard::Impl::SetMouse(Mouse* mouse)
+{
+	m_Mouse = mouse;
 }
 
 unsigned int Keyboard::Impl::ConvertKey(Keyboard::Key key) const
@@ -226,32 +243,6 @@ unsigned int Keyboard::Impl::ConvertKey(Keyboard::Key key) const
 	}
 }
 
-void Keyboard::Impl::FireInputAction(const InputAction& inputAction) const
-{
-	const InputAction::Value valueType{ inputAction.GetValueType() };
-
-	if (std::holds_alternative<bool>(valueType))
-	{
-		inputAction.GetCommand()->Execute( !inputAction.HasNegate() );
-	}
-	else if (std::holds_alternative<float>(valueType))
-	{
-		inputAction.GetCommand()->Execute(inputAction.HasNegate() ? -1.0f : 1.0f);	
-	}
-	else
-	{
-		InputAction::Value value{ glm::vec2{ 1.0f, 0.0f } };
-		if (inputAction.HasNegate()) std::get<glm::vec2>(value).x *= -1.0f;
-		if (inputAction.HasSwizzle())
-		{
-			std::get<glm::vec2>(value).y = std::get<glm::vec2>(value).x;
-			std::get<glm::vec2>(value).x = 0.0f;
-		}
-
-		inputAction.GetCommand()->Execute(value);	
-	}
-}
-
 Keyboard::Keyboard() :
 	m_Pimpl{ std::make_unique<Keyboard::Impl>() }
 {
@@ -265,12 +256,17 @@ bool Keyboard::ProcessInput()
 	return m_Pimpl->ProcessInput();
 }
 
-void Keyboard::AddInputAction(Key key, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate, bool swizzle)
+void Keyboard::AddInputAction(Key key, InputAction::Trigger trigger, const std::shared_ptr<Command>& command)
 {
-	m_Pimpl->AddInputAction(key, valueType, trigger, command, negate, swizzle);
+	m_Pimpl->AddInputAction(key, trigger, command);
 }
 
 void Keyboard::ClearInputActions()
 {
 	m_Pimpl->ClearInputActions();
+}
+
+void Minigin::Keyboard::SetMouse(Mouse* mouse)
+{
+	m_Pimpl->SetMouse(mouse);
 }

@@ -1,4 +1,5 @@
 #include <exception>
+#include <iostream>
 
 #include "MoveCommand.h"
 #include "GameObject.h"
@@ -16,8 +17,7 @@ MoveCommand::MoveCommand(Minigin::GameObject* object, Direction direction) :
 	}
 }
 
-void MoveCommand::Execute(const Minigin::InputAction::Value& value)
+void MoveCommand::Execute()
 {
-	value;
 	m_TankComponent->Move(m_Direction);
 }

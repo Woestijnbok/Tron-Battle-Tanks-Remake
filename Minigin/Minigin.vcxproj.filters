@@ -107,6 +107,9 @@
     <ClCompile Include="SpriteComponent.cpp">
       <Filter>Components\Sprite Component</Filter>
     </ClCompile>
+    <ClCompile Include="Mouse.cpp">
+      <Filter>Input\Mouse</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
@@ -221,6 +224,9 @@
     <ClInclude Include="SpriteComponent.h">
       <Filter>Components\Sprite Component</Filter>
     </ClInclude>
+    <ClInclude Include="Mouse.h">
+      <Filter>Input\Mouse</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="imgui">
@@ -321,6 +327,9 @@
     </Filter>
     <Filter Include="Components\Sprite Component">
       <UniqueIdentifier>{02f51a27-bd16-40c2-9c7e-f8f349a88a30}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input\Mouse">
+      <UniqueIdentifier>{13ac68f7-1e0c-4601-ac19-3d31d9604130}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

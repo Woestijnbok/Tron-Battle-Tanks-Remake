@@ -209,6 +209,7 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Keyboard.h" />
     <ClInclude Include="Engine.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="ObjectController.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
@@ -248,6 +249,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="Mouse.cpp" />
     <ClCompile Include="ObjectController.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />

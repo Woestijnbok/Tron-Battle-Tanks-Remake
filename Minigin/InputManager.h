@@ -5,6 +5,7 @@
 #include "Singleton.h"
 #include "Keyboard.h"
 #include "Controller.h"
+#include "Mouse.h"
 
 namespace Minigin
 {
@@ -13,7 +14,7 @@ namespace Minigin
 	public:
 		friend class Singleton<InputManager>;	
 
-		~InputManager();
+		~InputManager() = default;
 
 		InputManager(const InputManager&) = delete;
 		InputManager(InputManager&&) noexcept = delete;
@@ -23,9 +24,11 @@ namespace Minigin
 		bool ProcessInput();
 		void AddController();
 		Keyboard& GetKeyboard();
+		Mouse& GetMouse();
 		Controller& GetController(unsigned int index);
 
 	private:
+		Mouse m_Mouse;
 		Keyboard m_Keyboard;
 		std::vector<Controller> m_Controllers;
 

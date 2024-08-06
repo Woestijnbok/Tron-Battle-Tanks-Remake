@@ -36,7 +36,7 @@ namespace Minigin
 		Controller& operator=(Controller&& other) noexcept = delete;
 
 		void ProcessInput();
-		void AddInputAction(Button button, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate = false, bool swizzle = false);
+		void AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 		void ClearInputActions();
 		unsigned int GetIndex() const;
 

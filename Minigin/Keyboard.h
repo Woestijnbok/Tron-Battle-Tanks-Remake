@@ -6,6 +6,8 @@
 
 namespace Minigin
 {
+	class Mouse;
+
 	class Keyboard final
 	{
 	public:
@@ -62,8 +64,9 @@ namespace Minigin
 		Keyboard& operator=(Keyboard&& other) noexcept = delete;
 
 		bool ProcessInput();
-		void AddInputAction(Key key, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate = false, bool swizzle = false);
+		void AddInputAction(Key key, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 		void ClearInputActions();
+		void SetMouse(Mouse* mouse);
 
 	private:
 		class Impl;

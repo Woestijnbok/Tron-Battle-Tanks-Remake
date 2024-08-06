@@ -19,7 +19,7 @@ public:
 	Impl& operator=(Impl&& other) noexcept = delete;
 
 	void ProcessInput();
-	void AddInputAction(Button button, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate, bool swizzle);
+	void AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 	void ClearInputActions();
 	unsigned int GetIndex() const;
 
@@ -30,7 +30,6 @@ private:
 	XINPUT_STATE m_CurrentState;
 
 	unsigned int ConvertButton(Controller::Button button) const;
-	void FireInputAction(const InputAction& inputAction) const;
 };
 
 Controller::Impl::Impl(unsigned int index) :
@@ -60,28 +59,28 @@ void Controller::Impl::ProcessInput()
 		case InputAction::Trigger::Down:
 			if (m_CurrentState.Gamepad.wButtons & static_cast<WORD>(inputAction.GetButton()))	
 			{
-				FireInputAction(inputAction);	
+				inputAction.GetCommand()->Execute();	
 			}
 			break;
 		case InputAction::Trigger::Pressed:
 			if (buttonsPressedThisFrame & static_cast<WORD>(inputAction.GetButton()))	
 			{
-				FireInputAction(inputAction);		
+				inputAction.GetCommand()->Execute();			
 			}
 			break;
 		case InputAction::Trigger::Up:	
 			if (buttonsReleasedThisFrame & static_cast<WORD>(inputAction.GetButton()))	
 			{
-				FireInputAction(inputAction);	
+				inputAction.GetCommand()->Execute();		
 			}
 			break;
 		}
 	}
 }
 
-void Controller::Impl::AddInputAction(Button button, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate, bool swizzle)
+void Controller::Impl::AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command)
 {
-	m_InputActions.emplace_back(ConvertButton(button), valueType, trigger, command, negate, swizzle);	
+	m_InputActions.emplace_back(ConvertButton(button), trigger, command);	
 }
 
 void Controller::Impl::ClearInputActions()
@@ -146,32 +145,6 @@ unsigned int Controller::Impl::ConvertButton(Controller::Button button) const
 	}
 }
 
-void Controller::Impl::FireInputAction(const InputAction& inputAction) const
-{
-	const InputAction::Value valueType{ inputAction.GetValueType() };
-
-	if (std::holds_alternative<bool>(valueType))
-	{
-		inputAction.GetCommand()->Execute( !inputAction.HasNegate() );
-	}
-	else if (std::holds_alternative<float>(valueType))
-	{
-		inputAction.GetCommand()->Execute(inputAction.HasNegate() ? -1.0f : 1.0f);	
-	}
-	else
-	{
-		InputAction::Value value{ glm::vec2{ 1.0f, 0.0f } };
-		if (inputAction.HasNegate()) std::get<glm::vec2>(value).x *= -1.0f;
-		if (inputAction.HasSwizzle())
-		{
-			std::get<glm::vec2>(value).y = std::get<glm::vec2>(value).x;
-			std::get<glm::vec2>(value).x = 0.0f;
-		}
-
-		inputAction.GetCommand()->Execute(value);	
-	}
-}
-
 Controller::Controller(unsigned int index) :	
 	m_Pimpl{ std::make_unique<Controller::Impl>(index) }
 {
@@ -187,9 +160,9 @@ void Controller::ProcessInput()
 	m_Pimpl->ProcessInput();
 }
 
-void Controller::AddInputAction(Button button, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate, bool swizzle)
+void Controller::AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command)
 {
-	m_Pimpl->AddInputAction(button, valueType, trigger, command, negate, swizzle);
+	m_Pimpl->AddInputAction(button, trigger, command);
 }
 
 void Controller::ClearInputActions()
