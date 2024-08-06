@@ -13,6 +13,13 @@ Tile::Tile() :
 
 }
 
+Tile& Tile::operator=(const Tile&& rhs) noexcept
+{
+	m_Sides = rhs.m_Sides;
+
+	return *this;
+}
+
 bool Tile::CanPass(Side side) const
 {
 	return m_Sides.at(static_cast<int>(side));

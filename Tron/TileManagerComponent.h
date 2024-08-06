@@ -28,7 +28,7 @@ public:
 	virtual void Render() const override;
 
 private:
-	const std::array<const std::array<const Tile, 8>, 8> m_Tiles;
+	std::array<std::array<Tile, 8>, 8> m_Tiles;	
 	const std::unique_ptr<const Minigin::Texture> m_TileZero;	
 	const std::unique_ptr<const Minigin::Texture> m_TileOne;
 	const std::unique_ptr<const Minigin::Texture> m_TileTwoCorner;
@@ -43,4 +43,5 @@ private:
 	*/
 	std::pair<Minigin::Texture const *, Minigin::Transform> GetRenderInfo(const Tile& tile) const;	
 	glm::vec2 GetScale(Minigin::Texture const* texture) const;
+	void CreateTiles();	
 };

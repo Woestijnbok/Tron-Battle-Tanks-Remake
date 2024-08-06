@@ -10,15 +10,15 @@
 TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize) :
 	Component{ owner },
 	m_Tiles
-	{
-		std::array<const Tile, 8>{ Tile{ false, false, true, true }, Tile{ true, true, true, false }, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{ true, true, false, true }, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
-		std::array<const Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+	{ 
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },	
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },	
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },	
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },	
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },	
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },	
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} }
 	},
 	m_TileZero{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Zero.png") },
 	m_TileOne{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile One.png") },
@@ -28,17 +28,17 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 	m_TileFour{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Four.png") },
 	m_TileSize{ tileSize }
 {
-
+	CreateTiles();
 }
 
-glm::ivec2 TileManagerComponent::GetStartPosition() const
+glm::ivec2 TileManagerComponent::GetStartPosition() const	
 {
 	glm::ivec2 position{ GetOwner()->GetWorldTransform().GetPosition() };
 
-	return glm::ivec2{ position.x + static_cast<int>(m_TileSize * (m_Tiles.size() / 2)), position.y + static_cast<int>(m_TileSize * (m_Tiles.size() / 2)) };
+	return glm::ivec2{ position.x + static_cast<int>(m_TileSize * (m_Tiles.size() / 2)), position.y + static_cast<int>(m_TileSize * (m_Tiles.size() / 2)) };	
 }
 
-bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direction direction) const
+bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direction direction) const	
 {
 	bool canMove{ false };
 
@@ -236,4 +236,21 @@ glm::vec2 TileManagerComponent::GetScale(Minigin::Texture const* texture) const
 	const glm::ivec2 textureSize{ texture->GetSize() };
 
 	return glm::vec2{ static_cast<float>(m_TileSize) / textureSize.x, static_cast<float>(m_TileSize) / textureSize.y };
+}
+
+void TileManagerComponent::CreateTiles()
+{
+	std::array<std::array<Tile, 8>, 8> tiles
+	{
+		std::array<Tile, 8>{ Tile{ true, true, true, false }, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+		std::array<Tile, 8>{ Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{}, Tile{} },
+	};
+
+	m_Tiles = tiles;
 }

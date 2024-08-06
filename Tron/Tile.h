@@ -19,8 +19,8 @@ public:
 
 	Tile(const Tile&) = default;
 	Tile(Tile&&) noexcept = default;
-	Tile& operator= (const Tile&) = delete;
-	Tile& operator= (const Tile&&) noexcept = delete;
+	Tile& operator= (const Tile&) = default;
+	Tile& operator= (const Tile&& rhs) noexcept;
 
 	bool CanPass(Side side) const;
 	void SetPass(Side side, bool pass);
