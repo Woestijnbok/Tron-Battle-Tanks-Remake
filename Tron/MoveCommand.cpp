@@ -16,7 +16,8 @@ MoveCommand::MoveCommand(Minigin::GameObject* object, Direction direction) :
 	}
 }
 
-void MoveCommand::Execute()
+void MoveCommand::Execute(const Minigin::InputAction::Value& value)
 {
+	value;
 	m_TankComponent->Move(m_Direction);
 }

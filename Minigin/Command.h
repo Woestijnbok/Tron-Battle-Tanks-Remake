@@ -1,5 +1,10 @@
 #pragma once
 
+#include <variant>
+#include <vec2.hpp>
+
+#include "InputAction.h"
+
 namespace Minigin
 {
 	class GameObject;
@@ -15,7 +20,7 @@ namespace Minigin
 		Command& operator= (const Command&) = delete;
 		Command& operator= (const Command&&) noexcept = delete;
 
-		virtual void Execute() = 0;
+		virtual void Execute(const InputAction::Value& value) = 0;	
 
 	protected:
 
@@ -36,7 +41,7 @@ namespace Minigin
 		GameObjectCommand& operator= (const GameObjectCommand&) = delete;
 		GameObjectCommand& operator= (const GameObjectCommand&&) noexcept = delete;
 
-		virtual void Execute() override = 0;
+		virtual void Execute(const InputAction::Value& value) override = 0;	
 
 		GameObject* GetGameObject();
 

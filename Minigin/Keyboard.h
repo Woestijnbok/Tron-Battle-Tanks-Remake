@@ -4,7 +4,7 @@
 
 #include "InputAction.h"
 
-namespace Minigin	
+namespace Minigin
 {
 	class Keyboard final
 	{
@@ -62,7 +62,7 @@ namespace Minigin
 		Keyboard& operator=(Keyboard&& other) noexcept = delete;
 
 		bool ProcessInput();
-		void AddInputAction(Keyboard::Key key, InputAction::Trigger trigger, Command* command);
+		void AddInputAction(Key key, InputAction::Value valueType, InputAction::Trigger trigger, std::shared_ptr<Command> command, bool negate = false, bool swizzle = false);
 		void ClearInputActions();
 
 	private:

@@ -23,7 +23,7 @@ public:
 	MoveCommand& operator= (const MoveCommand&) = delete;
 	MoveCommand& operator= (const MoveCommand&&) = delete;
 
-	virtual void Execute() override;
+	virtual void Execute(const Minigin::InputAction::Value& value) override;		
 
 private:
 	Direction m_Direction;

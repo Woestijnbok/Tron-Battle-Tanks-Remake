@@ -1,6 +1,9 @@
 #pragma once
 
+#include <variant>
 #include <memory>
+#include <utility>
+#include <vec2.hpp>
 
 namespace Minigin
 {
@@ -9,6 +12,8 @@ namespace Minigin
 	class InputAction final
 	{
 	public:
+		using Value = std::variant<bool, float, glm::vec2>;
+
 		enum class Trigger : unsigned int
 		{
 			Up,			// When key is released this frame.
@@ -16,22 +21,31 @@ namespace Minigin
 			Down        // When key is down.
 		};
 
-		explicit InputAction(unsigned int button, InputAction::Trigger trigger, Command* command);
+		/*
+		*  @param valueType can be bool, float and glm::vec2.
+		*  We are using a std::variant to denote the possible types.
+		*/
+		explicit InputAction(unsigned int button, const Value& valueType, InputAction::Trigger trigger, const std::shared_ptr<Command>& command, bool negate, bool swizzle);
 		~InputAction() = default;
 
 		InputAction(const InputAction&) = delete;
 		InputAction(InputAction&&) noexcept = default;
 		InputAction& operator= (const InputAction&) = delete;
 		InputAction& operator= (const InputAction&&) noexcept = delete;
-
+		
 		unsigned int GetButton() const;
-		InputAction::Trigger GetTrigger() const;
+		const Value& GetValueType() const;
+		Trigger GetTrigger() const;
 		Command* GetCommand() const;
+		bool HasNegate() const;
+		bool HasSwizzle() const;
 
 	private:
-		unsigned int m_Button;
-		InputAction::Trigger m_Trigger;
-		std::unique_ptr<Command> m_Command;
-
+		const unsigned int m_Button;
+		const Value m_ValueType;
+		const InputAction::Trigger m_Trigger;
+		const std::shared_ptr<Command> m_Command;		
+		const bool m_Negate;
+		const bool m_Swizzle;
 	};
 }
