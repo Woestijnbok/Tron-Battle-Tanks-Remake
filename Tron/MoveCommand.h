@@ -15,7 +15,7 @@ public:
 		Left
 	};
 
-	MoveCommand(Minigin::GameObject* object, Direction direction);
+	MoveCommand(TankComponent* tank, Direction direction);
 	virtual ~MoveCommand() = default;
 
 	MoveCommand(const MoveCommand&) = delete;
@@ -27,6 +27,6 @@ public:
 
 private:
 	Direction m_Direction;
-	TankComponent* m_TankComponent;
+	TankComponent* m_Tank;
 
 };

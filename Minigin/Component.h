@@ -17,13 +17,12 @@ namespace Minigin
 		Component& operator=(const Component& other) = delete;
 		Component& operator=(Component&& other) noexcept = delete;
 
+		GameObject* GetOwner() const;
+
 		virtual void Update();
 		virtual void FixedUpdate();
 		virtual void LateUpdate();
 		virtual void Render() const;
-
-	protected:
-		GameObject* GetOwner() const;
 
 	private:
 		GameObject* const m_Owner;

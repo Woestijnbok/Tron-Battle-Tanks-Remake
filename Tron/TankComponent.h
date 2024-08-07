@@ -1,17 +1,19 @@
 #pragma once
 
 #include <memory>
+#include <array>
 
 #include "Component.h"
 #include "Texture.h"
 #include "MoveCommand.h"
 
 class TileManagerComponent;
+class BulletManagerComponent;
 
 class TankComponent final : public Minigin::Component
 {
 public:
-	explicit TankComponent(Minigin::GameObject* owner, float speed);
+	explicit TankComponent(Minigin::GameObject* owner, TileManagerComponent* tileManager, BulletManagerComponent* bulletManager, float speed);	
 	virtual ~TankComponent() = default;
 
 	TankComponent(const TankComponent&) = delete;
@@ -22,12 +24,23 @@ public:
 	float GetSpeed() const;
 	void Move(MoveCommand::Direction direction);
 	glm::ivec2 GetWorldPosition() const;
+	void SetBarrelRotation(int angle);
+	void Fire() const;
 
 	virtual void Render() const override;
 
 private:
+	TileManagerComponent* m_TileManager;
+	BulletManagerComponent* m_BulletManager;
 	const float m_Speed;
 	const std::unique_ptr<const Minigin::Texture> m_TankTexture;
+	const std::unique_ptr<const Minigin::Texture> m_BarrelTexture;
 	MoveCommand::Direction m_Direction;
-	TileManagerComponent* m_TileManager;
+	/*
+	* @brief offsets for the barrel in each direction.
+	* The order is up, right, left and down same as the enum.
+	*/
+	std::array<const glm::ivec2, 4> m_BarrelOffsets;
+	const glm::ivec2 m_BarrelRotationPoint;
+	int m_BarrelRotation;
 };

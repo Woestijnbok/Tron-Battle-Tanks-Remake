@@ -31,7 +31,7 @@ public:
 	void Render() const;
 	Texture* CreateTexture(const std::filesystem::path& path) const;
 	Texture* CreateTexture(Font* font, const std::string& text);
-	void RenderTexture(const Texture& texture, const Transform& transform) const;
+	void RenderTexture(const Texture& texture, const Transform& transform, const glm::ivec2& center) const;	
 	void RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const;
 
 private:
@@ -130,7 +130,7 @@ Texture* Renderer::Impl::CreateTexture(Font* font, const std::string& text)
 	return new Texture{ texture };	
 }
 
-void Renderer::Impl::RenderTexture(const Texture& texture, const Transform& transform) const
+void Renderer::Impl::RenderTexture(const Texture& texture, const Transform& transform, const glm::ivec2& center) const
 {
 	const glm::ivec2 position{ transform.GetPosition() };
 	const glm::ivec2 renderPosition{ position.x, m_WindowHeight - position.y };
@@ -153,7 +153,12 @@ void Renderer::Impl::RenderTexture(const Texture& texture, const Transform& tran
 
 	angle = (angle % 360 + 360) % 360;	
 
-	SDL_RenderCopyEx(m_Renderer, texture.GetTexture(), nullptr, &destination, static_cast<double>(angle), nullptr, flip);	
+	if (center == glm::ivec2{ -1 }) SDL_RenderCopyEx(m_Renderer, texture.GetTexture(), nullptr, &destination, static_cast<double>(angle), nullptr, flip);
+	else
+	{
+		const SDL_Point centerPoint{ center.x, textureSize.y - center.y };
+		SDL_RenderCopyEx(m_Renderer, texture.GetTexture(), nullptr, &destination, static_cast<double>(angle), &centerPoint, flip);
+	}
 }
 
 void Renderer::Impl::RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const
@@ -233,9 +238,9 @@ Texture* Renderer::CreateTexture(Font* font, const std::string& text) const
 	return m_Pimpl->CreateTexture(font, text);
 }
 
-void Renderer::RenderTexture(const Texture& texture, const Transform& transform) const
+void Minigin::Renderer::RenderTexture(const Texture& texture, const Transform& transform, const glm::ivec2& center) const
 {
-	m_Pimpl->RenderTexture(texture, transform);
+	m_Pimpl->RenderTexture(texture, transform, center);
 }
 
 void Renderer::RenderSprite(const Sprite& sprite, int frame, const Transform& transform) const

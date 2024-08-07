@@ -19,8 +19,20 @@
     <Filter Include="Commands">
       <UniqueIdentifier>{7de0e0b8-4d84-457e-926f-19ed64fbcda0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Commands\MoveCommand">
+    <Filter Include="Components\Bullet Manager">
+      <UniqueIdentifier>{27df4246-410f-4098-8ff0-a18e588b82a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Bullet Manager\Bullet">
+      <UniqueIdentifier>{ce5da085-feda-4636-8ecf-776852ac62bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Move">
       <UniqueIdentifier>{4a97870c-5fc0-476e-890f-3716551cce2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Aim">
+      <UniqueIdentifier>{079af0e9-4043-423e-87b3-ecd1984b4075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Fire">
+      <UniqueIdentifier>{707065cc-82ac-4952-a84e-b2e5e8b68e8d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -38,7 +50,19 @@
       <Filter>Components\Tank</Filter>
     </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
-      <Filter>Commands\MoveCommand</Filter>
+      <Filter>Commands\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="AimCommand.cpp">
+      <Filter>Commands\Aim</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletManagerComponent.cpp">
+      <Filter>Components\Bullet Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Components\Bullet Manager\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="FireCommand.cpp">
+      <Filter>Commands\Fire</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +79,19 @@
       <Filter>Components\Tank</Filter>
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
-      <Filter>Commands\MoveCommand</Filter>
+      <Filter>Commands\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="AimCommand.h">
+      <Filter>Commands\Aim</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletManagerComponent.h">
+      <Filter>Components\Bullet Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Components\Bullet Manager\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="FireCommand.h">
+      <Filter>Commands\Fire</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

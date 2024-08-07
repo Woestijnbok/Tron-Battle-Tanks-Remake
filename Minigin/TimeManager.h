@@ -19,8 +19,8 @@ namespace Minigin
 		TimeManager& operator=(TimeManager&& other) = delete;
 
 		void SetDeltaTime(std::chrono::milliseconds delta);
-		std::chrono::duration<float> GetDeltaTime();
-		std::chrono::milliseconds GetFixedDeltaTime();
+		std::chrono::duration<float> GetDeltaTime() const;
+		std::chrono::duration<float> GetFixedDeltaTime() const;	
 
 	private:
 		std::chrono::milliseconds m_DeltaTime;	

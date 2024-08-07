@@ -86,7 +86,7 @@ void Engine::Run(const std::function<void()>& load)
 		while (lag >= timeManager->GetFixedDeltaTime())	
 		{
 			sceneManager->FixedUpdate();	
-			lag -= timeManager->GetFixedDeltaTime();	
+			lag -= std::chrono::duration_cast<std::chrono::milliseconds>(timeManager->GetFixedDeltaTime());
 		}
 		sceneManager->Update();	
 		sceneManager->LateUpdate();	

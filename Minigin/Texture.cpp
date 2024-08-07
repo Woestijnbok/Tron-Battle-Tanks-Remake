@@ -17,9 +17,9 @@ Texture::~Texture()
 	SDL_DestroyTexture(m_Texture);
 }
 
-void Texture::Render(const Transform& transform) const
+void Texture::Render(const Transform& transform, const glm::ivec2& center) const
 {
-	Renderer::Instance()->RenderTexture(*this, transform);
+	Renderer::Instance()->RenderTexture(*this, transform, center);
 }
 
 SDL_Texture* Texture::GetTexture() const

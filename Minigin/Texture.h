@@ -25,8 +25,9 @@ namespace Minigin
 		* @param The scale makes the texture possibly strectch or shrink and flip with negative values.
 		* The position will be the center point of the texture.
 		* The rotation will dictate the rotation of the texture around the center of itself.
+		* The center is the point at wich the texture will rotate around (point in texture space).
 		*/
-		void Render(const Transform& transform) const;
+		void Render(const Transform& transform, const glm::ivec2& center = glm::ivec2{ -1 }) const;
 		SDL_Texture* GetTexture() const;	
 		glm::ivec2 GetSize() const;
 

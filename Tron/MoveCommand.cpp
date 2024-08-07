@@ -4,20 +4,24 @@
 #include "MoveCommand.h"
 #include "GameObject.h"
 #include "TankComponent.h"
-#include "TimeManager.h"
 
-MoveCommand::MoveCommand(Minigin::GameObject* object, Direction direction) :
-	GameObjectCommand{ object },
+MoveCommand::MoveCommand(TankComponent* tank, Direction direction) :
+	GameObjectCommand{ tank->GetOwner() },
 	m_Direction{ direction },
-	m_TankComponent{ GetGameObject()->GetComponent<TankComponent>() }	
+	m_Tank{ tank }		
 {
-	if (m_TankComponent == nullptr)	
+	if (GetGameObject() == nullptr)
 	{
-		throw std::exception{ "MoveCommand::MoveCommand() - Move command needs object with tank component." };
+		throw std::exception{ "MoveCommand::MoveCommand() - Move command has invalid game object" };
+	}
+
+	if (m_Tank == nullptr)
+	{
+		throw std::exception{ "MoveCommand::MoveCommand() - Move command has invalid tank component." };
 	}
 }
 
 void MoveCommand::Execute()
 {
-	m_TankComponent->Move(m_Direction);
+	m_Tank->Move(m_Direction);
 }

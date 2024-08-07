@@ -171,6 +171,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AimCommand.cpp" />
+    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletManagerComponent.cpp" />
+    <ClCompile Include="FireCommand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
@@ -179,6 +183,10 @@
     <ClCompile Include="TileManagerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AimCommand.h" />
+    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletManagerComponent.h" />
+    <ClInclude Include="FireCommand.h" />
     <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="TankComponent.h" />

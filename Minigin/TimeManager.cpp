@@ -15,12 +15,12 @@ void TimeManager::SetDeltaTime(std::chrono::milliseconds delta)
 	m_DeltaTime = delta;
 }
 
-std::chrono::duration<float> TimeManager::GetDeltaTime()
+std::chrono::duration<float> TimeManager::GetDeltaTime() const
 {
 	return std::chrono::duration_cast<std::chrono::duration<float>>(m_DeltaTime);
 }
 
-std::chrono::milliseconds TimeManager::GetFixedDeltaTime()
+std::chrono::duration<float> TimeManager::GetFixedDeltaTime() const
 {
-	return m_FixedDeltaTime;
+	return std::chrono::duration_cast<std::chrono::duration<float>>(m_FixedDeltaTime);
 }
