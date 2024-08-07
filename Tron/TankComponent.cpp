@@ -7,6 +7,8 @@
 #include "TimeManager.h"
 #include "BulletManagerComponent.h"
 
+#include <iostream>
+
 TankComponent::TankComponent(Minigin::GameObject* owner, TileManagerComponent* tileManager, BulletManagerComponent* bulletManager, float speed) :
 	Component{ owner },
 	m_TileManager{ tileManager },
@@ -68,7 +70,7 @@ void TankComponent::SetBarrelRotation(int angle)
 
 void TankComponent::Fire() const
 {
-	m_BulletManager->AddBullet(GetOwner()->GetWorldTransform().GetPosition(), glm::vec2{ 1.0f, 0.0f });
+	m_BulletManager->AddBullet(GetOwner()->GetWorldTransform().GetPosition(), GetDirection());
 }
 
 void TankComponent::Render() const
@@ -100,4 +102,17 @@ void TankComponent::Render() const
 
 	m_TankTexture->Render(tankTransform);
 	m_BarrelTexture->Render(barrelTransform, m_BarrelRotationPoint);
+}
+
+glm::vec2 TankComponent::GetDirection() const
+{
+	const float radians{ m_BarrelRotation * (3.14f / 180.0f) };
+	glm::vec2 direction{};
+
+	direction.x = std::sin(radians);		
+	direction.y = std::cos(radians);	
+
+	std::cout << m_BarrelRotation << "degrees => " << direction.x << ", " << direction.y << std::endl;
+
+	return direction;
 }

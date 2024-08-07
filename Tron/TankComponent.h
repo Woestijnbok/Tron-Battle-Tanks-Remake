@@ -43,4 +43,7 @@ private:
 	std::array<const glm::ivec2, 4> m_BarrelOffsets;
 	const glm::ivec2 m_BarrelRotationPoint;
 	int m_BarrelRotation;
+
+	glm::vec2 GetDirection() const;
+
 };

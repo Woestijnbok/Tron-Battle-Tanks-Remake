@@ -5,8 +5,9 @@
 #include <memory>
 
 #include "Component.h"
-#include "Bullet.h"
 #include "Texture.h"
+
+class Bullet;
 
 class BulletManagerComponent : public Minigin::Component
 {
@@ -25,6 +26,8 @@ public:
 	virtual void Render() const;
 
 private:
-	std::vector<Bullet> m_Bullets;
+	std::vector<std::unique_ptr<Bullet>> m_Bullets;
 	std::unique_ptr<Minigin::Texture> m_BulletTexture;
+
+	void RemoveBullet(Bullet* bullet);
 };
