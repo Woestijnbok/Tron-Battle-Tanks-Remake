@@ -25,7 +25,7 @@ public:
 	void Move(MoveCommand::Direction direction);
 	glm::ivec2 GetWorldPosition() const;
 	void SetBarrelRotation(int angle);
-	void Fire() const;
+	void Fire();
 
 	virtual void Render() const override;
 

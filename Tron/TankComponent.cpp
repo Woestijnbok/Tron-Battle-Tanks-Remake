@@ -68,9 +68,9 @@ void TankComponent::SetBarrelRotation(int angle)
 	m_BarrelRotation = angle;
 }
 
-void TankComponent::Fire() const
+void TankComponent::Fire()
 {
-	m_BulletManager->AddBullet(GetOwner()->GetWorldTransform().GetPosition(), GetDirection());
+	m_BulletManager->AddBullet(this, GetOwner()->GetWorldTransform().GetPosition(), GetDirection());
 }
 
 void TankComponent::Render() const
@@ -110,9 +110,7 @@ glm::vec2 TankComponent::GetDirection() const
 	glm::vec2 direction{};
 
 	direction.x = std::sin(radians);		
-	direction.y = std::cos(radians);	
-
-	std::cout << m_BarrelRotation << "degrees => " << direction.x << ", " << direction.y << std::endl;
+	direction.y = std::cos(radians);
 
 	return direction;
 }
