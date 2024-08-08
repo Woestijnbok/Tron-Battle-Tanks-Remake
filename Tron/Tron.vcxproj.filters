@@ -43,7 +43,7 @@
     <ClCompile Include="TileManagerComponent.cpp">
       <Filter>Components\Tile Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Tile.cpp">
+    <ClCompile Include="TileComponent.cpp">
       <Filter>Components\Tile Manager\Tile</Filter>
     </ClCompile>
     <ClCompile Include="TankComponent.cpp">
@@ -72,7 +72,7 @@
     <ClInclude Include="TileManagerComponent.h">
       <Filter>Components\Tile Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Tile.h">
+    <ClInclude Include="TileComponent.h">
       <Filter>Components\Tile Manager\Tile</Filter>
     </ClInclude>
     <ClInclude Include="TankComponent.h">

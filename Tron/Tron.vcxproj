@@ -179,7 +179,7 @@
     <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="TankComponent.cpp" />
-    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManagerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +190,7 @@
     <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="TankComponent.h" />
-    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManagerComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -7,7 +7,7 @@
 #include <optional>
 
 #include "Component.h"
-#include "Tile.h"
+#include "TileComponent.h"
 #include "Texture.h"
 #include "MoveCommand.h"
 #include "TankComponent.h"
@@ -29,26 +29,20 @@ public:
 	bool CanMove(TankComponent const * tank, MoveCommand::Direction direction) const;
 	bool CheckCollision(Bullet* bullet) const;
 
-	virtual void Render() const override;
-
 private:
-	std::array<std::array<Tile, 8>, 8> m_Tiles;	
-	const std::unique_ptr<const Minigin::Texture> m_TileZero;	
-	const std::unique_ptr<const Minigin::Texture> m_TileOne;
-	const std::unique_ptr<const Minigin::Texture> m_TileTwoCorner;
-	const std::unique_ptr<const Minigin::Texture> m_TileTwoStraight;
-	const std::unique_ptr<const Minigin::Texture> m_TileThree;
-	const std::unique_ptr<const Minigin::Texture> m_TileFour;
+	std::array<std::array<TileComponent*, 8>, 8> m_Tiles;		
+	const std::unique_ptr<Minigin::Texture> m_TileZero;		
+	const std::unique_ptr<Minigin::Texture> m_TileOne;	
+	const std::unique_ptr<Minigin::Texture> m_TileTwoCorner;	
+	const std::unique_ptr<Minigin::Texture> m_TileTwoStraight;	
+	const std::unique_ptr<Minigin::Texture> m_TileThree;	
+	const std::unique_ptr<Minigin::Texture> m_TileFour;	
 	const int m_TileSize;
 	const int m_CollisionOffset;
 
-	/*
-	* @brief Helper function to get the correct texture and rotation for a tile.
-	* @return A pair with the first element being the texture and the second the angle the texture needs to be rotated by.
-	*/
-	std::pair<Minigin::Texture const *, Minigin::Transform> GetRenderInfo(const Tile& tile) const;	
-	glm::vec2 GetScale(Minigin::Texture const* texture) const;
-	void CreateTiles();
+	int GetRotation(TileComponent* tile) const;		
+	glm::vec2 GetScale(TileComponent* tile) const;	
+	void CreateTiles();	
 	/*
 	* @param point is the point that needs to be checked.
 	* bottom is the bottom left point of the rectangle.

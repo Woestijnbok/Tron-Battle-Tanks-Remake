@@ -3,7 +3,7 @@
 #include <vec2.hpp>
 #include <chrono>
 
-#include "Tile.h"
+#include "TileComponent.h"
 
 class TankComponent;
 
@@ -21,7 +21,7 @@ public:
 	const glm::vec2& GetDirection() const;
 	bool Update();	// Returns true if it needs to be destroyed.
 	glm::ivec2 GetPosition() const;
-	bool Bounce(Tile::Side side);
+	bool Bounce(TileComponent::Side side);	
 	void SetPosition(const glm::ivec2& position);
 
 	bool operator==(const Bullet& rhs) const;

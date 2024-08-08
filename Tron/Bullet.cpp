@@ -40,22 +40,22 @@ glm::ivec2 Bullet::GetPosition() const
 	return m_Position;
 }
 
-bool Bullet::Bounce(Tile::Side side)
+bool Bullet::Bounce(TileComponent::Side side)	
 {
 	glm::vec2 normal{};
 
 	switch (side)
 	{
-	case Tile::Side::Top:
+	case TileComponent::Side::Top:
 		normal.y = 1.0f;
 		break;
-	case Tile::Side::Right:
+	case TileComponent::Side::Right:
 		normal.x = 1.0f;
 		break;
-	case Tile::Side::Bottom:
+	case TileComponent::Side::Bottom:
 		normal.y = -1.0f;
 		break;
-	case Tile::Side::Left:
+	case TileComponent::Side::Left:
 		normal.x = -1.0f;
 		break;
 	default:
