@@ -65,15 +65,26 @@ private:
 	* 
 	* @param To check wether or not the bullet needs to be destroyed use removeBullet.
 	* 
-	* @return will hold the intersection if empty there was no intersection with the boundaries
+	* @return Will hold the intersection in tile manager space if empty there was no intersection with the boundaries.
 	*/
 	std::optional<glm::ivec2> CheckBounds(Bullet* bullet, bool& removeBullet) const;	
 	/*
-	* @brief Checks and handles the bullet in case he is inside or hit the center collision zone of a tile.
+	* @brief Checks and handles the bullet in case he is inside or hit the center collision zone of the current tile.
 	*
 	* @param To check wether or not the bullet needs to be destroyed use removeBullet.
 	*
-	* @return will hold the intersection if empty there was no intersection with any center collision zone of a tile
+	* @return Will hold the intersection in tile manager space if empty there was no intersection.
 	*/
-	std::optional<glm::ivec2> CheckCenters(Bullet* bullet, bool& removeBullet) const;		
+	std::optional<glm::ivec2> CheckCenter(Bullet* bullet, bool& removeBullet) const;
+	/*
+	* @brief Checks and handles the bullet in case he is inside the top collision zones of the current tile some tiles have this.
+	*
+	* @param To check wether or not the bullet needs to be destroyed use removeBullet.
+	*
+	* @return Will hold the intersection in tile manager space if empty there was no intersection.
+	*/
+	std::optional<glm::ivec2> CheckTop(Bullet* bullet, bool& removeBullet) const;
+	std::optional<glm::ivec2> CheckRight(Bullet* bullet, bool& removeBullet) const;
+	std::optional<glm::ivec2> CheckBottom(Bullet* bullet, bool& removeBullet) const;
+	std::optional<glm::ivec2> CheckLeft(Bullet* bullet, bool& removeBullet) const;
 };

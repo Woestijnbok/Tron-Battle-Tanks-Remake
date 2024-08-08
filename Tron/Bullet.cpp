@@ -4,8 +4,8 @@
 #include "TimeManager.h"
 #include "TankComponent.h"
 
-const std::chrono::duration<float> Bullet::m_LifeTime{ 5.0f };
-const float Bullet::m_Speed{ 500.0f };
+const std::chrono::duration<float> Bullet::m_LifeTime{ 10.0f };
+const float Bullet::m_Speed{ 400.0f };
 const int Bullet::m_MaxBounces{ 5 };
 
 Bullet::Bullet(TankComponent* tank, const glm::ivec2& position, const glm::vec2& direction) :
@@ -47,16 +47,16 @@ bool Bullet::Bounce(Tile::Side side)
 	switch (side)
 	{
 	case Tile::Side::Top:
-		normal.y = -1.0f;
-		break;
-	case Tile::Side::Right:
-		normal.x = -1.0f;
-		break;
-	case Tile::Side::Bottom:
 		normal.y = 1.0f;
 		break;
-	case Tile::Side::Left:
+	case Tile::Side::Right:
 		normal.x = 1.0f;
+		break;
+	case Tile::Side::Bottom:
+		normal.y = -1.0f;
+		break;
+	case Tile::Side::Left:
+		normal.x = -1.0f;
 		break;
 	default:
 		break;
