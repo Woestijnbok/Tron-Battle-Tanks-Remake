@@ -4,6 +4,7 @@
 #include <memory>
 #include <utility>
 #include <vec2.hpp>
+#include <optional>
 
 #include "Component.h"
 #include "Tile.h"
@@ -54,5 +55,25 @@ private:
 	* top is the top right point of the rectangle
 	*/
 	bool PointInsideRectangle(const glm::ivec2& point, const glm::ivec2& bottom, const glm::ivec2 top) const;
-	bool LinesIntersect(const glm::ivec2& a, const glm::ivec2& b, const glm::ivec2& c, const glm::ivec2& d) const;	
+	/*
+	* @return An optional point holding the intersection if it intersected.
+	* Can use operator bool on std::optional to check if we intersected.
+	*/
+	std::optional<glm::ivec2> LinesIntersect(const glm::ivec2& a, const glm::ivec2& b, const glm::ivec2& c, const glm::ivec2& d) const;
+	/*
+	* @brief Checks and handles the bullet in case he is outside or hit the boundaries.
+	* 
+	* @param To check wether or not the bullet needs to be destroyed use removeBullet.
+	* 
+	* @return will hold the intersection if empty there was no intersection with the boundaries
+	*/
+	std::optional<glm::ivec2> CheckBounds(Bullet* bullet, bool& removeBullet) const;	
+	/*
+	* @brief Checks and handles the bullet in case he is inside or hit the center collision zone of a tile.
+	*
+	* @param To check wether or not the bullet needs to be destroyed use removeBullet.
+	*
+	* @return will hold the intersection if empty there was no intersection with any center collision zone of a tile
+	*/
+	std::optional<glm::ivec2> CheckCenters(Bullet* bullet, bool& removeBullet) const;		
 };

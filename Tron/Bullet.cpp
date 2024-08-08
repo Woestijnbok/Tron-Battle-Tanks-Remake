@@ -72,6 +72,11 @@ bool Bullet::Bounce(Tile::Side side)
 	return m_Bounces == m_MaxBounces;
 }
 
+void Bullet::SetPosition(const glm::ivec2& position)
+{
+	m_Position = position;
+}
+
 bool Bullet::operator==(const Bullet& rhs) const
 {
 	return m_InitialTime == rhs.m_InitialTime and m_Position == rhs.m_Position and m_Direction == rhs.m_Direction;

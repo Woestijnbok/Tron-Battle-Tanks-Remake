@@ -153,61 +153,29 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 
 bool TileManagerComponent::CheckCollision(Bullet* bullet) const
 {
+	bool removeBullet{ false };
+
 	const glm::ivec2 offset{ GetOwner()->GetWorldTransform().GetPosition() };
 	const glm::ivec2 bulletPosition{ bullet->GetPosition() - offset };		// this is tile - space not world space
+	std::optional<glm::ivec2> intersection{};	// this is in tile space not world
 
-	if (bulletPosition.y >= int(m_TileSize * m_Tiles.size()))	
+	// We are inside the boundaries
+	intersection = CheckBounds(bullet, removeBullet);
+	if (!intersection)					
 	{
-		return bullet->Bounce(Tile::Side::Top);
-	}
-	else if (bulletPosition.x >= int(m_TileSize * m_Tiles.size()))	
-	{
-		return bullet->Bounce(Tile::Side::Right);
-	}
-	else if (bulletPosition.y < 0)
-	{
-		return bullet->Bounce(Tile::Side::Bottom);
-	}
-	else if(bulletPosition.x < 0)
-	{
-		return bullet->Bounce(Tile::Side::Left);
-	}
-	else
-	{
-		const int row{ bulletPosition.y / m_TileSize };
-		const int collumn{ bulletPosition.x / m_TileSize };
-
-		const glm::ivec2 bottomLeft{ m_CollisionOffset + (collumn * m_TileSize), m_CollisionOffset + (row * m_TileSize) };
-		const glm::ivec2 topRight{ (m_TileSize + (collumn * m_TileSize) - 1) - m_CollisionOffset, (m_TileSize + (row * m_TileSize) - 1) - m_CollisionOffset };
-
-		if (PointInsideRectangle(bulletPosition, bottomLeft, topRight))
+		// We did not hid any of the center collision zones of a tile (every tile has one)
+		intersection = CheckCenters(bullet, removeBullet);	
+		if (!intersection)		
 		{
-			const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };
-			const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };
-
-			const glm::ivec2 end{ bulletPosition - glm::ivec2{ bullet->GetDirection() * 8.0f } };
-
-			if (LinesIntersect(topLeft, topRight, bulletPosition, end))
-			{
-				return bullet->Bounce(Tile::Side::Top);	
-			}
-			else if (LinesIntersect(topRight, bottomRight, bulletPosition, end))		
-			{
-				return bullet->Bounce(Tile::Side::Right);	
-			}
-			else if (LinesIntersect(bottomLeft, bottomRight, bulletPosition, end))	
-			{
-				return bullet->Bounce(Tile::Side::Bottom);	
-			}
-			else if(LinesIntersect(bottomLeft, topLeft, bulletPosition, end))	
-			{
-				return bullet->Bounce(Tile::Side::Left);	
-			}
+			auto test = offset + bulletPosition;
+			test;
 		}
 	}	
 
-	bullet;
-	return false;
+	// Set position to intersection point so we don't intersect again next frame
+	if (intersection) bullet->SetPosition(intersection.value() + offset);	
+
+	return removeBullet;
 }
 
 void TileManagerComponent::Render() const
@@ -318,25 +286,130 @@ void TileManagerComponent::CreateTiles()
 
 bool TileManagerComponent::PointInsideRectangle(const glm::ivec2& point, const glm::ivec2& bottom, const glm::ivec2 top) const
 {
-	return (point.x >= bottom.x) and (point.x <= top.x) and (point.y >= bottom.y) and (point.y <= top.y);	
+	// Not too high
+	if (point.y < top.y)
+	{
+		// Not too right
+		if (point.x < top.x)	
+		{
+			// Not too low
+			if (point.y > bottom.y)
+			{
+				// Not too left
+				if (point.x > bottom.x)	
+				{
+					return true;
+				}
+			}
+		}
+	}
+
+	return false;
 }
 
-bool TileManagerComponent::LinesIntersect(const glm::ivec2& a, const glm::ivec2& b, const glm::ivec2& c, const glm::ivec2& d) const
+std::optional<glm::ivec2> TileManagerComponent::LinesIntersect(const glm::ivec2& a, const glm::ivec2& b, const glm::ivec2& c, const glm::ivec2& d) const
 {
-	glm::vec2 r = b - a; // Direction vector of the first line segment		
-	glm::vec2 s = d - c; // Direction vector of the second line segment	
+	std::optional<glm::ivec2> intersection{};
 
-	float rxs = r.x * s.y - r.y * s.x; // Determinant
-	float qpxr = (c - a).x * r.y - (c - a).y * r.x; // Cross product of vectors
+	const glm::vec2 directionOne{ b - a }; // Direction vector of the first line segment			
+	const glm::vec2 directionTwo{ d - c }; // Direction vector of the second line segment		
 
-	if (rxs == 0.0f) return false; // Lines are parallel or collinear	
+	const float determinant{ directionOne.x * directionTwo.y - directionOne.y * directionTwo.x }; // Determinant	
+	const float cross{ (c - a).x * directionOne.y - (c - a).y * directionOne.x }; // Cross product of vectors		
 
-	float t = qpxr / rxs;
-	float u = ((c - a).x * s.y - (c - a).y * s.x) / rxs;	
+	if (determinant == 0.0f) return intersection; // Lines are parallel or collinear		
+
+	const float t{ cross / determinant };
+	const float u{ ((c - a).x * directionTwo.y - (c - a).y * directionTwo.x) / determinant };
 
 	if (t >= 0.0f && t <= 1.0f && u >= 0.0f && u <= 1.0f)
 	{
-		return true;
+		intersection = a + glm::ivec2{ t * directionOne };
+		return intersection;
 	}
-	else return false;
+	else return intersection;
+}
+
+std::optional<glm::ivec2> TileManagerComponent::CheckBounds(Bullet* bullet, bool& removeBullet) const
+{
+	std::optional<glm::ivec2> intersection{};
+	const glm::ivec2 bulletPosition{ bullet->GetPosition() - -GetOwner()->GetWorldTransform().GetPosition() }; // tile - space	
+
+	// Did we hit or pass the top boundry
+	if (bulletPosition.y >= int(m_TileSize * m_Tiles.size()))
+	{
+		intersection = glm::ivec2{ bulletPosition.x, int(m_TileSize * m_Tiles.size()) - 1 };
+		removeBullet = bullet->Bounce(Tile::Side::Top);	
+	}
+	// Did we hit or pass the top boundry
+	else if (bulletPosition.x >= int(m_TileSize * m_Tiles.size()))
+	{
+		intersection = glm::ivec2{ int(m_TileSize * m_Tiles.size()) - 1, bulletPosition.y };
+		removeBullet = bullet->Bounce(Tile::Side::Right);	
+	}
+	// Did we hit or pass the top boundry
+	else if (bulletPosition.y < 0)
+	{
+		intersection = glm::ivec2{ bulletPosition.x, 0 };
+		removeBullet = bullet->Bounce(Tile::Side::Bottom);
+	}
+	// Did we hit or pass the top boundry
+	else if (bulletPosition.x < 0)
+	{
+		intersection = glm::ivec2{ 0, bulletPosition.y };
+		removeBullet = bullet->Bounce(Tile::Side::Left);	
+	}
+	
+	return intersection;	
+}
+
+std::optional<glm::ivec2> TileManagerComponent::CheckCenters(Bullet* bullet, bool& removeBullet) const
+{
+	std::optional<glm::ivec2> intersection{};
+
+	const glm::ivec2 bulletPosition{ bullet->GetPosition() - GetOwner()->GetWorldTransform().GetPosition() };	// tile space not world space
+
+	const int row{ bulletPosition.y / m_TileSize };
+	const int collumn{ bulletPosition.x / m_TileSize };
+
+	const glm::ivec2 bottomLeft{ m_CollisionOffset + (collumn * m_TileSize), m_CollisionOffset + (row * m_TileSize) };
+	const glm::ivec2 topRight{ (m_TileSize + (collumn * m_TileSize) - 1) - m_CollisionOffset, (m_TileSize + (row * m_TileSize) - 1) - m_CollisionOffset };
+
+	// Is point in default collision center box of a tile all tiles have this
+	if (PointInsideRectangle(bulletPosition, bottomLeft, topRight))
+	{
+		const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };
+		const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };
+
+		// Start point of line we check for intersection will be 100 units before bullet was inside the rectangle
+		const glm::ivec2 start{ bulletPosition - glm::ivec2{ bullet->GetDirection() * 100.0f } };
+
+#pragma warning (push)
+#pragma warning (disable : 4706) // C4706 assignment used as a condition
+
+		// Did it pass the top side if so where
+		if (intersection = LinesIntersect(topLeft, topRight, start, bulletPosition))
+		{
+			removeBullet = bullet->Bounce(Tile::Side::Top);
+		}
+		// Did it pass the right side if so where
+		else if (intersection = LinesIntersect(topRight, bottomRight, start, bulletPosition))
+		{
+			removeBullet = bullet->Bounce(Tile::Side::Right);
+		}
+		// Did it pass the bottom side if so where
+		else if (intersection = LinesIntersect(bottomLeft, bottomRight, start, bulletPosition))
+		{
+			removeBullet = bullet->Bounce(Tile::Side::Bottom);
+		}
+		// Has to have passed the left but where
+		else
+		{
+			intersection = LinesIntersect(bottomLeft, topLeft, start, bulletPosition);
+			removeBullet = bullet->Bounce(Tile::Side::Left);
+		}
+#pragma warning (pop)
+	}
+
+	return intersection;	
 }

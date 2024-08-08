@@ -22,6 +22,7 @@ public:
 	bool Update();	// Returns true if it needs to be destroyed.
 	glm::ivec2 GetPosition() const;
 	bool Bounce(Tile::Side side);
+	void SetPosition(const glm::ivec2& position);
 
 	bool operator==(const Bullet& rhs) const;
 
