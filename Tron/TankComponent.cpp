@@ -58,11 +58,6 @@ void TankComponent::Move(MoveCommand::Direction direction)
 	GetOwner()->SetLocalPosition(newPosition);	
 }
 
-glm::ivec2 TankComponent::GetWorldPosition() const
-{
-	return GetOwner()->GetWorldTransform().GetPosition();
-}
-
 void TankComponent::SetBarrelRotation(int angle)
 {
 	m_BarrelRotation = angle;

@@ -29,28 +29,25 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 
 glm::ivec2 TileManagerComponent::GetStartPosition() const
 {
-	glm::ivec2 position{ GetOwner()->GetWorldTransform().GetPosition() };
-
-	return glm::ivec2{ position.x + static_cast<int>(m_TileSize * (m_Tiles.size() / 2)), position.y + static_cast<int>(m_TileSize * (m_Tiles.size() / 2)) };
+	return glm::ivec2{ m_TileSize * (int(m_Tiles.size()) / 2), m_TileSize * (int(m_Tiles.size()) / 2) };	
 }
 
 bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direction direction) const
 {
 	bool canMove{ false };
 
-	const glm::ivec2 worldTankPosition{ tank->GetWorldPosition() };
-	const glm::ivec2 offset{ GetOwner()->GetWorldTransform().GetPosition() };
+	const glm::ivec2 tankPosition{ tank->GetOwner()->GetLocalTransform().GetPosition() };
 
-	const int row{ (worldTankPosition.y - offset.y) / m_TileSize };
-	const int collumn{ (worldTankPosition.x - offset.x) / m_TileSize };
+	const int row{ tankPosition.y / m_TileSize };	
+	const int collumn{ tankPosition.x / m_TileSize };	
 
 	switch (direction)
 	{
 	case MoveCommand::Direction::Up:
-		if ((worldTankPosition.x - offset.x) % m_TileSize == 0)
+		if (tankPosition.x % m_TileSize == 0)
 		{
 			// cross road
-			if ((worldTankPosition.y - offset.y) % m_TileSize == 0)
+			if (tankPosition.y% m_TileSize == 0)
 			{
 				// not top edge
 				if (row < static_cast<int>(m_Tiles.size()))
@@ -70,10 +67,10 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 		}
 		break;
 	case MoveCommand::Direction::Right:
-		if ((worldTankPosition.y - offset.y) % m_TileSize == 0)
+		if (tankPosition.y % m_TileSize == 0)
 		{
 			// cross road
-			if ((worldTankPosition.x - offset.x) % m_TileSize == 0)
+			if (tankPosition.x % m_TileSize == 0)
 			{
 				// not right edge
 				if (collumn < static_cast<int>(m_Tiles.size()))
@@ -93,10 +90,10 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 		}
 		break;
 	case MoveCommand::Direction::Down:
-		if ((worldTankPosition.x - offset.x) % m_TileSize == 0)
+		if (tankPosition.x % m_TileSize == 0)
 		{
 			// cross road
-			if ((worldTankPosition.y - offset.y) % m_TileSize == 0)
+			if (tankPosition.y % m_TileSize == 0)
 			{
 				// not bottom edge
 				if (row > 0)
@@ -116,10 +113,10 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 		}
 		break;
 	case MoveCommand::Direction::Left:
-		if ((worldTankPosition.y - offset.y) % m_TileSize == 0)
+		if (tankPosition.y % m_TileSize == 0)
 		{
-			// cross road
-			if ((worldTankPosition.x - offset.x) % m_TileSize == 0)
+			// cross road	
+			if (tankPosition.x % m_TileSize == 0)	
 			{
 				// not left edge
 				if (collumn > 0)
