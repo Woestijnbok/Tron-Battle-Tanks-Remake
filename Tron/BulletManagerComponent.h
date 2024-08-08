@@ -7,7 +7,7 @@
 #include "Component.h"
 #include "Texture.h"
 
-class Bullet;
+class BulletComponent;
 class TileManagerComponent;
 class TankComponent;
 
@@ -22,15 +22,13 @@ public:
 	BulletManagerComponent& operator= (const BulletManagerComponent&) = delete;
 	BulletManagerComponent& operator= (const BulletManagerComponent&&) noexcept = delete;
 
-	void AddBullet(TankComponent* tank, const glm::vec2& position, const glm::vec2& direction);
-
-	virtual void FixedUpdate() override;	
-	virtual void Render() const;
+	void AddBullet(TankComponent* tank);
+	Minigin::Texture* GetBulletTexture() const;
+	void CheckCollision(BulletComponent* bullet);
 
 private:
-	std::vector<std::unique_ptr<Bullet>> m_Bullets;
+	std::vector<BulletComponent*> m_Bullets;
 	std::unique_ptr<Minigin::Texture> m_BulletTexture;
 	TileManagerComponent* m_TileManager;
 
-	void RemoveBullet(Bullet* bullet);
 };

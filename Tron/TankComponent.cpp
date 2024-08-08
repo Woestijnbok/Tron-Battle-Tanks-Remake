@@ -65,7 +65,7 @@ void TankComponent::SetBarrelRotation(int angle)
 
 void TankComponent::Fire()
 {
-	m_BulletManager->AddBullet(this, GetOwner()->GetWorldTransform().GetPosition(), GetDirection());
+	m_BulletManager->AddBullet(this);
 }
 
 void TankComponent::Render() const

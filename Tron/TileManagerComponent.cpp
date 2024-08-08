@@ -9,7 +9,7 @@
 #include "Transform.h"
 #include "GameObject.h"
 #include "Renderer.h"
-#include "Bullet.h"
+#include "BulletComponent.h"
 #include "Scene.h"
 
 TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize) :
@@ -142,35 +142,32 @@ bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direc
 	return canMove;
 }
 
-bool TileManagerComponent::CheckCollision(Bullet* bullet) const
+void TileManagerComponent::CheckCollision(BulletComponent* bullet) const
 {
-	bool removeBullet{ false };
-
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
 	std::optional<glm::ivec2> intersection{};	// this is in tile manager space not world
 
 	// We are inside the boundaries
-	intersection = CheckBounds(bullet, removeBullet);
+	intersection = CheckBounds(bullet);
 	if (!intersection)
 	{
 		// We did not hit the top collision zone of the tile some tiles have this
-		intersection = CheckTop(bullet, removeBullet);
+		intersection = CheckTop(bullet);
 		if (!intersection)
 		{
 			// We did not hit the right collision zone of the tile some tiles have this
-			intersection = CheckRight(bullet, removeBullet);
+			intersection = CheckRight(bullet);
 			if (!intersection)
 			{
 				// We did not hit the bottom collision zone of the tile some tiles have this
-				intersection = CheckBottom(bullet, removeBullet);
+				intersection = CheckBottom(bullet);
 				if (!intersection)
 				{
 					// We did not hit the bottom collision zone of the tile some tiles have this
-					intersection = CheckLeft(bullet, removeBullet);
+					intersection = CheckLeft(bullet);
 					if (!intersection)
 					{
 						// We did not hit the center collision zone of the current tile (every tile has one)
-						intersection = CheckCenter(bullet, removeBullet);
+						intersection = CheckCenter(bullet);
 						if (!intersection)
 						{
 							intersection;
@@ -187,10 +184,7 @@ bool TileManagerComponent::CheckCollision(Bullet* bullet) const
 	}
 	else std::cout << "Hit bounds" << std::endl;
 
-	// Set position the bullet to the position of the intersection in world space
-	if (intersection) bullet->SetPosition(intersection.value() + tileManagerOffset);
-
-	return removeBullet;
+	if (intersection) bullet->GetOwner()->SetLocalPosition(intersection.value());
 }
 
 int TileManagerComponent::GetRotation(TileComponent* tile) const		
@@ -250,13 +244,12 @@ void TileManagerComponent::CreateTiles()
 		for (size_t collumn{}; collumn < m_Tiles.size(); ++collumn)	
 		{
 			Minigin::GameObject* object{ scene->CreateGameObject(std::format("Tile ({}, {})", row, collumn)) };
-			auto tile{ object->CreateComponent<TileComponent>(m_TileZero.get()) };			
+			object->SetParent(GetOwner());	
+			auto tile{ object->CreateComponent<TileComponent>(m_TileZero.get()) };	
 
 			object->SetLocalPosition(glm::ivec2{ startPosition.x + (collumn * m_TileSize), startPosition.y + (row * m_TileSize) });	
 			object->SetLocalScale(GetScale(tile));	
 			object->SetLocalRotation(GetRotation(tile));	
-
-			object->SetParent(GetOwner());
 
 			m_Tiles.at(row).at(collumn) = tile;	
 		}
@@ -312,52 +305,50 @@ std::optional<glm::ivec2> TileManagerComponent::LinesIntersect(const glm::ivec2&
 	else return intersection;
 }
 
-std::optional<glm::ivec2> TileManagerComponent::CheckBounds(Bullet* bullet, bool& removeBullet) const
+std::optional<glm::ivec2> TileManagerComponent::CheckBounds(BulletComponent* bullet) const
 {
 	std::optional<glm::ivec2> intersection{};
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
-	const glm::ivec2 bulletTileManagerPosition{ bullet->GetPosition() - tileManagerOffset }; // tile manager space	
+	const glm::ivec2 bulletPosition{ bullet->GetOwner()->GetLocalTransform().GetPosition() };
 
 	// Did we hit or pass the top boundry
-	if (bulletTileManagerPosition.y >= int(m_TileSize * m_Tiles.size()))
+	if (bulletPosition.y >= int(m_TileSize * m_Tiles.size()))
 	{
-		intersection = glm::ivec2{ bulletTileManagerPosition.x, int(m_TileSize * m_Tiles.size()) - 1 };
-		removeBullet = bullet->Bounce(TileComponent::Side::Top);	
+		intersection = glm::ivec2{ bulletPosition.x, int(m_TileSize * m_Tiles.size()) - 1 };
+		bullet->Bounce(TileComponent::Side::Top);
 	}
 	// Did we hit or pass the right boundry
-	else if (bulletTileManagerPosition.x >= int(m_TileSize * m_Tiles.size()))
+	else if (bulletPosition.x >= int(m_TileSize * m_Tiles.size()))
 	{
-		intersection = glm::ivec2{ int(m_TileSize * m_Tiles.size()) - 1, bulletTileManagerPosition.y };
-		removeBullet = bullet->Bounce(TileComponent::Side::Right);	
+		intersection = glm::ivec2{ int(m_TileSize * m_Tiles.size()) - 1, bulletPosition.y };
+		bullet->Bounce(TileComponent::Side::Right);
 	}
 	// Did we hit or pass the bottom boundry
-	else if (bulletTileManagerPosition.y < 0)
+	else if (bulletPosition.y < 0)
 	{
-		intersection = glm::ivec2{ bulletTileManagerPosition.x, 0 };
-		removeBullet = bullet->Bounce(TileComponent::Side::Bottom);	
+		intersection = glm::ivec2{ bulletPosition.x, 0 };
+		bullet->Bounce(TileComponent::Side::Bottom);
 	}
 	// Did we hit or pass the left boundry
-	else if (bulletTileManagerPosition.x < 0)
+	else if (bulletPosition.x < 0)
 	{
-		intersection = glm::ivec2{ 0, bulletTileManagerPosition.y };
-		removeBullet = bullet->Bounce(TileComponent::Side::Left);	
+		intersection = glm::ivec2{ 0, bulletPosition.y };	
+		bullet->Bounce(TileComponent::Side::Left);
 	}
 
 	return intersection;
 }
 
-std::optional<glm::ivec2> TileManagerComponent::CheckCenter(Bullet* bullet, bool& removeBullet) const
+std::optional<glm::ivec2> TileManagerComponent::CheckCenter(BulletComponent* bullet) const
 {
 	std::optional<glm::ivec2> intersection{};	// tile space
 
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
-	const glm::ivec2 bulletTileManagerPosition{ bullet->GetPosition() - tileManagerOffset };	// tile manager space
+	const glm::ivec2 bulletPosition{ bullet->GetOwner()->GetLocalTransform().GetPosition() };
 
-	const int row{ bulletTileManagerPosition.y / m_TileSize };
-	const int collumn{ bulletTileManagerPosition.x / m_TileSize };
+	const int row{ bulletPosition.y / m_TileSize };	
+	const int collumn{ bulletPosition.x / m_TileSize };	
 
-	const glm::ivec2 tileOffset{ (collumn * m_TileSize) , (row * m_TileSize) };
-	const glm::ivec2 bulletTilePosition{ bulletTileManagerPosition - tileOffset }; // tile space			
+	const glm::ivec2 tileOffset{ (collumn * m_TileSize) , (row * m_TileSize) };	
+	const glm::ivec2 bulletTilePosition{ bulletPosition - tileOffset }; // tile space				
 
 	const glm::ivec2 bottomLeft{ m_CollisionOffset, m_CollisionOffset };	// tile space
 	const glm::ivec2 topRight{ m_TileSize - m_CollisionOffset - 1, m_TileSize - m_CollisionOffset - 1 };	// tile space	
@@ -377,24 +368,24 @@ std::optional<glm::ivec2> TileManagerComponent::CheckCenter(Bullet* bullet, bool
 		// Did it pass the top side if so where
 		if (intersection = LinesIntersect(topLeft, topRight, start, bulletTilePosition))
 		{
-			removeBullet = bullet->Bounce(TileComponent::Side::Top);
+			bullet->Bounce(TileComponent::Side::Top);
 		}
 		// Did it pass the right side if so where
 		else if (intersection = LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
 		{
-			removeBullet = bullet->Bounce(TileComponent::Side::Right);
+			bullet->Bounce(TileComponent::Side::Right);
 		}
 		// Did it pass the bottom side if so where
 		else if (intersection = LinesIntersect(bottomLeft, bottomRight, start, bulletTilePosition))
 		{
-			removeBullet = bullet->Bounce(TileComponent::Side::Bottom);
+			bullet->Bounce(TileComponent::Side::Bottom);
 		}
 		// Has to have passed the left but where
 		else
 		{
 			if (intersection = LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Left);
+				bullet->Bounce(TileComponent::Side::Left);
 			}
 			else
 			{
@@ -410,18 +401,17 @@ std::optional<glm::ivec2> TileManagerComponent::CheckCenter(Bullet* bullet, bool
 	return intersection;
 }
 
-std::optional<glm::ivec2> TileManagerComponent::CheckTop(Bullet* bullet, bool& removeBullet) const
+std::optional<glm::ivec2> TileManagerComponent::CheckTop(BulletComponent* bullet) const
 {
 	std::optional<glm::ivec2> intersection{};	// tile space	
 
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
-	const glm::ivec2 bulletTileManagerPosition{ bullet->GetPosition() - tileManagerOffset };	// tile manager space	
+	const glm::ivec2 bulletPosition{ bullet->GetOwner()->GetLocalTransform().GetPosition() };	
 
-	const int row{ bulletTileManagerPosition.y / m_TileSize };
-	const int collumn{ bulletTileManagerPosition.x / m_TileSize };
+	const int row{ bulletPosition.y / m_TileSize };	
+	const int collumn{ bulletPosition.x / m_TileSize };	
 
 	const glm::ivec2 tileOffset{ (collumn * m_TileSize) , (row * m_TileSize) };
-	const glm::ivec2 bulletTilePosition{ bulletTileManagerPosition - tileOffset }; // tile space		
+	const glm::ivec2 bulletTilePosition{ bulletPosition - tileOffset }; // tile space		
 
 	if (!m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Top))
 	{
@@ -443,19 +433,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckTop(Bullet* bullet, bool& r
 			// Dit it pass the left side if so where
 			if (intersection = LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Left);
+				bullet->Bounce(TileComponent::Side::Left);
 			}
 			// Did it pass the top side if so where
 			if (intersection = LinesIntersect(topLeft, topRight, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Top);
+				bullet->Bounce(TileComponent::Side::Top);
 			}
 			// Has to have passed the right side but where
 			else
 			{
 				if (intersection = LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
 				{
-					removeBullet = bullet->Bounce(TileComponent::Side::Right);
+					bullet->Bounce(TileComponent::Side::Right);
 				}
 			}
 #pragma warning (pop)
@@ -468,18 +458,17 @@ std::optional<glm::ivec2> TileManagerComponent::CheckTop(Bullet* bullet, bool& r
 	return intersection;
 }
 
-std::optional<glm::ivec2> TileManagerComponent::CheckRight(Bullet* bullet, bool& removeBullet) const
+std::optional<glm::ivec2> TileManagerComponent::CheckRight(BulletComponent* bullet) const
 {
 	std::optional<glm::ivec2> intersection{};	// tile space	
 
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
-	const glm::ivec2 bulletTileManagerPosition{ bullet->GetPosition() - tileManagerOffset };	// tile manager space	
+	const glm::ivec2 bulletPosition{ bullet->GetOwner()->GetLocalTransform().GetPosition() };
 
-	const int row{ bulletTileManagerPosition.y / m_TileSize };
-	const int collumn{ bulletTileManagerPosition.x / m_TileSize };
+	const int row{ bulletPosition.y / m_TileSize };
+	const int collumn{ bulletPosition.x / m_TileSize };
 
 	const glm::ivec2 tileOffset{ (collumn * m_TileSize) , (row * m_TileSize) };
-	const glm::ivec2 bulletTilePosition{ bulletTileManagerPosition - tileOffset }; // tile space		
+	const glm::ivec2 bulletTilePosition{ bulletPosition - tileOffset }; // tile space		
 
 	if (!m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Right))
 	{
@@ -501,19 +490,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckRight(Bullet* bullet, bool&
 			// Did it pass the top side if so where
 			if (intersection = LinesIntersect(topLeft, topRight, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Top);
+				bullet->Bounce(TileComponent::Side::Top);
 			}
 			// Did it pass the right side if so where
 			else if (intersection = LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Right);
+				bullet->Bounce(TileComponent::Side::Right);
 			}
 			// Has to have passed the bottom but where
 			else
 			{
 				if (intersection = LinesIntersect(bottomRight, bottomLeft, start, bulletTilePosition))
 				{
-					removeBullet = bullet->Bounce(TileComponent::Side::Bottom);
+					bullet->Bounce(TileComponent::Side::Bottom);
 				}
 			}
 #pragma warning (pop)
@@ -526,18 +515,17 @@ std::optional<glm::ivec2> TileManagerComponent::CheckRight(Bullet* bullet, bool&
 	return intersection;
 }
 
-std::optional<glm::ivec2> TileManagerComponent::CheckBottom(Bullet* bullet, bool& removeBullet) const
+std::optional<glm::ivec2> TileManagerComponent::CheckBottom(BulletComponent* bullet) const
 {
 	std::optional<glm::ivec2> intersection{};	// tile space	
 
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
-	const glm::ivec2 bulletTileManagerPosition{ bullet->GetPosition() - tileManagerOffset };	// tile manager space	
+	const glm::ivec2 bulletPosition{ bullet->GetOwner()->GetLocalTransform().GetPosition() };
 
-	const int row{ bulletTileManagerPosition.y / m_TileSize };
-	const int collumn{ bulletTileManagerPosition.x / m_TileSize };
+	const int row{ bulletPosition.y / m_TileSize };	
+	const int collumn{ bulletPosition.x / m_TileSize };	
 
 	const glm::ivec2 tileOffset{ (collumn * m_TileSize) , (row * m_TileSize) };
-	const glm::ivec2 bulletTilePosition{ bulletTileManagerPosition - tileOffset }; // tile space		
+	const glm::ivec2 bulletTilePosition{ bulletPosition - tileOffset }; // tile space		
 
 	if (!m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom))
 	{
@@ -559,19 +547,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckBottom(Bullet* bullet, bool
 			// Did it pass the left side if so where
 			if (intersection = LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Left);
+				bullet->Bounce(TileComponent::Side::Left);
 			}
 			// Did it pass the right side if so where
 			else if (intersection = LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Right);
+				bullet->Bounce(TileComponent::Side::Right);
 			}
 			// Has to have passed the bottom but where
 			else
 			{
 				if (intersection = LinesIntersect(bottomRight, bottomLeft, start, bulletTilePosition))
 				{
-					removeBullet = bullet->Bounce(TileComponent::Side::Bottom);
+					bullet->Bounce(TileComponent::Side::Bottom);
 				}
 			}
 #pragma warning (pop)
@@ -584,18 +572,17 @@ std::optional<glm::ivec2> TileManagerComponent::CheckBottom(Bullet* bullet, bool
 	return intersection;
 }
 
-std::optional<glm::ivec2> TileManagerComponent::CheckLeft(Bullet* bullet, bool& removeBullet) const
+std::optional<glm::ivec2> TileManagerComponent::CheckLeft(BulletComponent* bullet) const
 {
 	std::optional<glm::ivec2> intersection{};	// tile space	
 
-	const glm::ivec2 tileManagerOffset{ GetOwner()->GetWorldTransform().GetPosition() };
-	const glm::ivec2 bulletTileManagerPosition{ bullet->GetPosition() - tileManagerOffset };	// tile manager space	
+	const glm::ivec2 bulletPosition{ bullet->GetOwner()->GetLocalTransform().GetPosition() };
 
-	const int row{ bulletTileManagerPosition.y / m_TileSize };
-	const int collumn{ bulletTileManagerPosition.x / m_TileSize };
+	const int row{ bulletPosition.y / m_TileSize };
+	const int collumn{ bulletPosition.x / m_TileSize };
 
 	const glm::ivec2 tileOffset{ (collumn * m_TileSize) , (row * m_TileSize) };
-	const glm::ivec2 bulletTilePosition{ bulletTileManagerPosition - tileOffset }; // tile space		
+	const glm::ivec2 bulletTilePosition{ bulletPosition - tileOffset }; // tile space		
 
 	if (!m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left))	
 	{
@@ -617,19 +604,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckLeft(Bullet* bullet, bool& 
 			// Did it pass the bottom side if so where
 			if (intersection = LinesIntersect(bottomRight, bottomLeft, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Bottom);
+				bullet->Bounce(TileComponent::Side::Bottom);
 			}
 			// Did it pass the Left side if so where
 			else if (intersection = LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
 			{
-				removeBullet = bullet->Bounce(TileComponent::Side::Left);
+				bullet->Bounce(TileComponent::Side::Left);
 			}
 			// Has to have passed the top but where
 			else
 			{
 				if (intersection = LinesIntersect(topLeft, topRight, start, bulletTilePosition))
 				{
-					removeBullet = bullet->Bounce(TileComponent::Side::Top);
+					bullet->Bounce(TileComponent::Side::Top);
 				}
 			}
 #pragma warning (pop)

@@ -204,7 +204,16 @@ namespace Minigin
 		(
 			std::remove_if
 			(
-				std::begin(m_EnabledObjects), std::end(m_EnabledObjects), [](ObjectType* object) -> bool { return object->GetStatus() == ControllableObject::Status::Destroyed; }
+				std::begin(m_EnabledObjects), std::end(m_EnabledObjects), 
+				[](ObjectType* object) -> bool 
+				{ 
+					if (object->GetStatus() == ControllableObject::Status::Destroyed)
+					{
+						delete object;
+						return true;
+					}
+					else return false;
+				}
 			)
 			, m_EnabledObjects.end()
 		);
@@ -213,7 +222,16 @@ namespace Minigin
 		(
 			std::remove_if
 			(
-				std::begin(m_DisabledObjects), std::end(m_DisabledObjects), [](ObjectType* object) -> bool { return object->GetStatus() == ControllableObject::Status::Destroyed; }	
+				std::begin(m_DisabledObjects), std::end(m_DisabledObjects), 
+				[](ObjectType* object) -> bool 
+				{ 
+					if (object->GetStatus() == ControllableObject::Status::Destroyed)
+					{
+						delete object;
+						return true;
+					}
+					else return false;
+				}	
 			)
 			, m_DisabledObjects.end()
 		);

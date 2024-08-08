@@ -172,7 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AimCommand.cpp" />
-    <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="BulletManagerComponent.cpp" />
     <ClCompile Include="FireCommand.cpp" />
     <ClCompile Include="main.cpp" />
@@ -184,7 +184,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimCommand.h" />
-    <ClInclude Include="Bullet.h" />
+    <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="BulletManagerComponent.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="MenuComponent.h" />

@@ -11,8 +11,8 @@
 #include "Texture.h"
 #include "MoveCommand.h"
 #include "TankComponent.h"
-
-class Bullet;
+	
+class BulletComponent;	
 
 class TileManagerComponent final : public Minigin::Component
 {
@@ -27,7 +27,7 @@ public:
 
 	glm::ivec2 GetStartPosition() const;
 	bool CanMove(TankComponent const * tank, MoveCommand::Direction direction) const;
-	bool CheckCollision(Bullet* bullet) const;
+	void CheckCollision(BulletComponent* bullet) const;	
 
 private:
 	std::array<std::array<TileComponent*, 8>, 8> m_Tiles;		
@@ -61,7 +61,7 @@ private:
 	* 
 	* @return Will hold the intersection in tile manager space if empty there was no intersection with the boundaries.
 	*/
-	std::optional<glm::ivec2> CheckBounds(Bullet* bullet, bool& removeBullet) const;	
+	std::optional<glm::ivec2> CheckBounds(BulletComponent* bullet) const;	
 	/*
 	* @brief Checks and handles the bullet in case he is inside or hit the center collision zone of the current tile.
 	*
@@ -69,7 +69,7 @@ private:
 	*
 	* @return Will hold the intersection in tile manager space if empty there was no intersection.
 	*/
-	std::optional<glm::ivec2> CheckCenter(Bullet* bullet, bool& removeBullet) const;
+	std::optional<glm::ivec2> CheckCenter(BulletComponent* bullet) const;
 	/*
 	* @brief Checks and handles the bullet in case he is inside the top collision zones of the current tile some tiles have this.
 	*
@@ -77,8 +77,8 @@ private:
 	*
 	* @return Will hold the intersection in tile manager space if empty there was no intersection.
 	*/
-	std::optional<glm::ivec2> CheckTop(Bullet* bullet, bool& removeBullet) const;
-	std::optional<glm::ivec2> CheckRight(Bullet* bullet, bool& removeBullet) const;
-	std::optional<glm::ivec2> CheckBottom(Bullet* bullet, bool& removeBullet) const;
-	std::optional<glm::ivec2> CheckLeft(Bullet* bullet, bool& removeBullet) const;
+	std::optional<glm::ivec2> CheckTop(BulletComponent* bullet) const;	
+	std::optional<glm::ivec2> CheckRight(BulletComponent* bullet) const;	
+	std::optional<glm::ivec2> CheckBottom(BulletComponent* bullet) const;	
+	std::optional<glm::ivec2> CheckLeft(BulletComponent* bullet) const;	
 };

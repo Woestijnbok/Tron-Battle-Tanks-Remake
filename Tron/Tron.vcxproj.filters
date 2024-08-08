@@ -58,7 +58,7 @@
     <ClCompile Include="BulletManagerComponent.cpp">
       <Filter>Components\Bullet Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="BulletComponent.cpp">
       <Filter>Components\Bullet Manager\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="FireCommand.cpp">
@@ -87,7 +87,7 @@
     <ClInclude Include="BulletManagerComponent.h">
       <Filter>Components\Bullet Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Bullet.h">
+    <ClInclude Include="BulletComponent.h">
       <Filter>Components\Bullet Manager\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="FireCommand.h">

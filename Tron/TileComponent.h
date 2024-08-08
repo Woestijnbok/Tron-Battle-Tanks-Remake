@@ -18,7 +18,7 @@ public:
 
 	explicit TileComponent(Minigin::GameObject* owner, Minigin::Texture* texture, const std::array<bool, 4>& sides);
 	explicit TileComponent(Minigin::GameObject* owner, Minigin::Texture* texture);
-	~TileComponent() = default;
+	virtual ~TileComponent() = default;
 
 	TileComponent(const TileComponent&) = delete;
 	TileComponent(TileComponent&&) noexcept = delete;

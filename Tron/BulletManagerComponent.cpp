@@ -1,10 +1,13 @@
+#include <format>
+
 #include "BulletManagerComponent.h"
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include "Transform.h"
-#include "Bullet.h"
+#include "BulletComponent.h"
 #include "TileManagerComponent.h"
 #include "TankComponent.h"
+#include "Scene.h"
 
 BulletManagerComponent::BulletManagerComponent(Minigin::GameObject* owner, TileManagerComponent* tileManager) :
 	Component{ owner },
@@ -15,50 +18,23 @@ BulletManagerComponent::BulletManagerComponent(Minigin::GameObject* owner, TileM
 
 }
 
-void BulletManagerComponent::AddBullet(TankComponent* tank, const glm::vec2& position, const glm::vec2& direction)
+void BulletManagerComponent::AddBullet(TankComponent* tank)
 {
-	m_Bullets.push_back(std::make_unique<Bullet>(tank, position, direction));
+	Minigin::Scene* scene{ GetOwner()->GetScene() };
+
+	Minigin::GameObject* object{ scene->CreateGameObject(std::format("Bullet {}", m_Bullets.size() - 1)) };
+	object->SetParent(GetOwner());
+	BulletComponent* bullet{ object->CreateComponent<BulletComponent>(tank, this) };
+
+	m_Bullets.push_back(bullet);	
 }
 
-void BulletManagerComponent::RemoveBullet(Bullet* bullet)
+Minigin::Texture* BulletManagerComponent::GetBulletTexture() const
 {
-	m_Bullets.erase
-	(
-		std::remove_if
-		(
-			m_Bullets.begin(), m_Bullets.end(),
-			[&bullet](const std::unique_ptr<Bullet>& object) -> bool
-			{
-				return *object.get() == *bullet;
-			}
-		), 
-		m_Bullets.end()
-	);
+	return m_BulletTexture.get();	
 }
 
-void BulletManagerComponent::FixedUpdate()
+void BulletManagerComponent::CheckCollision(BulletComponent* bullet)
 {
-	std::vector<Bullet*> bulletsToRemove{};
-
-	for (std::unique_ptr<Bullet>& bullet : m_Bullets)	
-	{
-		if(m_TileManager->CheckCollision(bullet.get())) bulletsToRemove.push_back(bullet.get());
-		else if (bullet->Update()) bulletsToRemove.push_back(bullet.get());	
-	}	
-
-	for (Bullet* bullet : bulletsToRemove)
-	{
-		RemoveBullet(bullet);
-	}
-}
-
-void BulletManagerComponent::Render() const
-{
-	Minigin::Transform transform{};
-
-	for (const std::unique_ptr<Bullet>& bullet : m_Bullets)	
-	{
-		transform.SetPosition(bullet->GetPosition());
-		m_BulletTexture->Render(transform);
-	}
+	m_TileManager->CheckCollision(bullet);
 }

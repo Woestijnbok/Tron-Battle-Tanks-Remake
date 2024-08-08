@@ -25,6 +25,7 @@ public:
 	void Move(MoveCommand::Direction direction);
 	void SetBarrelRotation(int angle);
 	void Fire();
+	glm::vec2 GetDirection() const;
 
 	virtual void Render() const override;
 
@@ -42,7 +43,5 @@ private:
 	std::array<const glm::ivec2, 4> m_BarrelOffsets;
 	const glm::ivec2 m_BarrelRotationPoint;
 	int m_BarrelRotation;
-
-	glm::vec2 GetDirection() const;
 
 };
