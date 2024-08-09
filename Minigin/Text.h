@@ -2,6 +2,7 @@
 
 #include <string>
 #include <memory>
+#include <vec2.hpp>
 
 namespace Minigin
 {
@@ -31,6 +32,7 @@ namespace Minigin
 		void Render(const Transform& transform) const;	
 		void SetText(const std::string& text);
 		std::shared_ptr<Font> GetFont() const;
+		glm::ivec2 GetSize();
 
 	private:
 		bool m_NeedsUpdate;

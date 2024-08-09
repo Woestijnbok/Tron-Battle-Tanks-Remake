@@ -41,3 +41,14 @@ std::shared_ptr<Font> Text::GetFont() const
 {
 	return m_Font;
 }
+
+glm::ivec2 Minigin::Text::GetSize()
+{
+	if (m_NeedsUpdate)	
+	{
+		m_Texture.reset(Renderer::Instance()->CreateTexture(m_Font.get(), m_Text));	
+		m_NeedsUpdate = false;	
+	}
+
+	return m_Texture->GetSize();
+}

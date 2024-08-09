@@ -19,7 +19,9 @@ TankComponent::TankComponent(Minigin::GameObject* owner, TileManagerComponent* t
 	m_Direction{ MoveCommand::Direction::Up },
 	m_BarrelOffsets{ glm::ivec2{ 0, 4 }, glm::ivec2{ -4, 8 }, glm::ivec2{ 0, 12 }, glm::ivec2{ 4, 8 } },
 	m_BarrelRotationPoint{ 16, 8 },
-	m_BarrelRotation{}
+	m_BarrelRotation{},
+	m_OnLiveChange{},
+	m_OnScoreChange{}
 {
 	GetOwner()->SetLocalPosition(m_TileManager->GetRandomPosition());				
 }
@@ -66,6 +68,8 @@ void TankComponent::SetBarrelRotation(int angle)
 void TankComponent::Fire()
 {
 	m_BulletManager->AddBullet(this);
+	m_OnLiveChange.Notify(1);
+	m_OnScoreChange.Notify(1000);
 }
 
 void TankComponent::Render() const
@@ -108,4 +112,14 @@ glm::vec2 TankComponent::GetDirection() const
 	direction.y = std::cos(radians);
 
 	return direction;
+}
+
+Minigin::Subject<int>& TankComponent::OnLiveChange()
+{
+	return m_OnLiveChange;
+}
+
+Minigin::Subject<int>& TankComponent::OnScoreChange()
+{
+	return m_OnScoreChange;
 }

@@ -179,6 +179,7 @@
     <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="MiddleTileComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
+    <ClCompile Include="ScoreBoardComponent.cpp" />
     <ClCompile Include="TankComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManagerComponent.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="MiddleTileComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="ScoreBoardComponent.h" />
     <ClInclude Include="TankComponent.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManagerComponent.h" />

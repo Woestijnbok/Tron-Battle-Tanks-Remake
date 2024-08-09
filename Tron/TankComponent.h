@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "Texture.h"
 #include "MoveCommand.h"
+#include "Subject.h"
 
 class TileManagerComponent;
 class BulletManagerComponent;
@@ -26,6 +27,8 @@ public:
 	void SetBarrelRotation(int angle);
 	void Fire();
 	glm::vec2 GetDirection() const;
+	Minigin::Subject<int>& OnLiveChange();
+	Minigin::Subject<int>& OnScoreChange();
 
 	virtual void Render() const override;
 
@@ -43,5 +46,7 @@ private:
 	std::array<const glm::ivec2, 4> m_BarrelOffsets;
 	const glm::ivec2 m_BarrelRotationPoint;
 	int m_BarrelRotation;
+	Minigin::Subject<int> m_OnLiveChange;
+	Minigin::Subject<int> m_OnScoreChange;
 
 };

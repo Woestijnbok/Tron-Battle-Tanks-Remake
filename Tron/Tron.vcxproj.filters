@@ -37,6 +37,9 @@
     <Filter Include="Components\Tile Manager\Middle Tile">
       <UniqueIdentifier>{436d5049-283c-4ccd-9ca8-9fcbe2b3ab5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Scoreboard">
+      <UniqueIdentifier>{73eaab9f-79eb-4c43-aa93-c055dde26ec4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -70,6 +73,9 @@
     <ClCompile Include="MiddleTileComponent.cpp">
       <Filter>Components\Tile Manager\Middle Tile</Filter>
     </ClCompile>
+    <ClCompile Include="ScoreBoardComponent.cpp">
+      <Filter>Components\Scoreboard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuComponent.h">
@@ -101,6 +107,9 @@
     </ClInclude>
     <ClInclude Include="MiddleTileComponent.h">
       <Filter>Components\Tile Manager\Middle Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreBoardComponent.h">
+      <Filter>Components\Scoreboard</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
