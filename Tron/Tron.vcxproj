@@ -177,6 +177,7 @@
     <ClCompile Include="FireCommand.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuComponent.cpp" />
+    <ClCompile Include="MiddleTileComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
     <ClCompile Include="TankComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
@@ -188,6 +189,7 @@
     <ClInclude Include="BulletManagerComponent.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="MenuComponent.h" />
+    <ClInclude Include="MiddleTileComponent.h" />
     <ClInclude Include="MoveCommand.h" />
     <ClInclude Include="TankComponent.h" />
     <ClInclude Include="TileComponent.h" />

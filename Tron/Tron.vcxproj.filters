@@ -34,6 +34,9 @@
     <Filter Include="Commands\Fire">
       <UniqueIdentifier>{707065cc-82ac-4952-a84e-b2e5e8b68e8d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\Tile Manager\Middle Tile">
+      <UniqueIdentifier>{436d5049-283c-4ccd-9ca8-9fcbe2b3ab5a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -64,6 +67,9 @@
     <ClCompile Include="FireCommand.cpp">
       <Filter>Commands\Fire</Filter>
     </ClCompile>
+    <ClCompile Include="MiddleTileComponent.cpp">
+      <Filter>Components\Tile Manager\Middle Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuComponent.h">
@@ -92,6 +98,9 @@
     </ClInclude>
     <ClInclude Include="FireCommand.h">
       <Filter>Commands\Fire</Filter>
+    </ClInclude>
+    <ClInclude Include="MiddleTileComponent.h">
+      <Filter>Components\Tile Manager\Middle Tile</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

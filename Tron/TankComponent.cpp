@@ -21,7 +21,7 @@ TankComponent::TankComponent(Minigin::GameObject* owner, TileManagerComponent* t
 	m_BarrelRotationPoint{ 16, 8 },
 	m_BarrelRotation{}
 {
-	GetOwner()->SetLocalPosition(m_TileManager->GetStartPosition());			
+	GetOwner()->SetLocalPosition(m_TileManager->GetRandomPosition());				
 }
 
 float TankComponent::GetSpeed() const

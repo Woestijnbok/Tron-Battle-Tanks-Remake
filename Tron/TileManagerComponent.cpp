@@ -3,6 +3,7 @@
 #include <optional>
 #include <iostream>
 #include <format>
+#include <random>
 
 #include "TileManagerComponent.h"
 #include "ResourceManager.h"
@@ -11,10 +12,12 @@
 #include "Renderer.h"
 #include "BulletComponent.h"
 #include "Scene.h"
+#include "MiddleTileComponent.h"
 
 TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize) :
 	Component{ owner },
 	m_Tiles{},
+	m_MiddleTile{  },
 	m_TileZero{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Zero.png") },
 	m_TileOne{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile One.png") },
 	m_TileTwoCorner{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Two Corner.png") },
@@ -25,16 +28,35 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 	m_CollisionOffset{ 10 }
 {
 	CreateTiles();
+	CreateMiddleTile();
 }
 
-glm::ivec2 TileManagerComponent::GetStartPosition() const
+glm::ivec2 TileManagerComponent::GetRandomPosition() const
 {
-	return glm::ivec2{ m_TileSize * (int(m_Tiles.size()) / 2), m_TileSize * (int(m_Tiles.size()) / 2) };	
+	std::random_device random{};
+	std::mt19937 generator{ random() };
+	std::uniform_int_distribution<> distributer{ 0, static_cast<int>(m_Tiles.size()) - 1 };
+
+	int row{ -1 };
+	int collumn{ -1 };
+	while ((row == 3 and collumn == 3) or (row == -1 and collumn == -1))
+	{
+		row = distributer(generator);
+		collumn = distributer(generator);
+	}
+
+	return glm::ivec2{ m_TileSize * collumn, m_TileSize * row };			
 }
 
-bool TileManagerComponent::CanMove(TankComponent const* tank, MoveCommand::Direction direction) const
+bool TileManagerComponent::CanMove(TankComponent* tank, MoveCommand::Direction direction) const
 {
 	bool canMove{ false };
+
+	if (m_MiddleTile->CheckCollision(tank))
+	{
+		tank->GetOwner()->SetLocalPosition(GetRandomPosition());	
+		return canMove;
+	}
 
 	const glm::ivec2 tankPosition{ tank->GetOwner()->GetLocalTransform().GetPosition() };
 
@@ -168,21 +190,11 @@ void TileManagerComponent::CheckCollision(BulletComponent* bullet) const
 					{
 						// We did not hit the center collision zone of the current tile (every tile has one)
 						intersection = CheckCenter(bullet);
-						if (!intersection)
-						{
-							intersection;
-						}
-						else std::cout << "Hit Center" << std::endl;
 					}
-					else std::cout << "Hit Left" << std::endl;
 				}
-				else std::cout << "Hit Bottom" << std::endl;
 			}
-			else std::cout << "Hit Right" << std::endl;
 		}
-		else std::cout << "Hit Top" << std::endl;
 	}
-	else std::cout << "Hit bounds" << std::endl;
 
 	if (intersection) bullet->GetOwner()->SetLocalPosition(intersection.value());
 }
@@ -254,6 +266,16 @@ void TileManagerComponent::CreateTiles()
 			m_Tiles.at(row).at(collumn) = tile;	
 		}
 	}
+}
+
+void TileManagerComponent::CreateMiddleTile()
+{
+	Minigin::GameObject* object{ GetOwner()->GetScene()->CreateGameObject("Middle Tile") };	
+	object->SetParent(GetOwner());	
+	MiddleTileComponent* middle{ object->CreateComponent<MiddleTileComponent>() };	
+	object->SetLocalPosition(glm::ivec2{ static_cast<int>(m_Tiles.size()) * m_TileSize / 2 });	
+
+	m_MiddleTile = middle;	
 }
 
 bool TileManagerComponent::PointInsideRectangle(const glm::ivec2& point, const glm::ivec2& bottom, const glm::ivec2 top) const
