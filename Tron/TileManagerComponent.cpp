@@ -24,6 +24,7 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 	m_TileTwoStraight{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Two Straight.png") },
 	m_TileThree{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Three.png") },
 	m_TileFour{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Four.png") },
+	m_Border{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Border.png") },
 	m_TileSize{ tileSize },
 	m_CollisionOffset{ 10 }
 {
@@ -33,13 +34,14 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 
 glm::ivec2 TileManagerComponent::GetRandomPosition() const
 {
+	const int tiles{ static_cast<int>(m_Tiles.size()) };
 	std::random_device random{};
 	std::mt19937 generator{ random() };
-	std::uniform_int_distribution<> distributer{ 0, static_cast<int>(m_Tiles.size()) - 1 };
+	std::uniform_int_distribution<> distributer{ 0, tiles - 1 };	
 
 	int row{ -1 };
 	int collumn{ -1 };
-	while ((row == 3 and collumn == 3) or (row == -1 and collumn == -1))
+	while ((row == tiles / 4 and collumn == tiles / 4) or (row == -1 and collumn == -1))
 	{
 		row = distributer(generator);
 		collumn = distributer(generator);
@@ -197,6 +199,14 @@ void TileManagerComponent::CheckCollision(BulletComponent* bullet) const
 	}
 
 	if (intersection) bullet->GetOwner()->SetLocalPosition(intersection.value());
+}
+
+void TileManagerComponent::Render() const
+{
+	Minigin::Transform transform{ GetOwner()->GetWorldTransform() };
+	const glm::ivec2 center{ static_cast<int>(m_Tiles.size()) * m_TileSize / 2 };
+	transform.SetPosition(transform.GetPosition() + center);
+	m_Border->Render(transform);
 }
 
 int TileManagerComponent::GetRotation(TileComponent* tile) const		

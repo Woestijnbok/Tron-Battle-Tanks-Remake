@@ -28,7 +28,9 @@ public:
 
 	glm::ivec2 GetRandomPosition() const;	
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
-	void CheckCollision(BulletComponent* bullet) const;	
+	void CheckCollision(BulletComponent* bullet) const;
+	
+	virtual void Render() const;
 
 private:
 	std::array<std::array<TileComponent*, 8>, 8> m_Tiles;
@@ -38,7 +40,8 @@ private:
 	const std::unique_ptr<Minigin::Texture> m_TileTwoCorner;	
 	const std::unique_ptr<Minigin::Texture> m_TileTwoStraight;	
 	const std::unique_ptr<Minigin::Texture> m_TileThree;	
-	const std::unique_ptr<Minigin::Texture> m_TileFour;	
+	const std::unique_ptr<Minigin::Texture> m_TileFour;
+	const std::unique_ptr<Minigin::Texture> m_Border;
 	const int m_TileSize;
 	const int m_CollisionOffset;
 

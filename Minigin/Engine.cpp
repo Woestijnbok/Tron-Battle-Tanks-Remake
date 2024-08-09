@@ -16,7 +16,7 @@
 
 using namespace Minigin;
 
-glm::ivec2 Engine::m_WindowSize{ 640, 480 };
+glm::ivec2 Engine::m_WindowSize{ 510, 600 };
 SDL_Window* Engine::m_Window{ nullptr };
 const int Engine::m_TargetFrameRate{ 60 };
 const std::chrono::milliseconds Engine::m_TargetFrameDuration{ 1000 / m_TargetFrameRate };
