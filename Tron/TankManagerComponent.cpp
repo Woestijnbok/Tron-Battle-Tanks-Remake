@@ -36,16 +36,6 @@ void TankManagerComponent::SetManagers(TileManagerComponent* tileManager, Bullet
 	m_BulletManager = bulletManager;
 }
 
-TileManagerComponent* TankManagerComponent::GetTileManager() const
-{
-	return m_TileManager;
-}
-
-BulletManagerComponent* TankManagerComponent::GetBulletManager() const
-{
-	return m_BulletManager;
-}
-
 PlayerTankComponent* TankManagerComponent::CreatePlayerTank()
 {
 	PlayerTankComponent* playerTank{};
@@ -131,4 +121,9 @@ bool TankManagerComponent::CanMove(TankComponent* tank, MoveCommand::Direction d
 void TankManagerComponent::AddBullet(TankComponent* tank) const
 {
 	m_BulletManager->AddBullet(tank);
+}
+
+int TankManagerComponent::GetTileSize() const
+{
+	return m_TileManager->GetTileSize();	
 }

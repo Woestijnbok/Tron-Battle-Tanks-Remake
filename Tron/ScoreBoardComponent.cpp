@@ -10,7 +10,7 @@ ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, int lives) 
 	Component{ owner },
 	m_ScoreText{ std::make_unique<Minigin::Text>("0", Minigin::ResourceManager::Instance()->LoadFont("Arcade.otf", 30)) },
 	m_LiveTexture{ Minigin::ResourceManager::Instance()->LoadTexture("Hearth.png") },
-	m_Score{},
+	m_Score{ 0 },
 	m_Lives{ lives }
 {
 	
@@ -18,7 +18,7 @@ ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, int lives) 
 
 void ScoreboardComponent::UpdateScore(int score)
 {
-	m_Score = score;
+	m_Score += score;
 	m_ScoreText->SetText(std::to_string(score));
 }
 

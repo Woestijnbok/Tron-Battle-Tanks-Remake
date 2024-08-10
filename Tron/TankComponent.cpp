@@ -106,7 +106,7 @@ void TankComponent::Hit()
 	{
 		--m_Lives;
 		m_OnLivesChange.Notify(m_Lives);
-		if (m_Lives == 0) GetOwner()->SetStatus(ControllableObject::Status::Destroyed);	
+		if (m_Lives == 0) Die();	
 	}
 }
 
@@ -123,4 +123,9 @@ void TankComponent::SetMoveDirection(MoveCommand::Direction direction)
 TankManagerComponent* TankComponent::GetManager() const
 {
 	return m_Manager;
+}
+
+void TankComponent::Die()
+{
+	GetOwner()->SetStatus(ControllableObject::Status::Destroyed);
 }

@@ -17,13 +17,11 @@ public:
 	PlayerTankComponent& operator= (const PlayerTankComponent&&) noexcept = delete;
 
 	void SetBarrelRotation(int angle);
-	Minigin::Subject<int>& OnScoreChange();
 
 	virtual glm::vec2 GetFireDirection() const override;
 	virtual void Render() const override;
 
 private:
-	Minigin::Subject<int> m_OnScoreChange;
 	const std::unique_ptr<const Minigin::Texture> m_TankTexture;	
 	const std::unique_ptr<const Minigin::Texture> m_BarrelTexture;
 	std::array<const glm::ivec2, 4> m_BarrelOffsets;

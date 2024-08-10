@@ -24,8 +24,6 @@ public:
 	BulletManagerComponent& operator= (const BulletManagerComponent&&) noexcept = delete;
 
 	void SetManagers(TileManagerComponent* tileManager, TankManagerComponent* tankManager);
-	TileManagerComponent* GetTileManager() const;
-	TankManagerComponent* GetTankManager() const;
 	void AddBullet(TankComponent* tank);
 	Minigin::Texture* GetBulletTexture() const;
 	void CheckCollision(BulletComponent* bullet);

@@ -29,11 +29,10 @@ public:
 	TileManagerComponent& operator= (const TileManagerComponent&&) noexcept = delete;
 
 	void SetManagers(BulletManagerComponent* bulletManager, TankManagerComponent* tankManager);
-	BulletManagerComponent* GetBulletManager() const;	
-	TankManagerComponent* GetTankManager() const;
 	glm::ivec2 GetRandomPosition() const;	
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
 	void CheckCollision(BulletComponent* bullet) const;
+	int GetTileSize() const;
 	
 	virtual void Render() const;
 
@@ -56,8 +55,6 @@ private:
 	glm::vec2 GetScale(TileComponent* tile) const;	
 	void CreateTiles();	
 	void CreateMiddleTile();
-	bool PointInsideRectangle(const glm::ivec2& point, const glm::ivec2& bottom, const glm::ivec2 top) const;
-	std::optional<glm::ivec2> LinesIntersect(const glm::ivec2& a, const glm::ivec2& b, const glm::ivec2& c, const glm::ivec2& d) const;
 	std::optional<glm::ivec2> CheckBounds(BulletComponent* bullet) const;	
 	std::optional<glm::ivec2> CheckCenter(BulletComponent* bullet) const;
 	std::optional<glm::ivec2> CheckTop(BulletComponent* bullet) const;	

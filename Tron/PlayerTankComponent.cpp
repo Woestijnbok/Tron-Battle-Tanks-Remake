@@ -4,8 +4,7 @@
 #include "ResourceManager.h"
 
 PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager) :
-	TankComponent{ owner, manager, 100.0f, 20, 3 },		
-	m_OnScoreChange{},
+	TankComponent{ owner, manager, 100.0f, 20, 3 },
 	m_TankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") },	
 	m_BarrelTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Barrel.png") },
 	m_BarrelOffsets{ glm::ivec2{ 0, 4 }, glm::ivec2{ -4, 8 }, glm::ivec2{ 0, 12 }, glm::ivec2{ 4, 8 } },	
@@ -18,11 +17,6 @@ PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManager
 void PlayerTankComponent::SetBarrelRotation(int angle)
 {
 	m_BarrelRotation = angle;
-}
-
-Minigin::Subject<int>& PlayerTankComponent::OnScoreChange()
-{
-	return m_OnScoreChange;
 }
 
 glm::vec2 PlayerTankComponent::GetFireDirection() const

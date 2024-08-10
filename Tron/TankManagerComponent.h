@@ -28,8 +28,6 @@ public:
 	TankManagerComponent& operator= (const TankManagerComponent&&) noexcept = delete;
 
 	void SetManagers(TileManagerComponent* tileManager, BulletManagerComponent* bulletManager);	
-	TileManagerComponent* GetTileManager() const;	
-	BulletManagerComponent* GetBulletManager() const;
 	PlayerTankComponent* CreatePlayerTank();
 	BlueTankComponent* CreateBlueTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
 	const std::vector<TankComponent*>& GetTanks() const;
@@ -39,6 +37,7 @@ public:
 	glm::ivec2 GetRandomPosition() const;
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
 	void AddBullet(TankComponent* tank) const;
+	int GetTileSize() const;
 
 private:
 	std::vector<TankComponent*> m_Tanks;

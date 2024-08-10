@@ -43,6 +43,8 @@ protected:
 	void SetMoveDirection(MoveCommand::Direction direction);
 	TankManagerComponent* GetManager() const;
 
+	virtual void Die();	
+
 private:
 	TankManagerComponent* m_Manager;
 	MoveCommand::Direction m_Direction;	

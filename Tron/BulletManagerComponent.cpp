@@ -27,16 +27,6 @@ void BulletManagerComponent::SetManagers(TileManagerComponent* tileManager, Tank
 	m_TankManager = tankManager;
 }
 
-TileManagerComponent* BulletManagerComponent::GetTileManager() const
-{
-	return m_TileManager;
-}
-
-TankManagerComponent* BulletManagerComponent::GetTankManager() const
-{
-	return m_TankManager;
-}
-
 void BulletManagerComponent::AddBullet(TankComponent* tank)
 {
 	Minigin::Scene* scene{ GetOwner()->GetScene() };
