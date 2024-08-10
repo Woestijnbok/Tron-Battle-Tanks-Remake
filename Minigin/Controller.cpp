@@ -4,6 +4,7 @@
 
 #include "Controller.h"
 #include "Command.h"
+#include "GameObject.h"
 
 using namespace Minigin;
 
@@ -22,6 +23,7 @@ public:
 	void AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 	void ClearInputActions();
 	unsigned int GetIndex() const;
+	void RemoveInputActions(GameObject* object);
 
 private:
 	unsigned int m_Index;
@@ -91,6 +93,28 @@ void Controller::Impl::ClearInputActions()
 unsigned int Controller::Impl::GetIndex() const
 {
 	return m_Index;
+}
+
+void Controller::Impl::RemoveInputActions(GameObject* object)	
+{
+	m_InputActions.erase
+	(
+		std::remove_if
+		(
+			m_InputActions.begin(), m_InputActions.end(), 
+			[&object](const InputAction& inputAction) -> bool 
+			{
+				GameObjectCommand* command{ dynamic_cast<GameObjectCommand*>(inputAction.GetCommand()) };
+				if (command != nullptr)
+				{
+					if (command->GetGameObject() == object) return true;
+				}
+
+				return false;
+			}
+		),
+		m_InputActions.end()
+	);
 }
 
 unsigned int Controller::Impl::ConvertButton(Controller::Button button) const
@@ -173,4 +197,9 @@ void Controller::ClearInputActions()
 unsigned int Controller::GetIndex() const
 {
 	return m_Pimpl->GetIndex();
+}
+
+void Minigin::Controller::RemoveInputActions(GameObject* object)
+{
+	m_Pimpl->RemoveInputActions(object);
 }

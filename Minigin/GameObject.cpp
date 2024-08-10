@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "Renderer.h"
 #include "Scene.h"
+#include "InputManager.h"
 
 using namespace Minigin;
 
@@ -18,6 +19,11 @@ GameObject::GameObject(Scene* scene, const std::string& name) :
 	m_Name{ name }
 {
 
+}
+
+Minigin::GameObject::~GameObject()
+{
+	InputManager::Instance()->RemoveInputActions(this);
 }
 
 void GameObject::FlagWorldTransform()

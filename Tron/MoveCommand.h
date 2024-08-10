@@ -2,7 +2,7 @@
 
 #include "Command.h"
 
-class TankComponent;
+class PlayerTankComponent;
 
 class MoveCommand final : public Minigin::GameObjectCommand
 {
@@ -15,7 +15,7 @@ public:
 		Left
 	};
 
-	MoveCommand(TankComponent* tank, Direction direction);
+	MoveCommand(PlayerTankComponent* tank, Direction direction);
 	virtual ~MoveCommand() = default;
 
 	MoveCommand(const MoveCommand&) = delete;
@@ -27,6 +27,6 @@ public:
 
 private:
 	Direction m_Direction;
-	TankComponent* m_Tank;
+	PlayerTankComponent* m_Tank;
 
 };

@@ -4,12 +4,12 @@
 
 #include "Command.h"
 
-class TankComponent;
+class PlayerTankComponent;	
 
 class AimCommand : public Minigin::GameObjectCommand
 {
 public:
-	AimCommand(TankComponent* tank);
+	AimCommand(PlayerTankComponent* tank);
 	virtual ~AimCommand() = default;
 
 	AimCommand(const AimCommand&) = delete;
@@ -20,6 +20,6 @@ public:
 	virtual void Execute(const glm::vec2& axis) override;
 
 private:
-	TankComponent* m_Tank;
+	PlayerTankComponent* m_Tank;
 
 };

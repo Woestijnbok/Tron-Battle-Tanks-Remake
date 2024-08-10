@@ -6,13 +6,18 @@
 #include <random>
 
 #include "TileManagerComponent.h"
+#include "BulletManagerComponent.h"
+#include "TankManagerComponent.h"
+#include "TileComponent.h"
+#include "BulletComponent.h"
+#include "MiddleTileComponent.h"
+#include "TankComponent.h"
+
 #include "ResourceManager.h"
 #include "Transform.h"
 #include "GameObject.h"
 #include "Renderer.h"
-#include "BulletComponent.h"
 #include "Scene.h"
-#include "MiddleTileComponent.h"
 
 TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize) :
 	Component{ owner },
@@ -26,10 +31,28 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 	m_TileFour{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Tile Four.png") },
 	m_Border{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Tiles/Border.png") },
 	m_TileSize{ tileSize },
-	m_CollisionOffset{ 10 }
+	m_CollisionOffset{ 10 },
+	m_BulletManager{},
+	m_TankManager{}
 {
 	CreateTiles();
 	CreateMiddleTile();
+}
+
+void TileManagerComponent::SetManagers(BulletManagerComponent* bulletManager, TankManagerComponent* tankManager)
+{
+	m_BulletManager = bulletManager;
+	m_TankManager = tankManager;
+}
+
+BulletManagerComponent* TileManagerComponent::GetBulletManager() const
+{
+	return m_BulletManager;
+}
+
+TankManagerComponent* TileManagerComponent::GetTankManager() const
+{
+	return m_TankManager;
 }
 
 glm::ivec2 TileManagerComponent::GetRandomPosition() const

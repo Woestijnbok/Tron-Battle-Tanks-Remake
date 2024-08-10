@@ -4,6 +4,7 @@
 
 #include "Mouse.h"
 #include "Command.h"
+#include "GameObject.h"
 
 using namespace Minigin;
 
@@ -24,6 +25,7 @@ public:
 	void MouseMoved();
 	void MouseClicked(bool left);
 	void SetMousePosition(const glm::ivec2& position);
+	void RemoveInputActions(GameObject* object);
 
 private:
 	std::vector<InputAction> m_InputActions;
@@ -91,6 +93,28 @@ void Mouse::Impl::SetMousePosition(const glm::ivec2& position)
 	m_Position = position;
 }
 
+void Mouse::Impl::RemoveInputActions(GameObject* object)		
+{
+	m_InputActions.erase
+	(
+		std::remove_if
+		(
+			m_InputActions.begin(), m_InputActions.end(),
+			[&object](const InputAction& inputAction) -> bool
+			{
+				GameObjectCommand* command{ dynamic_cast<GameObjectCommand*>(inputAction.GetCommand()) };
+				if (command != nullptr)
+				{
+					if (command->GetGameObject() == object) return true;
+				}
+
+				return false;
+			}
+		),
+		m_InputActions.end()
+	);
+}	
+
 Mouse::Mouse() :
 	m_Pimpl{ std::make_unique<Mouse::Impl>() }
 {
@@ -127,4 +151,9 @@ void Minigin::Mouse::MouseClicked(bool left)
 void Minigin::Mouse::SetMousePosition(const glm::ivec2& position)
 {
 	m_Pimpl->SetMousePosition(position);
+}
+
+void Minigin::Mouse::RemoveInputActions(GameObject* object)
+{
+	m_Pimpl->RemoveInputActions(object);
 }

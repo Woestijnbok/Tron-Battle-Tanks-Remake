@@ -39,7 +39,8 @@ namespace Minigin
 		GameObjectCommand& operator= (const GameObjectCommand&) = delete;
 		GameObjectCommand& operator= (const GameObjectCommand&&) noexcept = delete;
 
-		GameObject* GetGameObject();
+		bool IsInvalid() const;
+		GameObject* GetGameObject() const;
 
 	protected:
 

@@ -25,18 +25,18 @@ namespace Minigin
 		explicit InputAction(unsigned int button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 		~InputAction() = default;
 
-		InputAction(const InputAction&) = delete;
-		InputAction(InputAction&&) noexcept = default;
-		InputAction& operator= (const InputAction&) = delete;
-		InputAction& operator= (const InputAction&&) noexcept = delete;
+		InputAction(const InputAction& rhs) = default;
+		InputAction(InputAction&& rhs) noexcept = default;
+		InputAction& operator= (const InputAction& rhs);
+		InputAction& operator= (const InputAction&& rhs) noexcept;
 		
 		unsigned int GetButton() const;
 		Trigger GetTrigger() const;
 		Command* GetCommand() const;
 
 	private:
-		const unsigned int m_Button;
-		const InputAction::Trigger m_Trigger;
-		const std::shared_ptr<Command> m_Command;
+		unsigned int m_Button;
+		InputAction::Trigger m_Trigger;
+		std::shared_ptr<Command> m_Command;
 	};
 }

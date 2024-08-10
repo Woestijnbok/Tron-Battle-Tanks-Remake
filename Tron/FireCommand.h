@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Command.h"
+#include "PlayerTankComponent.h"
 
-class TankComponent;
+class PlayerTankComponent;
 
 class FireCommand : public Minigin::GameObjectCommand
 {
 public:
-	explicit FireCommand(TankComponent* tank);
+	explicit FireCommand(PlayerTankComponent* tank);
 	~FireCommand() = default;
 
 	FireCommand(const FireCommand&) = default;
@@ -19,6 +20,6 @@ public:
 	virtual void Execute(const glm::vec2& axis) override;
 
 private:
-	TankComponent* m_Tank;
+	PlayerTankComponent* m_Tank;
 
 };

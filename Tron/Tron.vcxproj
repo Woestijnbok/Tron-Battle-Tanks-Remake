@@ -172,6 +172,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AimCommand.cpp" />
+    <ClCompile Include="BlueTankComponent.cpp" />
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="BulletManagerComponent.cpp" />
     <ClCompile Include="FireCommand.cpp" />
@@ -179,21 +180,26 @@
     <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="MiddleTileComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
+    <ClCompile Include="PlayerTankComponent.cpp" />
     <ClCompile Include="ScoreBoardComponent.cpp" />
     <ClCompile Include="TankComponent.cpp" />
+    <ClCompile Include="TankManagerComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
     <ClCompile Include="TileManagerComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimCommand.h" />
+    <ClInclude Include="BlueTankComponent.h" />
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="BulletManagerComponent.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="MiddleTileComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="PlayerTankComponent.h" />
     <ClInclude Include="ScoreBoardComponent.h" />
     <ClInclude Include="TankComponent.h" />
+    <ClInclude Include="TankManagerComponent.h" />
     <ClInclude Include="TileComponent.h" />
     <ClInclude Include="TileManagerComponent.h" />
   </ItemGroup>

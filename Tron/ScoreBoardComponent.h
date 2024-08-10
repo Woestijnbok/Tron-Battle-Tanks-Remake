@@ -9,7 +9,7 @@
 class ScoreboardComponent final : public Minigin::Component
 {
 public:
-	explicit ScoreboardComponent(Minigin::GameObject* owner);
+	explicit ScoreboardComponent(Minigin::GameObject* owner, int lives);
 	virtual ~ScoreboardComponent() = default;
 
 	ScoreboardComponent(const ScoreboardComponent&) = delete;

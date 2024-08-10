@@ -1,7 +1,7 @@
 #include "FireCommand.h"
-#include "TankComponent.h"
+#include "PlayerTankComponent.h"
 
-FireCommand::FireCommand(TankComponent* tank) :
+FireCommand::FireCommand(PlayerTankComponent* tank) :	
 	GameObjectCommand{ tank->GetOwner() },
 	m_Tank{ tank }
 {

@@ -4,26 +4,14 @@
     <Filter Include="Components">
       <UniqueIdentifier>{09d95e45-921a-4971-9d4e-bd6941e12f9b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Tile Manager">
-      <UniqueIdentifier>{57289254-5b49-4530-a834-d47362519b99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Menu">
       <UniqueIdentifier>{08ef4148-0ce8-40dc-80fd-18fe0b22a1d3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Tile Manager\Tile">
-      <UniqueIdentifier>{6de0acb1-ff93-4f8b-b15c-5e1fd116a1e2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Components\Tank">
       <UniqueIdentifier>{bf177b77-bb93-4605-873c-b0f06642f79f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Commands">
       <UniqueIdentifier>{7de0e0b8-4d84-457e-926f-19ed64fbcda0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Bullet Manager">
-      <UniqueIdentifier>{27df4246-410f-4098-8ff0-a18e588b82a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Components\Bullet Manager\Bullet">
-      <UniqueIdentifier>{ce5da085-feda-4636-8ecf-776852ac62bb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Commands\Move">
       <UniqueIdentifier>{4a97870c-5fc0-476e-890f-3716551cce2c}</UniqueIdentifier>
@@ -34,11 +22,32 @@
     <Filter Include="Commands\Fire">
       <UniqueIdentifier>{707065cc-82ac-4952-a84e-b2e5e8b68e8d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Tile Manager\Middle Tile">
-      <UniqueIdentifier>{436d5049-283c-4ccd-9ca8-9fcbe2b3ab5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Scoreboard">
       <UniqueIdentifier>{73eaab9f-79eb-4c43-aa93-c055dde26ec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tank\Player">
+      <UniqueIdentifier>{63eb1b33-fdd9-4e34-9d01-02186d05e678}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tank\Blue">
+      <UniqueIdentifier>{27ba4429-3f76-4260-9c1d-783cae47e453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Bullet">
+      <UniqueIdentifier>{27df4246-410f-4098-8ff0-a18e588b82a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Bullet\Bullet">
+      <UniqueIdentifier>{ce5da085-feda-4636-8ecf-776852ac62bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tile">
+      <UniqueIdentifier>{57289254-5b49-4530-a834-d47362519b99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tile\Tile">
+      <UniqueIdentifier>{6de0acb1-ff93-4f8b-b15c-5e1fd116a1e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tile\Middle Tile">
+      <UniqueIdentifier>{436d5049-283c-4ccd-9ca8-9fcbe2b3ab5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tank\Tank">
+      <UniqueIdentifier>{703c0176-e290-4010-84d4-c90c74a99b42}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -47,13 +56,10 @@
       <Filter>Components\Menu</Filter>
     </ClCompile>
     <ClCompile Include="TileManagerComponent.cpp">
-      <Filter>Components\Tile Manager</Filter>
+      <Filter>Components\Tile</Filter>
     </ClCompile>
     <ClCompile Include="TileComponent.cpp">
-      <Filter>Components\Tile Manager\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="TankComponent.cpp">
-      <Filter>Components\Tank</Filter>
+      <Filter>Components\Tile\Tile</Filter>
     </ClCompile>
     <ClCompile Include="MoveCommand.cpp">
       <Filter>Commands\Move</Filter>
@@ -62,19 +68,31 @@
       <Filter>Commands\Aim</Filter>
     </ClCompile>
     <ClCompile Include="BulletManagerComponent.cpp">
-      <Filter>Components\Bullet Manager</Filter>
+      <Filter>Components\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="BulletComponent.cpp">
-      <Filter>Components\Bullet Manager\Bullet</Filter>
+      <Filter>Components\Bullet\Bullet</Filter>
     </ClCompile>
     <ClCompile Include="FireCommand.cpp">
       <Filter>Commands\Fire</Filter>
     </ClCompile>
     <ClCompile Include="MiddleTileComponent.cpp">
-      <Filter>Components\Tile Manager\Middle Tile</Filter>
+      <Filter>Components\Tile\Middle Tile</Filter>
     </ClCompile>
     <ClCompile Include="ScoreBoardComponent.cpp">
       <Filter>Components\Scoreboard</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerTankComponent.cpp">
+      <Filter>Components\Tank\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="BlueTankComponent.cpp">
+      <Filter>Components\Tank\Blue</Filter>
+    </ClCompile>
+    <ClCompile Include="TankComponent.cpp">
+      <Filter>Components\Tank\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="TankManagerComponent.cpp">
+      <Filter>Components\Tank</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -82,13 +100,10 @@
       <Filter>Components\Menu</Filter>
     </ClInclude>
     <ClInclude Include="TileManagerComponent.h">
-      <Filter>Components\Tile Manager</Filter>
+      <Filter>Components\Tile</Filter>
     </ClInclude>
     <ClInclude Include="TileComponent.h">
-      <Filter>Components\Tile Manager\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="TankComponent.h">
-      <Filter>Components\Tank</Filter>
+      <Filter>Components\Tile\Tile</Filter>
     </ClInclude>
     <ClInclude Include="MoveCommand.h">
       <Filter>Commands\Move</Filter>
@@ -97,19 +112,31 @@
       <Filter>Commands\Aim</Filter>
     </ClInclude>
     <ClInclude Include="BulletManagerComponent.h">
-      <Filter>Components\Bullet Manager</Filter>
+      <Filter>Components\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="BulletComponent.h">
-      <Filter>Components\Bullet Manager\Bullet</Filter>
+      <Filter>Components\Bullet\Bullet</Filter>
     </ClInclude>
     <ClInclude Include="FireCommand.h">
       <Filter>Commands\Fire</Filter>
     </ClInclude>
     <ClInclude Include="MiddleTileComponent.h">
-      <Filter>Components\Tile Manager\Middle Tile</Filter>
+      <Filter>Components\Tile\Middle Tile</Filter>
     </ClInclude>
     <ClInclude Include="ScoreBoardComponent.h">
       <Filter>Components\Scoreboard</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerTankComponent.h">
+      <Filter>Components\Tank\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="BlueTankComponent.h">
+      <Filter>Components\Tank\Blue</Filter>
+    </ClInclude>
+    <ClInclude Include="TankComponent.h">
+      <Filter>Components\Tank\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="TankManagerComponent.h">
+      <Filter>Components\Tank</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

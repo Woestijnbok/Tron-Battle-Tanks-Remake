@@ -6,6 +6,7 @@
 #include "Command.h"
 #include "InputManager.h"
 #include "Engine.h"
+#include "GameObject.h"
 
 using namespace Minigin;
 
@@ -23,7 +24,8 @@ public:
 	bool ProcessInput();
 	void AddInputAction(Key key, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 	void ClearInputActions();
-	void SetMouse(Mouse* mouse);	
+	void SetMouse(Mouse* mouse);
+	void RemoveInputActions(GameObject* object);	
 
 private:
 	std::vector<InputAction> m_InputActions;
@@ -111,6 +113,28 @@ void Keyboard::Impl::ClearInputActions()
 void Keyboard::Impl::SetMouse(Mouse* mouse)
 {
 	m_Mouse = mouse;
+}
+
+void Keyboard::Impl::RemoveInputActions(GameObject* object)	
+{
+	m_InputActions.erase
+	(
+		std::remove_if
+		(
+			m_InputActions.begin(), m_InputActions.end(),
+			[&object](const InputAction& inputAction) -> bool
+			{
+				GameObjectCommand* command{ dynamic_cast<GameObjectCommand*>(inputAction.GetCommand()) };
+				if (command != nullptr)
+				{
+					if (command->GetGameObject() == object) return true;
+				}
+
+				return false;
+			}
+		),
+		m_InputActions.end()
+	);
 }
 
 unsigned int Keyboard::Impl::ConvertKey(Keyboard::Key key) const
@@ -269,4 +293,9 @@ void Keyboard::ClearInputActions()
 void Minigin::Keyboard::SetMouse(Mouse* mouse)
 {
 	m_Pimpl->SetMouse(mouse);
+}
+
+void Minigin::Keyboard::RemoveInputActions(GameObject* object)
+{
+	m_Pimpl->RemoveInputActions(object);
 }

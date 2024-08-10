@@ -1,5 +1,6 @@
 #include "Command.h"
 #include "GameObject.h"
+#include "Scene.h"
 
 using namespace Minigin;
 
@@ -20,7 +21,12 @@ GameObjectCommand::GameObjectCommand(GameObject* gameObject) :
 
 }
 
-GameObject* GameObjectCommand::GetGameObject()
+bool Minigin::GameObjectCommand::IsInvalid() const
+{
+	return m_GameObject->GetScene()->GetStatus() != ControllableObject::Status::Enabled or m_GameObject->GetStatus() != ControllableObject::Status::Enabled;
+}
+
+GameObject* GameObjectCommand::GetGameObject() const
 {
 	return m_GameObject;
 }

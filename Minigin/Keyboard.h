@@ -7,6 +7,7 @@
 namespace Minigin
 {
 	class Mouse;
+	class GameObject;
 
 	class Keyboard final
 	{
@@ -67,6 +68,7 @@ namespace Minigin
 		void AddInputAction(Key key, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 		void ClearInputActions();
 		void SetMouse(Mouse* mouse);
+		void RemoveInputActions(GameObject* object);
 
 	private:
 		class Impl;

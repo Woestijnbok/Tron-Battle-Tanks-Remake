@@ -7,6 +7,8 @@
 
 namespace Minigin
 {
+	class GameObject;
+	
 	class Mouse final
 	{
 	public:
@@ -31,6 +33,7 @@ namespace Minigin
 		void MouseMoved();
 		void MouseClicked(bool left);
 		void SetMousePosition(const glm::ivec2& position);
+		void RemoveInputActions(GameObject* object);	
 
 	private:
 		class Impl;

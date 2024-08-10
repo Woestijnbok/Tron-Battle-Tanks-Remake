@@ -12,6 +12,24 @@ InputAction::InputAction(unsigned int button, InputAction::Trigger trigger, cons
 	
 }
 
+InputAction& Minigin::InputAction::operator=(const InputAction& rhs)
+{
+	m_Button = rhs.m_Button;
+	m_Trigger = rhs.m_Trigger;
+	m_Command = rhs.m_Command;
+
+	return *this;
+}
+
+InputAction& Minigin::InputAction::operator=(const InputAction&& rhs) noexcept
+{
+	m_Button = rhs.m_Button;
+	m_Trigger = rhs.m_Trigger;
+	m_Command = rhs.m_Command;
+
+	return *this;
+}
+
 unsigned int InputAction::GetButton() const
 {
 	return m_Button;

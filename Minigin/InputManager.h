@@ -9,6 +9,8 @@
 
 namespace Minigin
 {
+	class GameObject;
+
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
@@ -26,6 +28,7 @@ namespace Minigin
 		Keyboard& GetKeyboard();
 		Mouse& GetMouse();
 		Controller& GetController(unsigned int index);
+		void RemoveInputActions(GameObject* object);
 
 	private:
 		Mouse m_Mouse;

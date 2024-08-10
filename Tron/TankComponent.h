@@ -2,6 +2,7 @@
 
 #include <memory>
 #include <array>
+#include <utility>
 
 #include "Component.h"
 #include "Texture.h"
@@ -10,43 +11,46 @@
 
 class TileManagerComponent;
 class BulletManagerComponent;
+class TankManagerComponent;
 
-class TankComponent final : public Minigin::Component
+class TankComponent : public Minigin::Component
 {
-public:
-	explicit TankComponent(Minigin::GameObject* owner, TileManagerComponent* tileManager, BulletManagerComponent* bulletManager, float speed);	
-	virtual ~TankComponent() = default;
+public:	
+	virtual ~TankComponent();
 
 	TankComponent(const TankComponent&) = delete;
 	TankComponent(TankComponent&&) noexcept = delete;	
 	TankComponent& operator= (const TankComponent&) = delete;
 	TankComponent& operator= (const TankComponent&&) noexcept = delete;
 
-	float GetSpeed() const;
+	float GetMovementSpeed() const;
 	void Move(MoveCommand::Direction direction);
-	void SetBarrelRotation(int angle);
 	void Fire();
-	glm::vec2 GetDirection() const;
-	Minigin::Subject<int>& OnLiveChange();
-	Minigin::Subject<int>& OnScoreChange();
+	std::pair<glm::ivec2, glm::ivec2> GetCollisionRectangle() const;
+	Minigin::Subject<int>& OnLivesChange();
+	Minigin::Subject<>& OnFire();
+	int GetLives() const;
+	void Hit();		
 
-	virtual void Render() const override;
+	virtual glm::vec2 GetFireDirection() const = 0;
+
+	static void SetManagerAlive(bool alive);
+
+protected:
+	explicit TankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, float speed, int collisionSize, int lives);
+
+	MoveCommand::Direction GetMoveDirection() const;
+	void SetMoveDirection(MoveCommand::Direction direction);
+	TankManagerComponent* GetManager() const;
 
 private:
-	TileManagerComponent* m_TileManager;
-	BulletManagerComponent* m_BulletManager;
+	TankManagerComponent* m_Manager;
+	MoveCommand::Direction m_Direction;	
 	const float m_Speed;
-	const std::unique_ptr<const Minigin::Texture> m_TankTexture;
-	const std::unique_ptr<const Minigin::Texture> m_BarrelTexture;
-	MoveCommand::Direction m_Direction;
-	/*
-	* @brief offsets for the barrel in each direction.
-	* The order is up, right, left and down same as the enum.
-	*/
-	std::array<const glm::ivec2, 4> m_BarrelOffsets;
-	const glm::ivec2 m_BarrelRotationPoint;
-	int m_BarrelRotation;
-	Minigin::Subject<int> m_OnLiveChange;
-	Minigin::Subject<int> m_OnScoreChange;
+	const int m_CollisionSize;
+	int m_Lives;
+	Minigin::Subject<int> m_OnLivesChange;	
+	Minigin::Subject<> m_OnFire;
 
+	static bool m_ManagerAlive;
 };

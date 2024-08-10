@@ -1,10 +1,10 @@
 #include "AimCommand.h"
 #include "GameObject.h"
-#include "TankComponent.h"
+#include "PlayerTankComponent.h"
 
-AimCommand::AimCommand(TankComponent* tank) :
-	Minigin::GameObjectCommand{ tank->GetOwner() },
-	m_Tank{ tank }
+AimCommand::AimCommand(PlayerTankComponent* tank) :
+	Minigin::GameObjectCommand{ tank->GetOwner() },	
+	m_Tank{ tank }	
 {
 	if (GetGameObject() == nullptr)		
 	{

@@ -23,6 +23,7 @@ public:
 
 	const glm::vec2& GetDirection() const;
 	void Bounce(TileComponent::Side side);
+	TankComponent* GetTank() const;
 
 	virtual void FixedUpdate() override;
 	virtual void Render() const;

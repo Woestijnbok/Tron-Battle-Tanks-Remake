@@ -1,10 +1,11 @@
 #include <glm.hpp>
 
 #include "BulletComponent.h"
-#include "TimeManager.h"
 #include "TankComponent.h"
-#include "GameObject.h"
 #include "BulletManagerComponent.h"
+
+#include "TimeManager.h"
+#include "GameObject.h"
 
 const std::chrono::duration<float> BulletComponent::m_LifeTime{ 10.0f };
 const float BulletComponent::m_Speed{ 400.0f };
@@ -13,7 +14,7 @@ const int BulletComponent::m_MaxBounces{ 5 };
 BulletComponent::BulletComponent(Minigin::GameObject* owner, TankComponent* tank, BulletManagerComponent* manager) :
 	Component{ owner },
 	m_Tank{ tank },
-	m_Direction{ tank->GetDirection() },
+	m_Direction{ tank->GetFireDirection() },
 	m_InitialTime{ std::chrono::steady_clock::now() },
 	m_Bounces{},
 	m_Texture{ manager->GetBulletTexture() },
@@ -57,8 +58,13 @@ void BulletComponent::Bounce(TileComponent::Side side)
 	++m_Bounces;
 	if (m_Bounces == m_MaxBounces)
 	{
-		SetStatus(Status::Destroyed);
+		GetOwner()->SetStatus(Status::Destroyed);
 	}
+}
+
+TankComponent* BulletComponent::GetTank() const
+{
+	return m_Tank;
 }
 
 void BulletComponent::FixedUpdate()
@@ -67,7 +73,7 @@ void BulletComponent::FixedUpdate()
 
 	if (timeDifference > m_LifeTime) 
 	{
-		SetStatus(Status::Destroyed);	
+		GetOwner()->SetStatus(Status::Destroyed);	
 	}
 	else
 	{

@@ -6,34 +6,43 @@
 #include "TileManagerComponent.h"
 #include "TimeManager.h"
 #include "BulletManagerComponent.h"
+#include "TankManagerComponent.h"
 
 #include <iostream>
 
-TankComponent::TankComponent(Minigin::GameObject* owner, TileManagerComponent* tileManager, BulletManagerComponent* bulletManager, float speed) :
-	Component{ owner },
-	m_TileManager{ tileManager },
-	m_BulletManager{ bulletManager },
-	m_Speed{ speed },
-	m_TankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") },
-	m_BarrelTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Barrel.png") },
-	m_Direction{ MoveCommand::Direction::Up },
-	m_BarrelOffsets{ glm::ivec2{ 0, 4 }, glm::ivec2{ -4, 8 }, glm::ivec2{ 0, 12 }, glm::ivec2{ 4, 8 } },
-	m_BarrelRotationPoint{ 16, 8 },
-	m_BarrelRotation{},
-	m_OnLiveChange{},
-	m_OnScoreChange{}
+bool TankComponent::m_ManagerAlive{ true };
+
+void TankComponent::SetManagerAlive(bool alive)
 {
-	GetOwner()->SetLocalPosition(m_TileManager->GetRandomPosition());				
+	m_ManagerAlive = alive;
 }
 
-float TankComponent::GetSpeed() const
+TankComponent::TankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, float speed, int collisionSize, int lives) :
+	Component{ owner },
+	m_Manager{ manager },	
+	m_Direction{ MoveCommand::Direction::Right },
+	m_Speed{ speed },
+	m_CollisionSize{ collisionSize },
+	m_Lives{ lives },
+	m_OnLivesChange{},
+	m_OnFire{}
+{
+	GetOwner()->SetLocalPosition(m_Manager->GetRandomPosition());	
+}
+
+TankComponent::~TankComponent()
+{
+	if (m_ManagerAlive) m_Manager->RemoveTank(this);
+}
+
+float TankComponent::GetMovementSpeed() const
 {
 	return m_Speed;
 }
 
 void TankComponent::Move(MoveCommand::Direction direction)
 {
-	if (!m_TileManager->CanMove(this, direction)) return;
+	if (!m_Manager->CanMove(this, direction)) return;	
 
 	const glm::ivec2 oldPosition{ GetOwner()->GetLocalTransform().GetPosition() };	
 	glm::ivec2 newPosition{ oldPosition };
@@ -60,66 +69,58 @@ void TankComponent::Move(MoveCommand::Direction direction)
 	GetOwner()->SetLocalPosition(newPosition);	
 }
 
-void TankComponent::SetBarrelRotation(int angle)
-{
-	m_BarrelRotation = angle;
-}
-
 void TankComponent::Fire()
 {
-	m_BulletManager->AddBullet(this);
-	m_OnLiveChange.Notify(1);
-	m_OnScoreChange.Notify(1000);
+	m_Manager->AddBullet(this);
+	m_OnFire.Notify();
 }
 
-void TankComponent::Render() const
+std::pair<glm::ivec2, glm::ivec2> TankComponent::GetCollisionRectangle() const
 {
-	Minigin::Transform tankTransform{ GetOwner()->GetWorldTransform() };
-	Minigin::Transform barrelTransform{ tankTransform };
-	barrelTransform.SetRotation(m_BarrelRotation);
-	
-	switch (m_Direction)
+	const glm::ivec2 position{ GetOwner()->GetLocalTransform().GetPosition() };	
+
+	const glm::ivec2 bottomLeft{ position - m_CollisionSize / 2 };
+	const glm::ivec2 topRight{ position + m_CollisionSize / 2 };
+
+	return std::make_pair(bottomLeft, topRight);
+}
+
+Minigin::Subject<int>& TankComponent::OnLivesChange()
+{
+	return m_OnLivesChange;
+}
+
+Minigin::Subject<>& TankComponent::OnFire()	
+{
+	return m_OnFire;
+}
+
+int TankComponent::GetLives() const	
+{
+	return m_Lives;
+}
+
+void TankComponent::Hit()
+{
+	if (m_Lives > 0)
 	{
-	case MoveCommand::Direction::Up:
-		barrelTransform.SetPosition(barrelTransform.GetPosition() + m_BarrelOffsets.at(0));		
-		break;
-	case MoveCommand::Direction::Right:	
-		tankTransform.SetRotation(tankTransform.GetRotation() + 90);
-		barrelTransform.SetPosition(barrelTransform.GetPosition() + m_BarrelOffsets.at(1));	
-		break;
-	case MoveCommand::Direction::Down:	
-		tankTransform.SetRotation(tankTransform.GetRotation() + 180);	
-		barrelTransform.SetPosition(barrelTransform.GetPosition() + m_BarrelOffsets.at(2));	
-		break;
-	case MoveCommand::Direction::Left:	
-		tankTransform.SetRotation(tankTransform.GetRotation() + 270);		
-		barrelTransform.SetPosition(barrelTransform.GetPosition() + m_BarrelOffsets.at(3));	
-		break;
-	default:
-		break;
+		--m_Lives;
+		m_OnLivesChange.Notify(m_Lives);
+		if (m_Lives == 0) GetOwner()->SetStatus(ControllableObject::Status::Destroyed);	
 	}
-
-	m_TankTexture->Render(tankTransform);
-	m_BarrelTexture->Render(barrelTransform, m_BarrelRotationPoint);
 }
 
-glm::vec2 TankComponent::GetDirection() const
+MoveCommand::Direction TankComponent::GetMoveDirection() const
 {
-	const float radians{ m_BarrelRotation * (3.14f / 180.0f) };
-	glm::vec2 direction{};
-
-	direction.x = std::sin(radians);		
-	direction.y = std::cos(radians);
-
-	return direction;
+	return m_Direction;
 }
 
-Minigin::Subject<int>& TankComponent::OnLiveChange()
+void TankComponent::SetMoveDirection(MoveCommand::Direction direction)
 {
-	return m_OnLiveChange;
+	m_Direction = direction;
 }
 
-Minigin::Subject<int>& TankComponent::OnScoreChange()
+TankManagerComponent* TankComponent::GetManager() const
 {
-	return m_OnScoreChange;
+	return m_Manager;
 }

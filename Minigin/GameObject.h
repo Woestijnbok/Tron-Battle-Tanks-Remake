@@ -22,7 +22,7 @@ namespace Minigin
 	{
 	public:
 		explicit GameObject(Scene* scene, const std::string& name);
-		~GameObject() = default;
+		~GameObject();
 
 		GameObject(const GameObject& other) = delete;	
 		GameObject(GameObject&& other) noexcept = delete;	

@@ -7,13 +7,15 @@
 #include <optional>
 
 #include "Component.h"
-#include "TileComponent.h"
 #include "Texture.h"
 #include "MoveCommand.h"
-#include "TankComponent.h"
-	
+
+class BulletManagerComponent;
+class TankManagerComponent;
+class TileComponent;	
 class BulletComponent;
 class MiddleTileComponent;
+class TankComponent;
 
 class TileManagerComponent final : public Minigin::Component
 {
@@ -26,6 +28,9 @@ public:
 	TileManagerComponent& operator= (const TileManagerComponent&) = delete;
 	TileManagerComponent& operator= (const TileManagerComponent&&) noexcept = delete;
 
+	void SetManagers(BulletManagerComponent* bulletManager, TankManagerComponent* tankManager);
+	BulletManagerComponent* GetBulletManager() const;	
+	TankManagerComponent* GetTankManager() const;
 	glm::ivec2 GetRandomPosition() const;	
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
 	void CheckCollision(BulletComponent* bullet) const;
@@ -44,6 +49,8 @@ private:
 	const std::unique_ptr<Minigin::Texture> m_Border;
 	const int m_TileSize;
 	const int m_CollisionOffset;
+	BulletManagerComponent* m_BulletManager;
+	TankManagerComponent* m_TankManager;
 
 	int GetRotation(TileComponent* tile) const;		
 	glm::vec2 GetScale(TileComponent* tile) const;	

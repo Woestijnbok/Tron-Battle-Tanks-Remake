@@ -10,11 +10,12 @@
 class BulletComponent;
 class TileManagerComponent;
 class TankComponent;
+class TankManagerComponent;
 
 class BulletManagerComponent : public Minigin::Component
 {
 public:
-	explicit BulletManagerComponent(Minigin::GameObject* owner, TileManagerComponent* tileManager);
+	explicit BulletManagerComponent(Minigin::GameObject* owner);
 	virtual ~BulletManagerComponent() = default;
 
 	BulletManagerComponent(const BulletManagerComponent&) = delete;
@@ -22,6 +23,9 @@ public:
 	BulletManagerComponent& operator= (const BulletManagerComponent&) = delete;
 	BulletManagerComponent& operator= (const BulletManagerComponent&&) noexcept = delete;
 
+	void SetManagers(TileManagerComponent* tileManager, TankManagerComponent* tankManager);
+	TileManagerComponent* GetTileManager() const;
+	TankManagerComponent* GetTankManager() const;
 	void AddBullet(TankComponent* tank);
 	Minigin::Texture* GetBulletTexture() const;
 	void CheckCollision(BulletComponent* bullet);
@@ -30,5 +34,6 @@ private:
 	std::vector<BulletComponent*> m_Bullets;
 	std::unique_ptr<Minigin::Texture> m_BulletTexture;
 	TileManagerComponent* m_TileManager;
+	TankManagerComponent* m_TankManager;
 
 };

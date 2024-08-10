@@ -6,6 +6,8 @@
 
 namespace Minigin	
 {
+	class GameObject;
+
 	class Controller final
 	{
 	public:
@@ -39,6 +41,7 @@ namespace Minigin
 		void AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command);
 		void ClearInputActions();
 		unsigned int GetIndex() const;
+		void RemoveInputActions(GameObject* object);
 
 	private:
 		class Impl;

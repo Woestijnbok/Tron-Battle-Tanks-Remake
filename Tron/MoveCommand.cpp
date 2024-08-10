@@ -3,9 +3,9 @@
 
 #include "MoveCommand.h"
 #include "GameObject.h"
-#include "TankComponent.h"
+#include "PlayerTankComponent.h"
 
-MoveCommand::MoveCommand(TankComponent* tank, Direction direction) :
+MoveCommand::MoveCommand(PlayerTankComponent* tank, Direction direction) :
 	GameObjectCommand{ tank->GetOwner() },
 	m_Direction{ direction },
 	m_Tank{ tank }		

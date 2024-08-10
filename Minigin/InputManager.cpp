@@ -1,11 +1,12 @@
 #include "InputManager.h"
+#include "GameObject.h"
 
 using namespace Minigin;
 
 InputManager::InputManager() :
-	m_Mouse{},	
-	m_Keyboard{},	
-	m_Controllers{}	
+	m_Mouse{},
+	m_Keyboard{},
+	m_Controllers{}
 {
 	m_Keyboard.SetMouse(&m_Mouse);
 }
@@ -19,7 +20,7 @@ bool InputManager::ProcessInput()
 
 		for (Controller& controller : m_Controllers)
 		{
-			controller.ProcessInput();	
+			controller.ProcessInput();
 		}
 
 		return false;
@@ -43,5 +44,15 @@ Mouse& Minigin::InputManager::GetMouse()
 
 Controller& Minigin::InputManager::GetController(unsigned int index)
 {
-	return m_Controllers.at(static_cast<size_t>(index));	
+	return m_Controllers.at(static_cast<size_t>(index));
+}
+
+void Minigin::InputManager::RemoveInputActions(GameObject* object)
+{
+	m_Mouse.RemoveInputActions(object);
+	m_Keyboard.RemoveInputActions(object);
+	for (Controller& controller : m_Controllers)
+	{
+		controller.RemoveInputActions(object);
+	}
 }
