@@ -2,6 +2,7 @@
 #include <vec2.hpp>
 #include <iostream>
 #include <algorithm>
+#include <format>
 
 #include "TankManagerComponent.h"
 #include "BulletComponent.h"
@@ -9,9 +10,11 @@
 #include "PlayerTankComponent.h"
 #include "TileManagerComponent.h"
 #include "BulletManagerComponent.h"
+#include "BlueTankComponent.h"
 
 #include "Collision.h"
 #include "GameObject.h"
+#include "Scene.h"
 
 TankManagerComponent::TankManagerComponent(Minigin::GameObject* owner) :
 	Component{ owner },
@@ -43,9 +46,30 @@ BulletManagerComponent* TankManagerComponent::GetBulletManager() const
 	return m_BulletManager;
 }
 
-void TankManagerComponent::AddTank(TankComponent* tank)
+PlayerTankComponent* TankManagerComponent::CreatePlayerTank()
 {
-	if(std::ranges::find(m_Tanks, tank) == m_Tanks.end()) m_Tanks.push_back(tank);	
+	PlayerTankComponent* playerTank{};
+
+	Minigin::GameObject* object{ GetOwner()->GetScene()->CreateGameObject(std::format("Tank {}", m_Tanks.size())) };
+	object->SetParent(GetOwner());	
+	playerTank = object->CreateComponent<PlayerTankComponent>(this);
+
+	m_Tanks.push_back(playerTank);
+
+	return playerTank;
+}
+
+BlueTankComponent* TankManagerComponent::CreateBlueTank(const std::shared_ptr<Minigin::Texture>& tankTexture)
+{
+	BlueTankComponent* blueTank{};	
+
+	Minigin::GameObject* object{ GetOwner()->GetScene()->CreateGameObject(std::format("Tank {}", m_Tanks.size())) };	
+	object->SetParent(GetOwner());
+	blueTank = object->CreateComponent<BlueTankComponent>(this, tankTexture);	
+
+	m_Tanks.push_back(blueTank);
+
+	return blueTank;	
 }
 
 const std::vector<TankComponent*>& TankManagerComponent::GetTanks() const
