@@ -15,6 +15,7 @@ class PlayerTankComponent;
 class TileManagerComponent;
 class BulletManagerComponent;
 class BlueTankComponent;
+class PurpleTankComponent;
 
 class TankManagerComponent final : public Minigin::Component
 {
@@ -30,6 +31,7 @@ public:
 	void SetManagers(TileManagerComponent* tileManager, BulletManagerComponent* bulletManager);	
 	PlayerTankComponent* CreatePlayerTank();
 	BlueTankComponent* CreateBlueTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
+	PurpleTankComponent* CreatePurpleTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
 	const std::vector<TankComponent*>& GetTanks() const;
 	std::vector<PlayerTankComponent*> GetPlayerTanks() const;
 	void CheckCollision(BulletComponent* bullet);
@@ -38,6 +40,8 @@ public:
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
 	void AddBullet(TankComponent* tank) const;
 	int GetTileSize() const;
+
+	void CheckBounds(TankComponent* tank);
 
 private:
 	std::vector<TankComponent*> m_Tanks;

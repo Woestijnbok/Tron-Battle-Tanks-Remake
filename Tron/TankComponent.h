@@ -2,12 +2,12 @@
 
 #include <memory>
 #include <array>
-#include <utility>
 
 #include "Component.h"
 #include "Texture.h"
 #include "MoveCommand.h"
 #include "Subject.h"
+#include "Collision.h"
 
 class TileManagerComponent;
 class BulletManagerComponent;
@@ -26,7 +26,7 @@ public:
 	float GetMovementSpeed() const;
 	void Move(MoveCommand::Direction direction);
 	void Fire();
-	std::pair<glm::ivec2, glm::ivec2> GetCollisionRectangle() const;
+	Minigin::Rectangle GetCollisionRectangle() const;
 	Minigin::Subject<int>& OnLivesChange();
 	Minigin::Subject<>& OnFire();
 	int GetLives() const;

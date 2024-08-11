@@ -11,6 +11,7 @@
 #include "TileManagerComponent.h"
 #include "BulletManagerComponent.h"
 #include "BlueTankComponent.h"
+#include "PurpleTankComponent.h"
 
 #include "Collision.h"
 #include "GameObject.h"
@@ -62,6 +63,19 @@ BlueTankComponent* TankManagerComponent::CreateBlueTank(const std::shared_ptr<Mi
 	return blueTank;	
 }
 
+PurpleTankComponent* TankManagerComponent::CreatePurpleTank(const std::shared_ptr<Minigin::Texture>& tankTexture)
+{
+	PurpleTankComponent* purpleTank{};	
+
+	Minigin::GameObject* object{ GetOwner()->GetScene()->CreateGameObject(std::format("Tank {}", m_Tanks.size())) };
+	object->SetParent(GetOwner());
+	purpleTank = object->CreateComponent<PurpleTankComponent>(this, tankTexture);	
+
+	m_Tanks.push_back(purpleTank);
+
+	return purpleTank;
+}
+
 const std::vector<TankComponent*>& TankManagerComponent::GetTanks() const
 {
 	return m_Tanks;
@@ -93,8 +107,7 @@ void TankManagerComponent::CheckCollision(BulletComponent* bullet)
 	{
 		if (bullet->GetTank() != tank)
 		{
-			const std::pair<glm::ivec2, glm::ivec2> collisionRectangle{tank->GetCollisionRectangle() };
-			if (Minigin::PointInsideRectangle(bulletPosition, collisionRectangle.first, collisionRectangle.second))
+			if (Minigin::PointInsideRectangle(bulletPosition, tank->GetCollisionRectangle()))	
 			{
 				bullet->GetOwner()->SetStatus(ControllableObject::Status::Destroyed);
 				tank->Hit();
@@ -126,4 +139,29 @@ void TankManagerComponent::AddBullet(TankComponent* tank) const
 int TankManagerComponent::GetTileSize() const
 {
 	return m_TileManager->GetTileSize();	
+}
+
+void TankManagerComponent::CheckBounds(TankComponent* tank)
+{
+	const glm::ivec2 position{ tank->GetOwner()->GetLocalTransform().GetPosition() };
+	glm::ivec2 newPosition{ position };
+
+	if (position.x < 0)
+	{
+		newPosition.x = 0;
+	}
+	else if (position.x > m_TileManager->GetTileArraySize() * m_TileManager->GetTileSize())
+	{
+		newPosition.x = m_TileManager->GetTileArraySize() * m_TileManager->GetTileSize();		
+	}
+	else if (position.y < 0)
+	{
+		newPosition.y = 0;
+	}
+	else if (position.y > m_TileManager->GetTileArraySize() * m_TileManager->GetTileSize())
+	{
+		newPosition.y = m_TileManager->GetTileArraySize() * m_TileManager->GetTileSize();
+	}
+
+	tank->GetOwner()->SetLocalPosition(newPosition);
 }

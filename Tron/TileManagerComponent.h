@@ -33,6 +33,7 @@ public:
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
 	void CheckCollision(BulletComponent* bullet) const;
 	int GetTileSize() const;
+	int GetTileArraySize() const;
 	
 	virtual void Render() const;
 

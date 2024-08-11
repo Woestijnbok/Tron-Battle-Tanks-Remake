@@ -66,7 +66,8 @@ void TankComponent::Move(MoveCommand::Direction direction)
 	}
 
 	m_Direction = direction;
-	GetOwner()->SetLocalPosition(newPosition);	
+	GetOwner()->SetLocalPosition(newPosition);
+	m_Manager->CheckBounds(this);
 }
 
 void TankComponent::Fire()
@@ -75,14 +76,17 @@ void TankComponent::Fire()
 	m_OnFire.Notify();
 }
 
-std::pair<glm::ivec2, glm::ivec2> TankComponent::GetCollisionRectangle() const
+Minigin::Rectangle TankComponent::GetCollisionRectangle() const
 {
 	const glm::ivec2 position{ GetOwner()->GetLocalTransform().GetPosition() };	
 
-	const glm::ivec2 bottomLeft{ position - m_CollisionSize / 2 };
-	const glm::ivec2 topRight{ position + m_CollisionSize / 2 };
+	const Minigin::Rectangle rectangle
+	{
+		position - m_CollisionSize / 2,
+		position + m_CollisionSize / 2
+	};
 
-	return std::make_pair(bottomLeft, topRight);
+	return rectangle;	
 }
 
 Minigin::Subject<int>& TankComponent::OnLivesChange()

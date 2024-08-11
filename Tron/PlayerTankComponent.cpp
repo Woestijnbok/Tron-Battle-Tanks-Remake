@@ -6,7 +6,7 @@
 PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager) :
 	TankComponent{ owner, manager, 100.0f, 20, 3 },
 	m_TankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") },	
-	m_BarrelTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Barrel.png") },
+	m_BarrelTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Barrel.png") },
 	m_BarrelOffsets{ glm::ivec2{ 0, 4 }, glm::ivec2{ -4, 8 }, glm::ivec2{ 0, 12 }, glm::ivec2{ 4, 8 } },	
 	m_BarrelRotationPoint{ 16, 8 },
 	m_BarrelRotation{}

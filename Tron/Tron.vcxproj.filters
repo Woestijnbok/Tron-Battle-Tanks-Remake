@@ -28,9 +28,6 @@
     <Filter Include="Components\Tank\Player">
       <UniqueIdentifier>{63eb1b33-fdd9-4e34-9d01-02186d05e678}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Tank\Blue">
-      <UniqueIdentifier>{27ba4429-3f76-4260-9c1d-783cae47e453}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Components\Bullet">
       <UniqueIdentifier>{27df4246-410f-4098-8ff0-a18e588b82a6}</UniqueIdentifier>
     </Filter>
@@ -48,6 +45,15 @@
     </Filter>
     <Filter Include="Components\Tank\Tank">
       <UniqueIdentifier>{703c0176-e290-4010-84d4-c90c74a99b42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tank\Enemy">
+      <UniqueIdentifier>{a774a56c-d0ee-4a03-9e2a-9e99e5a3c34a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tank\Enemy\Blue">
+      <UniqueIdentifier>{27ba4429-3f76-4260-9c1d-783cae47e453}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Tank\Enemy\Purple">
+      <UniqueIdentifier>{2384f6fb-06fe-454b-9c46-27f5cf1d4a49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -86,13 +92,19 @@
       <Filter>Components\Tank\Player</Filter>
     </ClCompile>
     <ClCompile Include="BlueTankComponent.cpp">
-      <Filter>Components\Tank\Blue</Filter>
+      <Filter>Components\Tank\Enemy\Blue</Filter>
     </ClCompile>
     <ClCompile Include="TankComponent.cpp">
       <Filter>Components\Tank\Tank</Filter>
     </ClCompile>
     <ClCompile Include="TankManagerComponent.cpp">
       <Filter>Components\Tank</Filter>
+    </ClCompile>
+    <ClCompile Include="PurpleTankComponent.cpp">
+      <Filter>Components\Tank\Enemy\Purple</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyTankComponent.cpp">
+      <Filter>Components\Tank\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,13 +142,19 @@
       <Filter>Components\Tank\Player</Filter>
     </ClInclude>
     <ClInclude Include="BlueTankComponent.h">
-      <Filter>Components\Tank\Blue</Filter>
+      <Filter>Components\Tank\Enemy\Blue</Filter>
     </ClInclude>
     <ClInclude Include="TankComponent.h">
       <Filter>Components\Tank\Tank</Filter>
     </ClInclude>
     <ClInclude Include="TankManagerComponent.h">
       <Filter>Components\Tank</Filter>
+    </ClInclude>
+    <ClInclude Include="PurpleTankComponent.h">
+      <Filter>Components\Tank\Enemy\Purple</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyTankComponent.h">
+      <Filter>Components\Tank\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

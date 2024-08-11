@@ -220,6 +220,11 @@ int TileManagerComponent::GetTileSize() const
 	return m_TileSize;
 }
 
+int TileManagerComponent::GetTileArraySize() const
+{
+	return static_cast<int>(m_Tiles.size());
+}
+
 void TileManagerComponent::Render() const
 {
 	Minigin::Transform transform{ GetOwner()->GetWorldTransform() };
@@ -356,7 +361,7 @@ std::optional<glm::ivec2> TileManagerComponent::CheckCenter(BulletComponent* bul
 	const glm::ivec2 topRight{ m_TileSize - m_CollisionOffset - 1, m_TileSize - m_CollisionOffset - 1 };	// tile space	
 
 	// Is point in default collision center box of a tile all tiles have this
-	if (Minigin::PointInsideRectangle(bulletTilePosition, bottomLeft, topRight))
+	if (Minigin::PointInsideRectangle(bulletTilePosition, Minigin::Rectangle{ bottomLeft, topRight }))	
 	{
 		const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };	// tile space
 		const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };	// tile space
@@ -368,24 +373,24 @@ std::optional<glm::ivec2> TileManagerComponent::CheckCenter(BulletComponent* bul
 #pragma warning (disable : 4706) // C4706 assignment used as a condition
 
 		// Did it pass the top side if so where
-		if (intersection = Minigin::LinesIntersect(topLeft, topRight, start, bulletTilePosition))	
+		if (intersection = Minigin::LinesIntersect(Minigin::Line{ topLeft, topRight }, Minigin::Line{ start, bulletTilePosition }))
 		{
 			bullet->Bounce(TileComponent::Side::Top);
 		}
 		// Did it pass the right side if so where
-		else if (intersection = Minigin::LinesIntersect(topRight, bottomRight, start, bulletTilePosition))	
+		else if (intersection = Minigin::LinesIntersect(Minigin::Line{ topRight, bottomRight }, Minigin::Line{ start, bulletTilePosition }))	
 		{
 			bullet->Bounce(TileComponent::Side::Right);
 		}
 		// Did it pass the bottom side if so where
-		else if (intersection = Minigin::LinesIntersect(bottomLeft, bottomRight, start, bulletTilePosition))	
+		else if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomLeft, bottomRight }, Minigin::Line{ start, bulletTilePosition }))	
 		{
 			bullet->Bounce(TileComponent::Side::Bottom);
 		}
 		// Has to have passed the left but where
 		else
 		{
-			if (intersection = Minigin::LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
+			if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomLeft, topLeft }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Left);
 			}
@@ -421,7 +426,7 @@ std::optional<glm::ivec2> TileManagerComponent::CheckTop(BulletComponent* bullet
 		const glm::ivec2 topRight{ m_TileSize - m_CollisionOffset - 1, m_TileSize - 1 };	// tile space
 
 		// Is point in default collision center box of a tile all tiles have this
-		if (Minigin::PointInsideRectangle(bulletTilePosition, bottomLeft, topRight))
+		if (Minigin::PointInsideRectangle(bulletTilePosition, Minigin::Rectangle{ bottomLeft, topRight }))
 		{
 			const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };
 			const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };
@@ -433,19 +438,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckTop(BulletComponent* bullet
 #pragma warning (disable : 4706) // C4706 assignment used as a condition
 
 			// Dit it pass the left side if so where
-			if (intersection = Minigin::LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
+			if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomLeft, topLeft }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Left);
 			}
 			// Did it pass the top side if so where
-			if (intersection = Minigin::LinesIntersect(topLeft, topRight, start, bulletTilePosition))
+			if (intersection = Minigin::LinesIntersect(Minigin::Line{ topLeft, topRight }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Top);
 			}
 			// Has to have passed the right side but where
 			else
 			{
-				if (intersection = Minigin::LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
+				if (intersection = Minigin::LinesIntersect(Minigin::Line{ topRight, bottomRight }, Minigin::Line{ start, bulletTilePosition }))
 				{
 					bullet->Bounce(TileComponent::Side::Right);
 				}
@@ -478,7 +483,7 @@ std::optional<glm::ivec2> TileManagerComponent::CheckRight(BulletComponent* bull
 		const glm::ivec2 topRight{ m_TileSize - 1, m_TileSize - m_CollisionOffset - 1 };	// tile space
 
 		// Is point in default collision center box of a tile all tiles have this
-		if (Minigin::PointInsideRectangle(bulletTilePosition, bottomLeft, topRight))
+		if (Minigin::PointInsideRectangle(bulletTilePosition, Minigin::Rectangle{ bottomLeft, topRight }))
 		{
 			const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };
 			const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };
@@ -490,19 +495,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckRight(BulletComponent* bull
 #pragma warning (disable : 4706) // C4706 assignment used as a condition
 
 			// Did it pass the top side if so where
-			if (intersection = Minigin::LinesIntersect(topLeft, topRight, start, bulletTilePosition))
+			if (intersection = Minigin::LinesIntersect(Minigin::Line{ topLeft, topRight }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Top);
 			}
 			// Did it pass the right side if so where
-			else if (intersection = Minigin::LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
+			else if (intersection = Minigin::LinesIntersect(Minigin::Line{ topRight, bottomRight }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Right);
 			}
 			// Has to have passed the bottom but where
 			else
 			{
-				if (intersection = Minigin::LinesIntersect(bottomRight, bottomLeft, start, bulletTilePosition))
+				if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomRight, bottomLeft }, Minigin::Line{ start, bulletTilePosition }))
 				{
 					bullet->Bounce(TileComponent::Side::Bottom);
 				}
@@ -535,7 +540,7 @@ std::optional<glm::ivec2> TileManagerComponent::CheckBottom(BulletComponent* bul
 		const glm::ivec2 topRight{ m_TileSize - m_CollisionOffset - 1, m_CollisionOffset - 1 };	// tile space
 
 		// Is point in default collision center box of a tile all tiles have this
-		if (Minigin::PointInsideRectangle(bulletTilePosition, bottomLeft, topRight))
+		if (Minigin::PointInsideRectangle(bulletTilePosition, Minigin::Rectangle{ bottomLeft, topRight }))
 		{
 			const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };
 			const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };
@@ -547,19 +552,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckBottom(BulletComponent* bul
 #pragma warning (disable : 4706) // C4706 assignment used as a condition
 
 			// Did it pass the left side if so where
-			if (intersection = Minigin::LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))
+			if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomLeft, topLeft }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Left);
 			}
 			// Did it pass the right side if so where
-			else if (intersection = Minigin::LinesIntersect(topRight, bottomRight, start, bulletTilePosition))
+			else if (intersection = Minigin::LinesIntersect(Minigin::Line{ topRight, bottomRight }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Right);
 			}
 			// Has to have passed the bottom but where
 			else
 			{
-				if (intersection = Minigin::LinesIntersect(bottomRight, bottomLeft, start, bulletTilePosition))
+				if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomRight, bottomLeft }, Minigin::Line{ start, bulletTilePosition }))
 				{
 					bullet->Bounce(TileComponent::Side::Bottom);
 				}
@@ -592,7 +597,7 @@ std::optional<glm::ivec2> TileManagerComponent::CheckLeft(BulletComponent* bulle
 		const glm::ivec2 topRight{ m_CollisionOffset - 1, m_TileSize - m_CollisionOffset - 1 };	// tile space
 
 		// Is point in default collision center box of a tile all tiles have this
-		if (Minigin::PointInsideRectangle(bulletTilePosition, bottomLeft, topRight))
+		if (Minigin::PointInsideRectangle(bulletTilePosition, Minigin::Rectangle{ bottomLeft, topRight }))
 		{
 			const glm::ivec2 bottomRight{ topRight.x, bottomLeft.y };
 			const glm::ivec2 topLeft{ bottomLeft.x, topRight.y };
@@ -604,19 +609,19 @@ std::optional<glm::ivec2> TileManagerComponent::CheckLeft(BulletComponent* bulle
 #pragma warning (disable : 4706) // C4706 assignment used as a condition
 
 			// Did it pass the bottom side if so where
-			if (intersection = Minigin::LinesIntersect(bottomRight, bottomLeft, start, bulletTilePosition))	
+			if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomRight, bottomLeft }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Bottom);
 			}
 			// Did it pass the Left side if so where
-			else if (intersection = Minigin::LinesIntersect(bottomLeft, topLeft, start, bulletTilePosition))	
+			else if (intersection = Minigin::LinesIntersect(Minigin::Line{ bottomLeft, topLeft }, Minigin::Line{ start, bulletTilePosition }))
 			{
 				bullet->Bounce(TileComponent::Side::Left);
 			}
 			// Has to have passed the top but where
 			else
 			{
-				if (intersection = Minigin::LinesIntersect(topLeft, topRight, start, bulletTilePosition))	
+				if (intersection = Minigin::LinesIntersect(Minigin::Line{ topLeft, topRight }, Minigin::Line{ start, bulletTilePosition }))
 				{
 					bullet->Bounce(TileComponent::Side::Top);
 				}

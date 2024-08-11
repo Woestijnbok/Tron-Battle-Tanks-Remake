@@ -19,7 +19,7 @@ ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, int lives) 
 void ScoreboardComponent::UpdateScore(int score)
 {
 	m_Score += score;
-	m_ScoreText->SetText(std::to_string(score));
+	m_ScoreText->SetText(std::to_string(m_Score));
 }
 
 void ScoreboardComponent::UpdateLives(int lives)
