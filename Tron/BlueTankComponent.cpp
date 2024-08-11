@@ -26,8 +26,7 @@ void BlueTankComponent::Update()
 
 	if (CheckPlayers())
 	{
-		TryFire();	
-		Move(GetMoveDirection());
+		TryFire();
 	}
 	else
 	{

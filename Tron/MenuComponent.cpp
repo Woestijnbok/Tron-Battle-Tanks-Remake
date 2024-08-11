@@ -3,6 +3,7 @@
 #include "MenuComponent.h"
 #include "Engine.h"
 #include "SceneManager.h"
+#include "Loaders.h"
 
 using namespace Minigin;
 
@@ -59,6 +60,5 @@ ImVec2 MenuComponent::CalculateStartPosition() const
 
 void MenuComponent::SoloMenuClicked() const
 {
-    SceneManager::Instance()->GetScene("Main Menu")->SetStatus(ControllableObject::Status::Disabled);
-    SceneManager::Instance()->GetScene("First Level")->SetStatus(ControllableObject::Status::Enabled);
+    LoadLevelOne(); 
 }

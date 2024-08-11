@@ -6,6 +6,7 @@
 #include "Component.h"
 #include "MoveCommand.h"
 #include "Texture.h"
+#include "Subject.h"
 
 #include <memory>
 
@@ -40,12 +41,19 @@ public:
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
 	void AddBullet(TankComponent* tank) const;
 	int GetTileSize() const;
-
+	Minigin::Subject<>& OnGameOver();
+	Minigin::Subject<>& OnLevelCompleted();
 	void CheckBounds(TankComponent* tank);
+
+	virtual void LateUpdate() override;
 
 private:
 	std::vector<TankComponent*> m_Tanks;
 	TileManagerComponent* m_TileManager;
 	BulletManagerComponent* m_BulletManager;
+	Minigin::Subject<> m_OnGameOver;
+	Minigin::Subject<> m_OnLevelCompleted;
+
+	void CheckLevel();
 
 };

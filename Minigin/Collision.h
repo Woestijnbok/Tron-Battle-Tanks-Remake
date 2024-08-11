@@ -29,7 +29,7 @@ namespace Minigin
 	std::optional<glm::ivec2> LinesIntersect(const Line& a, const Line& b);	
 
 	/*
-	* @checks if two lines intersect if so returns the point of intersection
+	* @checks if two rectangles, sides are touching is not overlapping here
 	*/
 	bool RectanglesOverlap(const Rectangle& a, const Rectangle& b);
 }

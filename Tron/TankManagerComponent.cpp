@@ -3,6 +3,7 @@
 #include <iostream>
 #include <algorithm>
 #include <format>
+#include <string>
 
 #include "TankManagerComponent.h"
 #include "BulletComponent.h"
@@ -21,7 +22,9 @@ TankManagerComponent::TankManagerComponent(Minigin::GameObject* owner) :
 	Component{ owner },
 	m_Tanks{},
 	m_TileManager{},
-	m_BulletManager{}
+	m_BulletManager{},
+	m_OnGameOver{},
+	m_OnLevelCompleted{}
 {
 
 }
@@ -141,6 +144,16 @@ int TankManagerComponent::GetTileSize() const
 	return m_TileManager->GetTileSize();	
 }
 
+Minigin::Subject<>& TankManagerComponent::OnGameOver()
+{
+	return m_OnGameOver;
+}
+
+Minigin::Subject<>& TankManagerComponent::OnLevelCompleted()
+{
+	return m_OnLevelCompleted;
+}
+
 void TankManagerComponent::CheckBounds(TankComponent* tank)
 {
 	const glm::ivec2 position{ tank->GetOwner()->GetLocalTransform().GetPosition() };
@@ -164,4 +177,36 @@ void TankManagerComponent::CheckBounds(TankComponent* tank)
 	}
 
 	tank->GetOwner()->SetLocalPosition(newPosition);
+}
+
+void TankManagerComponent::LateUpdate()
+{
+	CheckLevel();	
+}
+
+void TankManagerComponent::CheckLevel()
+{
+	int playerCount{};
+	int enemyCount{};
+
+	for (TankComponent* tank : m_Tanks)
+	{
+		if (dynamic_cast<PlayerTankComponent*>(tank) != nullptr)
+		{
+			++playerCount;
+		}
+		else if (dynamic_cast<EnemyTankComponent*>(tank) != nullptr)	
+		{
+			++enemyCount;	
+		}
+	}
+
+	if (playerCount == 0)
+	{
+		m_OnGameOver.Notify();	
+	}
+	else if(enemyCount == 0)
+	{
+		m_OnLevelCompleted.Notify();
+	}
 }

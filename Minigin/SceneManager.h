@@ -22,6 +22,8 @@ namespace Minigin
 
 		Scene* CreateScene(const std::string& name, bool enabled = true);
 		Scene* GetScene(const std::string& name) const;
+		void RemoveScene(const std::string name);
+		void IsolateScene(const std::string& name);
 
 	private:
 		explicit SceneManager() = default;

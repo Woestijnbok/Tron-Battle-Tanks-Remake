@@ -55,6 +55,9 @@
     <Filter Include="Components\Tank\Enemy\Purple">
       <UniqueIdentifier>{2384f6fb-06fe-454b-9c46-27f5cf1d4a49}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers">
+      <UniqueIdentifier>{823d5d80-966a-490c-9eb9-db63f7034d9b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -106,6 +109,9 @@
     <ClCompile Include="EnemyTankComponent.cpp">
       <Filter>Components\Tank\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Loaders.cpp">
+      <Filter>Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuComponent.h">
@@ -155,6 +161,9 @@
     </ClInclude>
     <ClInclude Include="EnemyTankComponent.h">
       <Filter>Components\Tank\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Loaders.h">
+      <Filter>Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -26,3 +26,25 @@ Scene* SceneManager::GetScene(const std::string& name) const
 
 	return scene;	
 }
+
+void Minigin::SceneManager::RemoveScene(const std::string name)
+{
+	RemoveControllableObjects
+	(
+		[&name](Scene* scene) -> bool
+		{
+			return scene->GetName() == name;
+		}
+	);
+}
+
+void Minigin::SceneManager::IsolateScene(const std::string& name)
+{
+	RemoveControllableObjects	
+	(
+		[&name](Scene* scene) -> bool
+		{
+			return scene->GetName() != name;
+		}
+	);
+}

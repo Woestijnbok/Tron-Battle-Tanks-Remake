@@ -5,6 +5,7 @@
 #include <vector>
 #include <functional>
 #include <iterator>
+#include <algorithm>
 
 #include "ControllableObject.h"
 
@@ -28,7 +29,7 @@ namespace Minigin
 	};
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	class ObjectController
 	{
 	public:
@@ -48,6 +49,7 @@ namespace Minigin
 
 		void AddControllableObject(ObjectType* object);
 		ObjectType* GetControllableObject(const std::function<bool(ObjectType*)>& predicate) const;
+		void RemoveControllableObjects(const std::function<bool(ObjectType*)>& predicate);
 
 	private:
 		size_t m_InitialObjectCount;
@@ -78,7 +80,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::FixedUpdate()
 	{
 		m_InitialObjectCount = m_EnabledObjects.size();
@@ -94,7 +96,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::Update()
 	{
 		m_InitialObjectCount = m_EnabledObjects.size();
@@ -109,7 +111,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::LateUpdate()
 	{
 		m_InitialObjectCount = m_EnabledObjects.size();
@@ -128,7 +130,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::Render() const
 	{
 		for (ObjectType* object : m_EnabledObjects)
@@ -138,12 +140,12 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::AddControllableObject(ObjectType* object)
 	{
 		if (object->GetStatus() == ControllableObject::Status::Enabled)
 		{
-			m_EnabledObjects.push_back(object);	
+			m_EnabledObjects.push_back(object);
 		}
 		else
 		{
@@ -152,7 +154,7 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	ObjectType* ObjectController<ObjectType>::GetControllableObject(const std::function<bool(ObjectType*)>& predicate) const
 	{
 		auto enabledItertator
@@ -160,14 +162,14 @@ namespace Minigin
 			std::ranges::find_if
 			(
 				m_EnabledObjects,
-				[&predicate](ObjectType* object) -> bool	
+				[&predicate](ObjectType* object) -> bool
 				{
 					return predicate(object);
 				}
 			)
 		};
 
-		if (enabledItertator != std::end(m_EnabledObjects)) 
+		if (enabledItertator != std::end(m_EnabledObjects))
 		{
 			return *enabledItertator;
 		}
@@ -178,7 +180,7 @@ namespace Minigin
 				std::ranges::find_if
 				(
 					m_DisabledObjects,
-					[&predicate](ObjectType* object) -> bool	
+					[&predicate](ObjectType* object) -> bool
 					{
 						return predicate(object);
 					}
@@ -197,16 +199,45 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
+	void ObjectController<ObjectType>::RemoveControllableObjects(const std::function<bool(ObjectType*)>& predicate)
+	{
+		std::ranges::for_each
+		(
+			m_EnabledObjects,
+			[&predicate](ObjectType* object) -> void
+			{
+				if (predicate(object))
+				{
+					object->SetStatus(ControllableObject::Status::Destroyed);
+				}
+			}
+		);
+
+		std::ranges::for_each
+		(
+			m_DisabledObjects,
+			[&predicate](ObjectType* object) -> void
+			{
+				if (predicate(object))
+				{
+					object->SetStatus(ControllableObject::Status::Destroyed);
+				}
+			}
+		);
+	}
+
+	template<typename ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::CheckDestroyedObjects()
 	{
 		m_EnabledObjects.erase
 		(
 			std::remove_if
 			(
-				std::begin(m_EnabledObjects), std::end(m_EnabledObjects), 
-				[](ObjectType* object) -> bool 
-				{ 
+				std::begin(m_EnabledObjects), std::end(m_EnabledObjects),
+				[](ObjectType* object) -> bool
+				{
 					if (object->GetStatus() == ControllableObject::Status::Destroyed)
 					{
 						delete object;
@@ -222,23 +253,23 @@ namespace Minigin
 		(
 			std::remove_if
 			(
-				std::begin(m_DisabledObjects), std::end(m_DisabledObjects), 
-				[](ObjectType* object) -> bool 
-				{ 
+				std::begin(m_DisabledObjects), std::end(m_DisabledObjects),
+				[](ObjectType* object) -> bool
+				{
 					if (object->GetStatus() == ControllableObject::Status::Destroyed)
 					{
 						delete object;
 						return true;
 					}
 					else return false;
-				}	
+				}
 			)
 			, m_DisabledObjects.end()
 		);
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::CheckDisabledObjects()
 	{
 		auto it = std::remove_if
@@ -263,13 +294,13 @@ namespace Minigin
 	}
 
 	template<typename ObjectType>
-		requires Controllable<ObjectType> && Updatable<ObjectType> && Renderable<ObjectType>
+		requires Controllable<ObjectType>&& Updatable<ObjectType>&& Renderable<ObjectType>
 	void ObjectController<ObjectType>::CheckEnabledObjects()
 	{
 		auto it = std::remove_if
-		(	
-			std::begin(m_DisabledObjects),	
-			std::end(m_DisabledObjects),	
+		(
+			std::begin(m_DisabledObjects),
+			std::end(m_DisabledObjects),
 			[this](ObjectType* object) -> bool
 			{
 				if (object->GetStatus() == ControllableObject::Status::Enabled)
