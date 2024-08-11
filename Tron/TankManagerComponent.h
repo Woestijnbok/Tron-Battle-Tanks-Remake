@@ -45,7 +45,10 @@ public:
 	Minigin::Subject<>& OnLevelCompleted();
 	void CheckBounds(TankComponent* tank);
 
+	virtual void Update() override;
 	virtual void LateUpdate() override;
+
+	static bool Alive();
 
 private:
 	std::vector<TankComponent*> m_Tanks;
@@ -53,6 +56,8 @@ private:
 	BulletManagerComponent* m_BulletManager;
 	Minigin::Subject<> m_OnGameOver;
 	Minigin::Subject<> m_OnLevelCompleted;
+
+	static bool m_Alive;
 
 	void CheckLevel();
 

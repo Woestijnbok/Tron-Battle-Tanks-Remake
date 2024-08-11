@@ -14,7 +14,7 @@ class BulletComponent final : public Minigin::Component
 {
 public:
 	explicit BulletComponent(Minigin::GameObject* owner, TankComponent* tank, BulletManagerComponent* manager);
-	virtual ~BulletComponent() = default;
+	virtual ~BulletComponent();
 
 	BulletComponent(const BulletComponent&) = delete;	
 	BulletComponent(BulletComponent&&) noexcept = delete;	

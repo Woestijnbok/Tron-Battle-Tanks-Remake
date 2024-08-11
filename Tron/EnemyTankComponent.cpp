@@ -9,12 +9,19 @@
 #include "TankManagerComponent.h"
 #include "MoveCommand.h"
 
+int EnemyTankComponent::m_Counter{ 0 };
+
 EnemyTankComponent::EnemyTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, const std::shared_ptr<Minigin::Texture>& tankTexture, float speed) :
 	TankComponent{ owner, manager, speed, 20, 3 },	
 	m_TankTexture{ tankTexture },
 	m_OnDie{}
 {
+	++m_Counter;
+}
 
+EnemyTankComponent::~EnemyTankComponent()
+{
+	--m_Counter;
 }
 
 Minigin::Subject<int>& EnemyTankComponent::OnDie()
@@ -65,6 +72,11 @@ void EnemyTankComponent::Render() const
 	}
 
 	m_TankTexture->Render(tankTransform);
+}
+
+int EnemyTankComponent::Counter()
+{
+	return m_Counter;
 }
 
 bool EnemyTankComponent::CheckPlayers()

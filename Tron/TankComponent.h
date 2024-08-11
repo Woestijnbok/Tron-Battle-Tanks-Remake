@@ -34,8 +34,6 @@ public:
 
 	virtual glm::vec2 GetFireDirection() const = 0;
 
-	static void SetManagerAlive(bool alive);
-
 protected:
 	explicit TankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, float speed, int collisionSize, int lives);
 
@@ -54,5 +52,4 @@ private:
 	Minigin::Subject<int> m_OnLivesChange;	
 	Minigin::Subject<> m_OnFire;
 
-	static bool m_ManagerAlive;
 };

@@ -6,11 +6,11 @@ const int ScoreboardComponent::m_LiveSize{ 30 };
 const int ScoreboardComponent::m_LivesOffset{ 2 };
 const int ScoreboardComponent::m_ScoreLivesOffset{ 2 };	
 
-ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, int lives) :
+ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, int score, int lives) :
 	Component{ owner },
-	m_ScoreText{ std::make_unique<Minigin::Text>("0", Minigin::ResourceManager::Instance()->LoadFont("Arcade.otf", 30)) },
+	m_ScoreText{ std::make_unique<Minigin::Text>(std::to_string(score), Minigin::ResourceManager::Instance()->LoadFont("Arcade.otf", 30)) },	
 	m_LiveTexture{ Minigin::ResourceManager::Instance()->LoadTexture("Hearth.png") },
-	m_Score{ 0 },
+	m_Score{ score },
 	m_Lives{ lives }
 {
 	
@@ -25,6 +25,16 @@ void ScoreboardComponent::UpdateScore(int score)
 void ScoreboardComponent::UpdateLives(int lives)
 {
 	m_Lives = lives;
+}
+
+int ScoreboardComponent::GetScore() const
+{
+	return m_Score;
+}
+
+int ScoreboardComponent::GetLives() const
+{
+	return m_Lives;
 }
 
 void ScoreboardComponent::Render() const

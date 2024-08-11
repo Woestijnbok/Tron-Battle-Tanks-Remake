@@ -10,13 +10,6 @@
 
 #include <iostream>
 
-bool TankComponent::m_ManagerAlive{ true };
-
-void TankComponent::SetManagerAlive(bool alive)
-{
-	m_ManagerAlive = alive;
-}
-
 TankComponent::TankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, float speed, int collisionSize, int lives) :
 	Component{ owner },
 	m_Manager{ manager },	
@@ -32,7 +25,9 @@ TankComponent::TankComponent(Minigin::GameObject* owner, TankManagerComponent* m
 
 TankComponent::~TankComponent()
 {
-	if (m_ManagerAlive) m_Manager->RemoveTank(this);
+	if (TankManagerComponent::Alive()) m_Manager->RemoveTank(this);
+
+	std::cout << "TankComponent Destructor" << std::endl;
 }
 
 float TankComponent::GetMovementSpeed() const

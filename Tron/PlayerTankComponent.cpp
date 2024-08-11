@@ -3,6 +3,8 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 
+int PlayerTankComponent::m_Counter{ 0 };
+
 PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager) :
 	TankComponent{ owner, manager, 100.0f, 20, 3 },
 	m_TankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") },	
@@ -11,7 +13,12 @@ PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManager
 	m_BarrelRotationPoint{ 16, 8 },
 	m_BarrelRotation{}
 {
+	++m_Counter;
+}
 
+PlayerTankComponent::~PlayerTankComponent()
+{
+	--m_Counter;
 }
 
 void PlayerTankComponent::SetBarrelRotation(int angle)
@@ -59,4 +66,9 @@ void PlayerTankComponent::Render() const
 
 	m_TankTexture->Render(tankTransform);
 	m_BarrelTexture->Render(barrelTransform, m_BarrelRotationPoint);
+}
+
+int PlayerTankComponent::Counter()
+{
+	return m_Counter;
 }

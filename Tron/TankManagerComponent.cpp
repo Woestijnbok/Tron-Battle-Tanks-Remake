@@ -18,6 +18,8 @@
 #include "GameObject.h"
 #include "Scene.h"
 
+bool TankManagerComponent::m_Alive{ false };
+
 TankManagerComponent::TankManagerComponent(Minigin::GameObject* owner) :
 	Component{ owner },
 	m_Tanks{},
@@ -26,12 +28,23 @@ TankManagerComponent::TankManagerComponent(Minigin::GameObject* owner) :
 	m_OnGameOver{},
 	m_OnLevelCompleted{}
 {
+	m_Alive = true;
 
+	std::cout << "Tank Manager Constructor" << std::endl;
 }
 
 TankManagerComponent::~TankManagerComponent()
 {
-	TankComponent::SetManagerAlive(false);
+	
+	for (TankComponent* tank : m_Tanks)
+	{
+		tank->GetOwner()->SetStatus(ControllableObject::Status::Destroyed);
+		tank->SetStatus(ControllableObject::Status::Destroyed);	
+	}
+
+	m_Alive = false;
+
+	std::cout << "TankManagerComponent Destructor" << std::endl;	
 }
 
 void TankManagerComponent::SetManagers(TileManagerComponent* tileManager, BulletManagerComponent* bulletManager)
@@ -121,7 +134,7 @@ void TankManagerComponent::CheckCollision(BulletComponent* bullet)
 
 void TankManagerComponent::RemoveTank(TankComponent* tank)
 {
-	m_Tanks.erase(std::remove(m_Tanks.begin(), m_Tanks.end(), tank), m_Tanks.end());	
+	m_Tanks.erase(std::remove(m_Tanks.begin(), m_Tanks.end(), tank), m_Tanks.end());
 }
 
 glm::ivec2 TankManagerComponent::GetRandomPosition() const
@@ -179,33 +192,28 @@ void TankManagerComponent::CheckBounds(TankComponent* tank)
 	tank->GetOwner()->SetLocalPosition(newPosition);
 }
 
+void TankManagerComponent::Update()
+{
+	if (!m_Alive) m_Alive = true;	
+}
+
 void TankManagerComponent::LateUpdate()
 {
 	CheckLevel();	
 }
 
+bool TankManagerComponent::Alive()
+{
+	return m_Alive;
+}
+
 void TankManagerComponent::CheckLevel()
 {
-	int playerCount{};
-	int enemyCount{};
-
-	for (TankComponent* tank : m_Tanks)
-	{
-		if (dynamic_cast<PlayerTankComponent*>(tank) != nullptr)
-		{
-			++playerCount;
-		}
-		else if (dynamic_cast<EnemyTankComponent*>(tank) != nullptr)	
-		{
-			++enemyCount;	
-		}
-	}
-
-	if (playerCount == 0)
+	if (PlayerTankComponent::Counter() == 0)
 	{
 		m_OnGameOver.Notify();	
 	}
-	else if(enemyCount == 0)
+	else if(EnemyTankComponent::Counter() == 0)
 	{
 		m_OnLevelCompleted.Notify();
 	}

@@ -21,7 +21,7 @@ class TileManagerComponent final : public Minigin::Component
 {
 public:	
 	explicit TileManagerComponent(Minigin::GameObject* owner, int tileSize);
-	virtual ~TileManagerComponent() = default;
+	virtual ~TileManagerComponent();
 
 	TileManagerComponent(const TileManagerComponent&) = delete;
 	TileManagerComponent(TileManagerComponent&&) noexcept = delete;
@@ -34,8 +34,12 @@ public:
 	void CheckCollision(BulletComponent* bullet) const;
 	int GetTileSize() const;
 	int GetTileArraySize() const;
+	void RemoveTile(TileComponent* tile);
 	
-	virtual void Render() const;
+	virtual void Update() override;
+	virtual void Render() const override;
+
+	static bool Alive();
 
 private:
 	std::array<std::array<TileComponent*, 8>, 8> m_Tiles;
@@ -51,6 +55,8 @@ private:
 	const int m_CollisionOffset;
 	BulletManagerComponent* m_BulletManager;
 	TankManagerComponent* m_TankManager;
+
+	static bool m_Alive;
 
 	int GetRotation(TileComponent* tile) const;		
 	glm::vec2 GetScale(TileComponent* tile) const;	

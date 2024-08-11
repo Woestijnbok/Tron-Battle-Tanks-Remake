@@ -6,7 +6,7 @@ class EnemyTankComponent : public TankComponent
 {
 public:
 	explicit EnemyTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, const std::shared_ptr<Minigin::Texture>& tankTexture, float speed);	
-	virtual ~EnemyTankComponent() = default;
+	virtual ~EnemyTankComponent();
 
 	EnemyTankComponent(const EnemyTankComponent&) = delete;
 	EnemyTankComponent(EnemyTankComponent&&) noexcept = delete;
@@ -18,6 +18,8 @@ public:
 	virtual glm::vec2 GetFireDirection() const override;
 	virtual void Render() const override;
 
+	static int Counter();
+
 protected:
 	bool CheckPlayers();
 	void Roam();
@@ -27,4 +29,6 @@ private:
 	Minigin::Subject<int> m_OnDie;
 
 	void SetRandomDirection();	
+
+	static int m_Counter;
 };

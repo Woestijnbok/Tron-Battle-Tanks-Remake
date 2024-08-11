@@ -9,7 +9,7 @@ class PlayerTankComponent final : public TankComponent
 {
 public:
 	explicit PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager);
-	virtual ~PlayerTankComponent() = default;
+	virtual ~PlayerTankComponent();
 
 	PlayerTankComponent(const PlayerTankComponent&) = delete;
 	PlayerTankComponent(PlayerTankComponent&&) noexcept = delete;
@@ -21,10 +21,14 @@ public:
 	virtual glm::vec2 GetFireDirection() const override;
 	virtual void Render() const override;
 
+	static int Counter();
+
 private:
 	const std::unique_ptr<const Minigin::Texture> m_TankTexture;	
 	const std::unique_ptr<const Minigin::Texture> m_BarrelTexture;
 	std::array<const glm::ivec2, 4> m_BarrelOffsets;
 	const glm::ivec2 m_BarrelRotationPoint;	
-	int m_BarrelRotation;	
+	int m_BarrelRotation;
+
+	static int m_Counter;
 };	

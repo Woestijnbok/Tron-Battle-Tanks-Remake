@@ -20,6 +20,8 @@
 #include "Scene.h"
 #include "Collision.h"
 
+bool TileManagerComponent::m_Alive{ false };
+
 TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize) :
 	Component{ owner },
 	m_Tiles{},
@@ -36,8 +38,23 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 	m_BulletManager{},
 	m_TankManager{}
 {
+	m_Alive = true;
 	CreateTiles();
 	CreateMiddleTile();
+}
+
+TileManagerComponent::~TileManagerComponent()
+{
+	for (size_t row{}; row < m_Tiles.size(); ++row)
+	{
+		for (size_t collumn{}; collumn < m_Tiles.at(row).size(); ++collumn)
+		{
+			m_Tiles.at(row).at(collumn)->GetOwner()->SetStatus(ControllableObject::Status::Destroyed);
+			m_Tiles.at(row).at(collumn)->SetStatus(ControllableObject::Status::Destroyed);
+		}
+	}
+
+	m_Alive = false;
 }
 
 void TileManagerComponent::SetManagers(BulletManagerComponent* bulletManager, TankManagerComponent* tankManager)
@@ -225,12 +242,33 @@ int TileManagerComponent::GetTileArraySize() const
 	return static_cast<int>(m_Tiles.size());
 }
 
+void TileManagerComponent::RemoveTile(TileComponent* tile)
+{
+	for (size_t row{}; row < m_Tiles.size(); ++row)
+	{
+		for (size_t collumn{}; collumn < m_Tiles.at(row).size(); ++collumn)
+		{
+			if (m_Tiles.at(row).at(collumn) == tile) m_Tiles.at(row).at(collumn) = nullptr;
+		}
+	}
+}
+
+void TileManagerComponent::Update()
+{
+	if (!m_Alive) m_Alive = true;
+}
+
 void TileManagerComponent::Render() const
 {
 	Minigin::Transform transform{ GetOwner()->GetWorldTransform() };
 	const glm::ivec2 center{ static_cast<int>(m_Tiles.size()) * m_TileSize / 2 };
 	transform.SetPosition(transform.GetPosition() + center);
 	m_Border->Render(transform);
+}
+
+bool TileManagerComponent::Alive()
+{
+	return m_Alive;
 }
 
 int TileManagerComponent::GetRotation(TileComponent* tile) const		

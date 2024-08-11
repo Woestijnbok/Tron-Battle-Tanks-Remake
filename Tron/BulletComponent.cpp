@@ -23,6 +23,11 @@ BulletComponent::BulletComponent(Minigin::GameObject* owner, TankComponent* tank
 	GetOwner()->SetLocalPosition(m_Tank->GetOwner()->GetLocalTransform().GetPosition());
 }
 
+BulletComponent::~BulletComponent()
+{
+	if(BulletManagerComponent::Alive()) m_Manager->RemoveBullet(this);
+}
+
 const glm::vec2& BulletComponent::GetDirection() const
 {
 	return m_Direction;

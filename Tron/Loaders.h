@@ -7,3 +7,5 @@ void LoadMainMenu();
 void LoadLevelTwo();
 
 void LoadLevelOne();
+
+void LoadLevelThree();
