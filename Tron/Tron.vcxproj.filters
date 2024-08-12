@@ -58,6 +58,9 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{823d5d80-966a-490c-9eb9-db63f7034d9b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Commands\Menu">
+      <UniqueIdentifier>{466c86e0-7223-4e8d-a692-e860c2f26840}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -112,6 +115,9 @@
     <ClCompile Include="Loaders.cpp">
       <Filter>Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="MenuCommand.cpp">
+      <Filter>Commands\Menu</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MenuComponent.h">
@@ -164,6 +170,9 @@
     </ClInclude>
     <ClInclude Include="Loaders.h">
       <Filter>Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuCommand.h">
+      <Filter>Commands\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,9 +2,10 @@
 #include "GameObject.h"
 #include "PlayerTankComponent.h"
 
-AimCommand::AimCommand(PlayerTankComponent* tank) :
+AimCommand::AimCommand(PlayerTankComponent* tank, bool controller) :
 	Minigin::GameObjectCommand{ tank->GetOwner() },	
-	m_Tank{ tank }	
+	m_Tank{ tank },	
+	m_Controller{ controller }
 {
 	if (GetGameObject() == nullptr)		
 	{
@@ -19,8 +20,21 @@ AimCommand::AimCommand(PlayerTankComponent* tank) :
 
 void AimCommand::Execute(const glm::vec2& axis)	
 {
-	const glm::ivec2 startPoint{ GetGameObject()->GetWorldTransform().GetPosition() };
-	int angle{ int(atan2(axis.x - static_cast<int>(startPoint.x), axis.y - static_cast<int>(startPoint.y)) * (180.0f / 3.14f)) };
+	glm::vec2 startPoint{};	
+	glm::vec2 endPoint{};	
+
+	if (m_Controller)
+	{
+		startPoint = glm::vec2{ 0.0f, 0.0f };	
+		endPoint = startPoint + (100.0f * axis);	
+	}
+	else
+	{
+		startPoint = GetGameObject()->GetWorldTransform().GetPosition();		
+		endPoint = axis;		
+	}
+
+	int angle{ int(atan2(endPoint.x - startPoint.x, endPoint.y - startPoint.y) * (180.0f / 3.14f)) };	
 
 	angle = 90 - angle;	
 

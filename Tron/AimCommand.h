@@ -9,7 +9,7 @@ class PlayerTankComponent;
 class AimCommand : public Minigin::GameObjectCommand
 {
 public:
-	AimCommand(PlayerTankComponent* tank);
+	AimCommand(PlayerTankComponent* tank, bool controller = false);
 	virtual ~AimCommand() = default;
 
 	AimCommand(const AimCommand&) = delete;
@@ -21,5 +21,6 @@ public:
 
 private:
 	PlayerTankComponent* m_Tank;
+	const bool m_Controller;
 
 };

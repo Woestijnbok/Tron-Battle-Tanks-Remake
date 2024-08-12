@@ -26,7 +26,9 @@ namespace Minigin
 			LeftShoulder,
 			LeftTrigger,
 			Start,
-			Back
+			Back,
+			LeftJoystick,
+			RightJoystick
 		};
 
 		explicit Controller(unsigned int index);

@@ -12,9 +12,10 @@
 int EnemyTankComponent::m_Counter{ 0 };
 
 EnemyTankComponent::EnemyTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, const std::shared_ptr<Minigin::Texture>& tankTexture, float speed) :
-	TankComponent{ owner, manager, speed, 20, 3 },	
+	TankComponent{ owner, manager, speed, 20 },	
 	m_TankTexture{ tankTexture },
-	m_OnDie{}
+	m_OnDie{},
+	m_Lives{ 3 }
 {
 	++m_Counter;
 }
@@ -50,6 +51,16 @@ glm::vec2 EnemyTankComponent::GetFireDirection() const
 	}
 
 	return direction;
+}
+
+void EnemyTankComponent::Hit()
+{
+	if (m_Lives > 0)	
+	{
+		--m_Lives;	
+		OnHit().Notify(m_Lives);
+		if (m_Lives == 0) Die();
+	}
 }
 
 void EnemyTankComponent::Render() const

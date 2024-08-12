@@ -261,6 +261,9 @@ unsigned int Keyboard::Impl::ConvertKey(Keyboard::Key key) const
 	case Minigin::Keyboard::Key::Left:
 		return static_cast<unsigned int>(SDLK_LEFT);	
 		break;
+	case Minigin::Keyboard::Key::Backspace:
+		return static_cast<unsigned int>(SDLK_BACKSPACE);	
+		break;
 	default:
 		return 0U;
 		break;

@@ -53,7 +53,8 @@ namespace Minigin
 			Up,
 			Right,
 			Down,
-			Left
+			Left,
+			Backspace
 		};
 
 		explicit Keyboard();

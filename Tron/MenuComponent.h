@@ -28,4 +28,7 @@ private:
 
 	ImVec2 CalculateStartPosition() const;
 	void SoloMenuClicked() const;
+	void CoopMenuClicked() const;
+	void VersusMenuClicked() const;
+	void ScoreboardMenuClicked() const;
 };

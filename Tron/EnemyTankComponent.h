@@ -16,6 +16,7 @@ public:
 	Minigin::Subject<int>& OnDie();
 
 	virtual glm::vec2 GetFireDirection() const override;
+	virtual void Hit() override;
 	virtual void Render() const override;
 
 	static int Counter();
@@ -27,6 +28,7 @@ protected:
 private:
 	std::shared_ptr<Minigin::Texture> m_TankTexture;
 	Minigin::Subject<int> m_OnDie;
+	int m_Lives;
 
 	void SetRandomDirection();	
 

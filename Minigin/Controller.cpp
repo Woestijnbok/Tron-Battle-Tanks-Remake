@@ -1,6 +1,8 @@
 #include <vector>
 #include <windows.h>
 #include <Xinput.h>
+#include <iostream>
+#include <vec2.hpp>
 
 #include "Controller.h"
 #include "Command.h"
@@ -28,15 +30,26 @@ public:
 private:
 	unsigned int m_Index;
 	std::vector<InputAction> m_InputActions;
+	std::vector<InputAction> m_JoystickActions;
 	XINPUT_STATE m_PreviousState;
 	XINPUT_STATE m_CurrentState;
 
+	static const SHORT m_Deadzone;
+	static const SHORT m_JoystickMaxValue;
+	static const SHORT m_JoystickMinValue;
+
 	unsigned int ConvertButton(Controller::Button button) const;
+	float ProccessJoystick(SHORT value) const;
 };
+
+const SHORT Controller::Impl::m_Deadzone{ 10000 };
+const SHORT Controller::Impl::m_JoystickMaxValue{ 32767 };
+const SHORT Controller::Impl::m_JoystickMinValue{ -32768 };
 
 Controller::Impl::Impl(unsigned int index) :
 	m_Index{ index },
 	m_InputActions{},
+	m_JoystickActions{},
 	m_PreviousState{},
 	m_CurrentState{}
 {
@@ -78,11 +91,41 @@ void Controller::Impl::ProcessInput()
 			break;
 		}
 	}
+
+	if (m_JoystickActions.size() > 0)
+	{
+		float lx{ ProccessJoystick(m_CurrentState.Gamepad.sThumbLX) };
+		float ly{ ProccessJoystick(m_CurrentState.Gamepad.sThumbLY) };
+		float rx{ ProccessJoystick(m_CurrentState.Gamepad.sThumbRX) };
+		float ry{ ProccessJoystick(m_CurrentState.Gamepad.sThumbRY) };
+
+		const glm::vec2 left{ lx, ly };	
+		const glm::vec2 right{ rx, ry };	
+
+		for (const InputAction& inputAction : m_JoystickActions)
+		{
+			if (static_cast<Button>(inputAction.GetButton()) == Button::LeftJoystick)
+			{
+				inputAction.GetCommand()->Execute(left);
+			}
+			else
+			{
+				inputAction.GetCommand()->Execute(right);	
+			}
+		}
+	}
 }
 
 void Controller::Impl::AddInputAction(Button button, InputAction::Trigger trigger, const std::shared_ptr<Command>& command)
 {
-	m_InputActions.emplace_back(ConvertButton(button), trigger, command);	
+	if (button == Button::LeftJoystick or button == Button::RightJoystick)
+	{
+		m_JoystickActions.emplace_back(static_cast<int>(button), trigger, command);
+	}
+	else 
+	{
+		m_InputActions.emplace_back(ConvertButton(button), trigger, command);
+	}
 }
 
 void Controller::Impl::ClearInputActions()
@@ -114,6 +157,25 @@ void Controller::Impl::RemoveInputActions(GameObject* object)
 			}
 		),
 		m_InputActions.end()
+	);
+
+	m_JoystickActions.erase
+	(
+		std::remove_if
+		(
+			m_JoystickActions.begin(), m_JoystickActions.end(),
+			[&object](const InputAction& inputAction) -> bool
+			{
+				GameObjectCommand* command{ dynamic_cast<GameObjectCommand*>(inputAction.GetCommand()) };
+				if (command != nullptr)
+				{
+					if (command->GetGameObject() == object) return true;
+				}
+
+				return false;
+			}
+		),
+		m_JoystickActions.end()
 	);
 }
 
@@ -167,6 +229,29 @@ unsigned int Controller::Impl::ConvertButton(Controller::Button button) const
 		return 0U;
 		break;
 	}
+}
+
+float Controller::Impl::ProccessJoystick(SHORT value) const
+{
+	float newValue{};
+
+	if (abs(value) < m_Deadzone)	
+	{
+		newValue = 0.0f;
+	}
+	else
+	{
+		if (value > 0)
+		{
+			newValue = float(value) / float(m_JoystickMaxValue);
+		}
+		else
+		{
+			newValue = -float(value) / float(m_JoystickMinValue);
+		}
+	}
+
+	return newValue;
 }
 
 Controller::Controller(unsigned int index) :	

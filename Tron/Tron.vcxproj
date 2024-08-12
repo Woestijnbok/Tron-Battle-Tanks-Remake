@@ -179,6 +179,7 @@
     <ClCompile Include="FireCommand.cpp" />
     <ClCompile Include="Loaders.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MenuCommand.cpp" />
     <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="MiddleTileComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
@@ -198,6 +199,7 @@
     <ClInclude Include="EnemyTankComponent.h" />
     <ClInclude Include="FireCommand.h" />
     <ClInclude Include="Loaders.h" />
+    <ClInclude Include="MenuCommand.h" />
     <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="MiddleTileComponent.h" />
     <ClInclude Include="MoveCommand.h" />

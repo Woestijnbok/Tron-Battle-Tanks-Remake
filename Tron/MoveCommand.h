@@ -15,6 +15,7 @@ public:
 		Left
 	};
 
+
 	MoveCommand(PlayerTankComponent* tank, Direction direction);
 	virtual ~MoveCommand() = default;
 
@@ -26,7 +27,7 @@ public:
 	virtual void Execute() override;
 
 private:
-	Direction m_Direction;
+	const Direction m_Direction;
 	PlayerTankComponent* m_Tank;
 
 };

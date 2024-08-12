@@ -23,5 +23,5 @@ MoveCommand::MoveCommand(PlayerTankComponent* tank, Direction direction) :
 
 void MoveCommand::Execute()
 {
-	m_Tank->Move(m_Direction);
+	m_Tank->Move(m_Direction);	
 }

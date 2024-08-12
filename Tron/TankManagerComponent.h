@@ -30,7 +30,7 @@ public:
 	TankManagerComponent& operator= (const TankManagerComponent&&) noexcept = delete;
 
 	void SetManagers(TileManagerComponent* tileManager, BulletManagerComponent* bulletManager);	
-	PlayerTankComponent* CreatePlayerTank();
+	PlayerTankComponent* CreatePlayerTank(Minigin::Texture* tankTexture, Minigin::Texture* barrelTexture);
 	BlueTankComponent* CreateBlueTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
 	PurpleTankComponent* CreatePurpleTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
 	const std::vector<TankComponent*>& GetTanks() const;
@@ -44,6 +44,7 @@ public:
 	Minigin::Subject<>& OnGameOver();
 	Minigin::Subject<>& OnLevelCompleted();
 	void CheckBounds(TankComponent* tank);
+	void RemoveAllPlayers();
 
 	virtual void Update() override;
 	virtual void LateUpdate() override;

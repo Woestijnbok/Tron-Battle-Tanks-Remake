@@ -10,14 +10,13 @@
 
 #include <iostream>
 
-TankComponent::TankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, float speed, int collisionSize, int lives) :
+TankComponent::TankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, float speed, int collisionSize) :
 	Component{ owner },
 	m_Manager{ manager },	
 	m_Direction{ MoveCommand::Direction::Right },
 	m_Speed{ speed },
 	m_CollisionSize{ collisionSize },
-	m_Lives{ lives },
-	m_OnLivesChange{},
+	m_OnHit{},
 	m_OnFire{}
 {
 	GetOwner()->SetLocalPosition(m_Manager->GetRandomPosition());	
@@ -26,8 +25,6 @@ TankComponent::TankComponent(Minigin::GameObject* owner, TankManagerComponent* m
 TankComponent::~TankComponent()
 {
 	if (TankManagerComponent::Alive()) m_Manager->RemoveTank(this);
-
-	std::cout << "TankComponent Destructor" << std::endl;
 }
 
 float TankComponent::GetMovementSpeed() const
@@ -84,29 +81,14 @@ Minigin::Rectangle TankComponent::GetCollisionRectangle() const
 	return rectangle;	
 }
 
-Minigin::Subject<int>& TankComponent::OnLivesChange()
+Minigin::Subject<int>& TankComponent::OnHit()
 {
-	return m_OnLivesChange;
+	return m_OnHit;
 }
 
 Minigin::Subject<>& TankComponent::OnFire()	
 {
 	return m_OnFire;
-}
-
-int TankComponent::GetLives() const	
-{
-	return m_Lives;
-}
-
-void TankComponent::Hit()
-{
-	if (m_Lives > 0)
-	{
-		--m_Lives;
-		m_OnLivesChange.Notify(m_Lives);
-		if (m_Lives == 0) Die();	
-	}
 }
 
 MoveCommand::Direction TankComponent::GetMoveDirection() const

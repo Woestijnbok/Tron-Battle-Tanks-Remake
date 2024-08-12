@@ -32,13 +32,13 @@ void MenuComponent::Render() const
     ImGui::SetCursorPos(ImVec2{ m_StartPosition.x, m_StartPosition.y + (m_ButtonSize.y + m_Spacing) * 1 });
     if (ImGui::Button("Coop", m_ButtonSize))    
     {
-        // Action for Load Game
+        this->CoopMenuClicked();
     }
 
     ImGui::SetCursorPos(ImVec2{ m_StartPosition.x, m_StartPosition.y + (m_ButtonSize.y + m_Spacing) * 2 }); 
     if (ImGui::Button("Versus", m_ButtonSize))  
     {
-        // Action for Settings
+        this->VersusMenuClicked();
     }
 
     ImGui::SetCursorPos(ImVec2{ m_StartPosition.x, m_StartPosition.y + (m_ButtonSize.y + m_Spacing) * 3 });
@@ -61,4 +61,19 @@ ImVec2 MenuComponent::CalculateStartPosition() const
 void MenuComponent::SoloMenuClicked() const
 {
     LoadLevelOne(); 
+}
+
+void MenuComponent::CoopMenuClicked() const
+{
+    LoadCoopLevel();
+}
+
+void MenuComponent::VersusMenuClicked() const
+{
+    LoadVersusLevel();
+}
+
+void MenuComponent::ScoreboardMenuClicked() const
+{
+
 }

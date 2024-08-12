@@ -29,8 +29,6 @@ TankManagerComponent::TankManagerComponent(Minigin::GameObject* owner) :
 	m_OnLevelCompleted{}
 {
 	m_Alive = true;
-
-	std::cout << "Tank Manager Constructor" << std::endl;
 }
 
 TankManagerComponent::~TankManagerComponent()
@@ -42,9 +40,7 @@ TankManagerComponent::~TankManagerComponent()
 		tank->SetStatus(ControllableObject::Status::Destroyed);	
 	}
 
-	m_Alive = false;
-
-	std::cout << "TankManagerComponent Destructor" << std::endl;	
+	m_Alive = false;	
 }
 
 void TankManagerComponent::SetManagers(TileManagerComponent* tileManager, BulletManagerComponent* bulletManager)
@@ -53,13 +49,13 @@ void TankManagerComponent::SetManagers(TileManagerComponent* tileManager, Bullet
 	m_BulletManager = bulletManager;
 }
 
-PlayerTankComponent* TankManagerComponent::CreatePlayerTank()
+PlayerTankComponent* TankManagerComponent::CreatePlayerTank(Minigin::Texture* tankTexture, Minigin::Texture* barrelTexture)
 {
 	PlayerTankComponent* playerTank{};
 
 	Minigin::GameObject* object{ GetOwner()->GetScene()->CreateGameObject(std::format("Tank {}", m_Tanks.size())) };
 	object->SetParent(GetOwner());	
-	playerTank = object->CreateComponent<PlayerTankComponent>(this);
+	playerTank = object->CreateComponent<PlayerTankComponent>(this, tankTexture, barrelTexture);
 
 	m_Tanks.push_back(playerTank);
 
@@ -190,6 +186,18 @@ void TankManagerComponent::CheckBounds(TankComponent* tank)
 	}
 
 	tank->GetOwner()->SetLocalPosition(newPosition);
+}
+
+void TankManagerComponent::RemoveAllPlayers()
+{
+	for (TankComponent* tank : m_Tanks)
+	{
+		PlayerTankComponent* player{ dynamic_cast<PlayerTankComponent*>(tank) };
+		if (player != nullptr)
+		{
+			player->SetStatus(ControllableObject::Status::Destroyed);
+		}
+	}
 }
 
 void TankManagerComponent::Update()

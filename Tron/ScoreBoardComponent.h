@@ -9,7 +9,7 @@
 class ScoreboardComponent final : public Minigin::Component
 {
 public:
-	explicit ScoreboardComponent(Minigin::GameObject* owner, int score, int lives);	
+	explicit ScoreboardComponent(Minigin::GameObject* owner, int score, int lives, bool withScore = true);
 	virtual ~ScoreboardComponent() = default;
 
 	ScoreboardComponent(const ScoreboardComponent&) = delete;
@@ -29,6 +29,7 @@ private:
 	std::shared_ptr<Minigin::Texture> m_LiveTexture;
 	int m_Score;
 	int m_Lives;
+	const bool m_WithScore;
 
 	static const int m_LiveSize;
 	static const int m_LivesOffset;
