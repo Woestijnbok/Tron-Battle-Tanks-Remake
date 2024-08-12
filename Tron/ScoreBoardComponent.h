@@ -19,19 +19,20 @@ public:
 
 	void UpdateScore(int score);
 	void UpdateLives(int lives);
-	int GetScore() const;
 	int GetLives() const;
 
 	virtual void Render() const;
 
+	static int GetScore();
+
 private:
 	std::unique_ptr<Minigin::Text> m_ScoreText;	
 	std::shared_ptr<Minigin::Texture> m_LiveTexture;
-	int m_Score;
 	int m_Lives;
 	const bool m_WithScore;
 
 	static const int m_LiveSize;
 	static const int m_LivesOffset;
 	static const int m_ScoreLivesOffset;
+	static int m_Score;
 };

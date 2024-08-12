@@ -13,10 +13,12 @@
 #include "PlayerTankComponent.h"
 #include "BlueTankComponent.h"
 #include "PurpleTankComponent.h"
-#include "ScoreBoardComponent.h"
 #include "AimCommand.h"
 #include "MoveCommand.h"
 #include "FireCommand.h"
+#include "HighscoresComponent.h"
+#include "MenuComponent.h"
+#include "ScoreBoardComponent.h"
 
 using namespace Minigin;
 
@@ -47,7 +49,15 @@ void CreateControllerInput(PlayerTankComponent* tank, int controllerIndex)
 }
 
 void GameOver()	
-{
+{	
+	const std::optional<std::string> name{ SceneManager::Instance()->GetScene("Main Menu")->GetGameObject("Menu")->GetComponent<MenuComponent>()->GetPlayerName() };
+
+	if (name)
+	{
+		HighscoresComponent::AddScore(HighscoresComponent::ScoreEntry{ name.value(), ScoreboardComponent::GetScore()});
+		HighscoresComponent::SaveHighscores();		
+	}		
+
 	LoadMainMenu();	
 }
 
@@ -76,10 +86,6 @@ void LoadLevelOne()
 	tankManager->SetManagers(tileManager, bulletManager);
 	bulletManager->SetManagers(tileManager, tankManager);
 
-	// Scene transisitions
-	tankManager->OnGameOver().AddObserver(&GameOver);	
-	tankManager->OnLevelCompleted().AddObserver(&LoadLevelTwo);
-
 	// Player tank
 	Texture* redTankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") };	
 	Texture* redBarrelTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Barrel.png") };	
@@ -107,6 +113,10 @@ void LoadLevelOne()
 	// Input for player tank
 	CreateKeyboardAndMouseInput(playerTank);
 	CreateControllerInput(playerTank, 0);
+
+	// Scene transisitions
+	tankManager->OnGameOver().AddObserver(&GameOver);				
+	tankManager->OnLevelCompleted().AddObserver(&LoadLevelTwo);	
 }
 
 void LoadLevelTwo()
@@ -128,7 +138,7 @@ void LoadLevelTwo()
 	bulletManager->SetManagers(tileManager, tankManager);
 
 	// Scene transisitions
-	tankManager->OnGameOver().AddObserver(&GameOver);	
+	tankManager->OnGameOver().AddObserver(&LoadMainMenu);	
 	tankManager->OnLevelCompleted().AddObserver(&LoadLevelThree);				
 
 	// Player tank
@@ -178,8 +188,8 @@ void LoadLevelThree()
 	bulletManager->SetManagers(tileManager, tankManager);
 
 	// Scene transisitions
-	tankManager->OnGameOver().AddObserver(&GameOver);
-	tankManager->OnLevelCompleted().AddObserver(&GameOver);	
+	tankManager->OnGameOver().AddObserver(&LoadMainMenu);	
+	tankManager->OnLevelCompleted().AddObserver(&LoadMainMenu);		
 
 	// Player tank
 	Texture* redTankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") };	
@@ -230,8 +240,8 @@ void LoadCoopLevel()
 	bulletManager->SetManagers(tileManager, tankManager);	
 
 	// Scene transisitions
-	tankManager->OnGameOver().AddObserver(&GameOver);
-	tankManager->OnLevelCompleted().AddObserver(&LoadLevelTwo);	
+	tankManager->OnGameOver().AddObserver(&LoadMainMenu);	
+	tankManager->OnLevelCompleted().AddObserver(&LoadMainMenu);	
 
 	// Player tne	
 	Texture* redTankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") };	
@@ -247,22 +257,22 @@ void LoadCoopLevel()
 
 	// Enemy blue tank 1
 	std::shared_ptr<Texture> blueTankTexture{ ResourceManager::Instance()->LoadTexture("Blue Tank.png") };	
-	BlueTankComponent* enemyOne{ tankManager->CreateBlueTank(blueTankTexture) };	
+	BlueTankComponent* enemyOne{ tankManager->CreateBlueTank(blueTankTexture) };
+	enemyOne;
 
 	// Enemy Purple 1
 	std::shared_ptr<Texture> purpleTankTexture{ ResourceManager::Instance()->LoadTexture("Purple Tank.png") };
 	PurpleTankComponent* enemyTwo{ tankManager->CreatePurpleTank(purpleTankTexture) };
+	enemyTwo;	
 
 	// Scoreboard
 	GameObject* scoreboardObject{ scene->CreateGameObject("Scoreboard") };
-	ScoreboardComponent* scoreboard{ scoreboardObject->CreateComponent<ScoreboardComponent>(0, PlayerTankComponent::SharedLives()) };		
+	ScoreboardComponent* scoreboard{ scoreboardObject->CreateComponent<ScoreboardComponent>(0, PlayerTankComponent::SharedLives(), false) };		
 	scoreboardObject->SetLocalPosition(glm::ivec2{ 255, 550 });
 
 	// Hooking scoreboard up to player tank
 	playerOne->OnHit().AddObserver(std::bind(&ScoreboardComponent::UpdateLives, scoreboard, std::placeholders::_1));
 	playerTwo->OnHit().AddObserver(std::bind(&ScoreboardComponent::UpdateLives, scoreboard, std::placeholders::_1));
-	enemyOne->OnDie().AddObserver(std::bind(&ScoreboardComponent::UpdateScore, scoreboard, std::placeholders::_1));
-	enemyTwo->OnDie().AddObserver(std::bind(&ScoreboardComponent::UpdateScore, scoreboard, std::placeholders::_1));
 
 	// Input for player tank
 	CreateKeyboardAndMouseInput(playerOne);
@@ -290,7 +300,7 @@ void LoadVersusLevel()
 	bulletManager->SetManagers(tileManager, tankManager);
 
 	// Scene transisitions
-	tankManager->OnGameOver().AddObserver(&GameOver);
+	tankManager->OnGameOver().AddObserver(&LoadMainMenu);	
 
 	// Player tne
 	Texture* redTankTexture{ Minigin::Renderer::Instance()->CreateTexture(Minigin::ResourceManager::Instance()->GetTextureRootPath() / "Red Tank.png") };
@@ -322,4 +332,15 @@ void LoadVersusLevel()
 	CreateKeyboardAndMouseInput(playerOne);
 	CreateControllerInput(playerOne, 1);
 	CreateControllerInput(playerTwo, 0);
+}
+
+void LoadScoreboard()
+{
+	SceneManager::Instance()->IsolateScene("Main Menu");		
+	SceneManager::Instance()->GetScene("Main Menu")->SetStatus(ControllableObject::Status::Disabled);
+
+	Scene* scene{ SceneManager::Instance()->CreateScene("Scoreboard") };
+	
+	GameObject* scoreboardOjbect{scene->CreateGameObject("Scoreboard")};
+	scoreboardOjbect->CreateComponent<HighscoresComponent>();
 }

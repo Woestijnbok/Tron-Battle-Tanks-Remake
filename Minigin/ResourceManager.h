@@ -29,11 +29,13 @@ namespace Minigin
 		const std::filesystem::path& GetTextureRootPath() const;	
 		const std::filesystem::path& GetFontRootPath() const;
 		const std::filesystem::path& GetAudioRootPath() const;
+		const std::filesystem::path& GetFileRootPath() const;
 
 	private:
 		const std::filesystem::path m_TextureRootDirectory;
 		const std::filesystem::path m_FontRootDirectory;
 		const std::filesystem::path m_AudioRootDirectory;
+		const std::filesystem::path m_FileRootDirectory;
 
 		explicit ResourceManager();
 

@@ -61,6 +61,9 @@
     <Filter Include="Commands\Menu">
       <UniqueIdentifier>{466c86e0-7223-4e8d-a692-e860c2f26840}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Components\HighScores">
+      <UniqueIdentifier>{9758b5bd-06d8-4b05-807a-e268964f77b1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -112,11 +115,14 @@
     <ClCompile Include="EnemyTankComponent.cpp">
       <Filter>Components\Tank\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Loaders.cpp">
-      <Filter>Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="MenuCommand.cpp">
       <Filter>Commands\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="HighscoresComponent.cpp">
+      <Filter>Components\HighScores</Filter>
+    </ClCompile>
+    <ClCompile Include="Loaders.cpp">
+      <Filter>Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -168,11 +174,14 @@
     <ClInclude Include="EnemyTankComponent.h">
       <Filter>Components\Tank\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Loaders.h">
-      <Filter>Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="MenuCommand.h">
       <Filter>Commands\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="HighscoresComponent.h">
+      <Filter>Components\HighScores</Filter>
+    </ClInclude>
+    <ClInclude Include="Loaders.h">
+      <Filter>Helpers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

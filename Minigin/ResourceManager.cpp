@@ -13,7 +13,8 @@ ResourceManager::ResourceManager() :
 	Singleton{},	
 	m_TextureRootDirectory{ "../Resources/Textures" },	
 	m_FontRootDirectory{ "../Resources/Fonts" },
-	m_AudioRootDirectory{ "../Resources/Audio" }
+	m_AudioRootDirectory{ "../Resources/Audio" },
+	m_FileRootDirectory{ "../Resources/Files" }
 {	
 	// Checking texture root directory	
 	if (std::filesystem::exists(m_TextureRootDirectory))
@@ -44,6 +45,16 @@ ResourceManager::ResourceManager() :
 		}
 	}
 	else throw std::runtime_error("ResourceManager::ResourceManager() - audio root directory doesn't exist");
+
+	// Checking file root directory
+	if (std::filesystem::exists(m_FileRootDirectory))
+	{
+		if (!std::filesystem::is_directory(m_FileRootDirectory))
+		{
+			throw std::runtime_error("ResourceManager::ResourceManager() - file root directory isn't a directory");
+		}
+	}
+	else throw std::runtime_error("ResourceManager::ResourceManager() - file root directory doesn't exist");
 }
 
 std::shared_ptr<Texture> ResourceManager::LoadTexture(const std::filesystem::path& path) const
@@ -107,4 +118,9 @@ const std::filesystem::path& ResourceManager::GetFontRootPath() const
 const std::filesystem::path& ResourceManager::GetAudioRootPath() const
 {
 	return m_AudioRootDirectory;
+}
+
+const std::filesystem::path& Minigin::ResourceManager::GetFileRootPath() const
+{
+	return m_FileRootDirectory;
 }

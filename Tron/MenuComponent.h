@@ -4,6 +4,7 @@
 #include <string>
 #include <vec2.hpp>
 #include <imgui.h>
+#include <optional>
 
 #include "Component.h"
 
@@ -18,17 +19,27 @@ public:
 	MenuComponent& operator= (const MenuComponent&) = delete;
 	MenuComponent& operator= (const MenuComponent&&) noexcept = delete;
 
+	std::optional<std::string> GetPlayerName() const;		
+
+	virtual void LateUpdate() override;	
 	virtual void Render() const override;
 
 private:
 	const ImVec2 m_ButtonSize;
 	const int m_Spacing;
 	const ImVec2 m_WindowSize;	
-	const ImVec2 m_StartPosition;
+	const ImVec2 m_MenuStartPosition;
+	const ImVec2 m_NameStartPosition;
+	std::string m_PlayerName;	
 
-	ImVec2 CalculateStartPosition() const;
+	ImVec2 CalculateMenuStartPosition() const;
+	ImVec2 CalculateNameStartPosition();
 	void SoloMenuClicked() const;
 	void CoopMenuClicked() const;
 	void VersusMenuClicked() const;
 	void ScoreboardMenuClicked() const;
+
+	static const std::string m_DefaultPlayerName;
+	static const int m_NameBarWidth;
+	static const int m_NameBarOffset;
 };

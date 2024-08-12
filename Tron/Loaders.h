@@ -8,7 +8,7 @@ void CreateKeyboardAndMouseInput(PlayerTankComponent* tank);
 
 void CreateControllerInput(PlayerTankComponent* tank, int controllerIndex);
 
-void GameOver();
+void GameOver();		
 
 void LoadMainMenu();
 
@@ -21,3 +21,5 @@ void LoadLevelThree();
 void LoadCoopLevel();
 
 void LoadVersusLevel();
+
+void LoadScoreboard();
