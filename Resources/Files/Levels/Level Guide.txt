@@ -1,0 +1,40 @@
+# Legend for tiles
+
+a Tile where every edge is passable
+
+b Tile where every edge is passable but the top one
+c Tile where every edge is passable but the right one
+d Tile where every edge is passable but the bottom one
+e Tile where every edge is passable but the left one
+
+f Tile where every only 2 edges are passable namely the top and bottom one
+g Tile where every only 2 edges are passable namely the right and left one
+
+h Tile where every only 2 edges are passable namely the top and right one
+i Tile where every only 2 edges are passable namely the right and bottom one
+j Tile where every only 2 edges are passable namely the bottom and left one
+k Tile where every only 2 edges are passable namely the left and top one
+
+l Tile where every only the top edge is passable
+m Tile where every only the right edge is passable
+n Tile where every only the bottom edge is passable
+o Tile where every only the left edge is passable
+
+p Tile where no edge is passable
+
+# Instruction to create tile map
+
+Write a 8 by 8 collumn of characters using the legend above.
+each element is seperate by a , and white space.
+Make sure it's a valid tile map, 'a' can't be to the right of 'e'.
+
+here is a good example:
+
+k, e, a, a, a, a, c, h
+b, a, a, a, a, a, a, b
+a, a, a, a, a, a, a, a
+a, d, a, a, a, a, d, a
+a, b, a, a, a, a, b, a
+a, a, a, a, a, a, a, a
+d, a, a, a, a, a, a, d
+j, e, a, a, a, a, c, i

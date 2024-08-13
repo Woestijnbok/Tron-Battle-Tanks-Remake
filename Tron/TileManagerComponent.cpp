@@ -4,6 +4,8 @@
 #include <iostream>
 #include <format>
 #include <random>
+#include <fstream>
+#include <regex>
 
 #include "TileManagerComponent.h"
 #include "BulletManagerComponent.h"
@@ -22,7 +24,7 @@
 
 bool TileManagerComponent::m_Alive{ false };
 
-TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize) :
+TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileSize, const std::filesystem::path& path) :
 	Component{ owner },
 	m_Tiles{},
 	m_MiddleTile{  },
@@ -39,9 +41,9 @@ TileManagerComponent::TileManagerComponent(Minigin::GameObject* owner, int tileS
 	m_TankManager{}
 {
 	m_Alive = true;
-	CreateTiles();
+	CreateTiles(path);	
 	CreateMiddleTile();
-}
+}   
 
 TileManagerComponent::~TileManagerComponent()
 {
@@ -115,7 +117,7 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 				if (row < static_cast<int>(m_Tiles.size()))
 				{
 					// check if at right edge
-					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);
+					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Right);	
 					else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);
 				}
 			}
@@ -123,7 +125,7 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 			else
 			{
 				// check if at right edge
-				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);
+				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Right);	
 				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);
 			}
 		}
@@ -138,7 +140,7 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 				if (collumn < static_cast<int>(m_Tiles.size()))
 				{
 					// check if at top edge
-					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);
+					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Top);	
 					else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);
 				}
 			}
@@ -146,7 +148,7 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 			else
 			{
 				// check if at top edge
-				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);
+				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Top);	
 				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);
 			}
 		}
@@ -161,15 +163,15 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 				if (row > 0)
 				{
 					// check if at right edge
-					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1)->CanPass(TileComponent::Side::Left);
+					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1)->CanPass(TileComponent::Side::Right);	
 					else canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Left);
 				}
 			}
 			// between two
 			else
 			{
-				// check if at right edge
-				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);
+				// check if at right edge	
+				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Right);	
 				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);
 			}
 		}
@@ -184,7 +186,7 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 				if (collumn > 0)
 				{
 					// check if at top edge
-					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1)->CanPass(TileComponent::Side::Bottom);
+					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1)->CanPass(TileComponent::Side::Top);
 					else canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Bottom);
 				}
 			}
@@ -192,7 +194,7 @@ bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Dire
 			else
 			{
 				// check if at top edge
-				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);
+				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Top);
 				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);
 			}
 		}
@@ -344,32 +346,138 @@ void TileManagerComponent::CreateTiles()
 
 			m_Tiles.at(row).at(collumn) = tile;	
 		}
+	}	
+}
+
+void TileManagerComponent::CreateTiles(const std::filesystem::path& path)
+{
+	CreateTiles();	
+
+	const std::filesystem::path fullPath{ Minigin::ResourceManager::Instance()->GetFileRootPath() / path };
+
+	if (std::filesystem::exists(fullPath))	
+	{
+		if (std::filesystem::is_regular_file(fullPath))	
+		{
+			std::ifstream file{ fullPath };
+
+			if (file.is_open() and file.good())	
+			{	
+				int lineCounter{};
+				std::string line{};
+				const std::regex pattern{ R"((\w),\s(\w),\s(\w),\s(\w),\s(\w),\s(\w),\s(\w),\s(\w))"  };		
+
+				while (std::getline(file, line) and lineCounter < m_Tiles.size())	
+				{
+					++lineCounter;	
+
+					std::smatch match{};
+					if (std::regex_match(line, match, pattern))
+					{
+						for (size_t i{}; i < m_Tiles.size(); ++i)
+						{
+							CreateTile(8 - lineCounter, int(i), match[i + 1].str().at(0));
+						}
+					}
+					else throw std::runtime_error(std::format("TileManagerComponent::CreatTiles() - {} failed to read.", fullPath.generic_string().c_str()));
+				}
+			}
+			else throw std::runtime_error(std::format("TileManagerComponent::CreatTiles() - {} failed to open.", fullPath.generic_string().c_str()));	
+		}
+		else throw std::runtime_error(std::format("TileManagerComponent::CreatTiles() - {} isn't a regular file.", fullPath.generic_string().c_str()));	
 	}
+	else throw std::runtime_error(std::format("TileManagerComponent::CreatTiles() - {} doesn't exist.", fullPath.generic_string().c_str()));	
+}
 
-	TileComponent* tileLeft{ m_Tiles.at(1).at(1) };	
-	tileLeft->SetSide(TileComponent::Side::Right, false);	
-	tileLeft->SetTexture(m_TileOne.get());	
-	tileLeft->GetOwner()->SetLocalRotation(GetRotation(tileLeft));
+void TileManagerComponent::CreateTile(int row, int collumn, char character)
+{
+	TileComponent* tile{ m_Tiles.at(row).at(collumn) };
 
-	TileComponent* tileUp{ m_Tiles.at(2).at(2) };	
-	tileUp->SetSide(TileComponent::Side::Bottom, false);			
-	tileUp->SetTexture(m_TileOne.get());
-	tileUp->GetOwner()->SetLocalRotation(GetRotation(tileUp));
-
-	TileComponent* tileRight{ m_Tiles.at(1).at(3) };	
-	tileRight->SetSide(TileComponent::Side::Left, false);				
-	tileRight->SetTexture(m_TileOne.get());		
-	tileRight->GetOwner()->SetLocalRotation(GetRotation(tileRight));
-
-	TileComponent* tileDown{ m_Tiles.at(0).at(2) };
-	tileDown->SetSide(TileComponent::Side::Top, false);	
-	tileDown->SetTexture(m_TileOne.get());	
-	tileDown->GetOwner()->SetLocalRotation(GetRotation(tileDown));
-
-	TileComponent* tileMiddle{ m_Tiles.at(1).at(2) };			
-	tileMiddle->SetSides(std::array<bool, 4>{ false, false, false, false });	
-	tileMiddle->SetTexture(m_TileFour.get());			
-	tileMiddle->GetOwner()->SetLocalRotation(GetRotation(tileMiddle));		
+	switch (character)
+	{
+	case 'a':
+		tile->SetSides(std::array<bool, 4>{ true, true, true, true });
+		tile->SetTexture(m_TileZero.get());
+		tile->GetOwner()->SetLocalRotation(0);
+		break;
+	case 'b':
+		tile->SetSides(std::array<bool, 4>{ false, true, true, true });	
+		tile->SetTexture(m_TileOne.get());	
+		tile->GetOwner()->SetLocalRotation(270);	
+		break;
+	case 'c':
+		tile->SetSides(std::array<bool, 4>{ true, false, true, true });
+		tile->SetTexture(m_TileOne.get());	
+		tile->GetOwner()->SetLocalRotation(0);
+		break;
+	case 'd':
+		tile->SetSides(std::array<bool, 4>{ true, true, false, true });
+		tile->SetTexture(m_TileOne.get());	
+		tile->GetOwner()->SetLocalRotation(90);
+		break;
+	case 'e':
+		tile->SetSides(std::array<bool, 4>{ true, true, true, false });	
+		tile->SetTexture(m_TileOne.get());		
+		tile->GetOwner()->SetLocalRotation(180);	
+		break;
+	case 'f':	
+		tile->SetSides(std::array<bool, 4>{ true, false, true, false });	
+		tile->SetTexture(m_TileTwoStraight.get());		
+		tile->GetOwner()->SetLocalRotation(0);	
+		break;
+	case 'g':
+		tile->SetSides(std::array<bool, 4>{ false, true, false, true });	
+		tile->SetTexture(m_TileTwoStraight.get());	
+		tile->GetOwner()->SetLocalRotation(90);		
+		break;
+	case 'h':
+		tile->SetSides(std::array<bool, 4>{ true, true, false, false });	
+		tile->SetTexture(m_TileTwoCorner.get());		
+		tile->GetOwner()->SetLocalRotation(180);	
+		break;
+	case 'i':
+		tile->SetSides(std::array<bool, 4>{ false, true, true, false });	
+		tile->SetTexture(m_TileTwoCorner.get());		
+		tile->GetOwner()->SetLocalRotation(270);		
+		break;
+	case 'j':
+		tile->SetSides(std::array<bool, 4>{ false, false, true, true });	
+		tile->SetTexture(m_TileTwoCorner.get());	
+		tile->GetOwner()->SetLocalRotation(0);		
+		break;
+	case 'k':
+		tile->SetSides(std::array<bool, 4>{ true, false, false, true });
+		tile->SetTexture(m_TileTwoCorner.get());	
+		tile->GetOwner()->SetLocalRotation(90);	
+		break;
+	case 'l':
+		tile->SetSides(std::array<bool, 4>{ true, false, false, false });	
+		tile->SetTexture(m_TileThree.get());	
+		tile->GetOwner()->SetLocalRotation(180);	
+		break;
+	case 'm':
+		tile->SetSides(std::array<bool, 4>{ false, true, false, false });
+		tile->SetTexture(m_TileThree.get());	
+		tile->GetOwner()->SetLocalRotation(270);	
+		break;
+	case 'n':
+		tile->SetSides(std::array<bool, 4>{ false, false, true, false });	
+		tile->SetTexture(m_TileThree.get());	
+		tile->GetOwner()->SetLocalRotation(0);		
+		break;
+	case 'o':
+		tile->SetSides(std::array<bool, 4>{ false, false, false, true });	
+		tile->SetTexture(m_TileThree.get());	
+		tile->GetOwner()->SetLocalRotation(90);
+		break;
+	case 'p':
+		tile->SetSides(std::array<bool, 4>{ false, false, false, false });	
+		tile->SetTexture(m_TileFour.get());	
+		tile->GetOwner()->SetLocalRotation(0);		
+		break;
+	default:
+		throw std::runtime_error("TileManagerComponent::CreatTile() - invalid character");
+	};
 }
 
 void TileManagerComponent::CreateMiddleTile()
