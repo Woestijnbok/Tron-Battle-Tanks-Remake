@@ -29,7 +29,8 @@ public:
 	int GetTotalOpenSides() const;
 	Minigin::Texture* GetTexture() const;
 	void SetSide(Side side, bool pass);
-	void SetTexture(Minigin::Texture* texture);
+	void SetSides(const std::array<bool, 4>& sides);
+	void SetTexture(Minigin::Texture* texture);	
 
 	virtual void Render() const override;
 

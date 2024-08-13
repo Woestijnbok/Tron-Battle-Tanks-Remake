@@ -150,6 +150,11 @@ bool TankManagerComponent::CanMove(TankComponent* tank, MoveCommand::Direction d
 	return m_TileManager->CanMove(tank, direction);
 }
 
+bool TankManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Direction direction) const
+{
+	return m_TileManager->CanMove(position, direction);
+}
+
 void TankManagerComponent::AddBullet(TankComponent* tank) const
 {
 	m_BulletManager->AddBullet(tank);

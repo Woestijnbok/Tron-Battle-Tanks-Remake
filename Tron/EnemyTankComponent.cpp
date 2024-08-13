@@ -94,43 +94,57 @@ bool EnemyTankComponent::CheckPlayers()
 {
 	bool foundPlayer{ false };
 
-	const glm::ivec2 position{ GetOwner()->GetLocalTransform().GetPosition() };
+	const glm::ivec2 tankPosition{ GetOwner()->GetLocalTransform().GetPosition() };
 
 	for (PlayerTankComponent* player : GetManager()->GetPlayerTanks())
 	{
 		const glm::ivec2 playerPosition{ player->GetOwner()->GetLocalTransform().GetPosition() };
 
-		if ((position.x == playerPosition.x) and (position.x % 50 == 0))
+		if ((tankPosition.x == playerPosition.x) and (tankPosition.x % 50 == 0))
 		{
 			// Above player
-			if (position.y > playerPosition.y)
+			if (tankPosition.y > playerPosition.y)
 			{
-				SetMoveDirection(MoveCommand::Direction::Down);
+				if (CanSeePlayer(tankPosition, playerPosition, MoveCommand::Direction::Down))
+				{
+					SetMoveDirection(MoveCommand::Direction::Down);		
+					foundPlayer = true;	
+					break;	
+				}
 			}
 			// Below player
 			else
 			{
-				SetMoveDirection(MoveCommand::Direction::Up);
-			}
-
-			foundPlayer = true;
-			break;
+				if (CanSeePlayer(tankPosition, playerPosition, MoveCommand::Direction::Up))		
+				{
+					SetMoveDirection(MoveCommand::Direction::Up);		
+					foundPlayer = true;	
+					break;
+				}
+			}	
 		}
-		else if ((position.y == playerPosition.y) and (position.y % 50 == 0))
+		else if ((tankPosition.y == playerPosition.y) and (tankPosition.y % 50 == 0))	
 		{
-			// Right of player
-			if (position.x > playerPosition.x)
+			// Right of player	
+			if (tankPosition.x > playerPosition.x)	
 			{
-				SetMoveDirection(MoveCommand::Direction::Left);
+				if (CanSeePlayer(tankPosition, playerPosition, MoveCommand::Direction::Left))			
+				{
+					SetMoveDirection(MoveCommand::Direction::Left);		
+					foundPlayer = true;	
+					break;
+				}
 			}
 			// Left of player
 			else
 			{
-				SetMoveDirection(MoveCommand::Direction::Right);
+				if (CanSeePlayer(tankPosition, playerPosition, MoveCommand::Direction::Right))		
+				{
+					SetMoveDirection(MoveCommand::Direction::Right);	
+					foundPlayer = true;
+					break;
+				}
 			}
-
-			foundPlayer = true;
-			break;
 		}
 	}
 
@@ -165,4 +179,67 @@ void EnemyTankComponent::SetRandomDirection()
 	}
 
 	SetMoveDirection(direction);
+}
+
+bool EnemyTankComponent::CanSeePlayer(const glm::ivec2& tankPosition, const glm::ivec2& playerPosition, MoveCommand::Direction direction) const
+{
+	bool canSee{ false };	
+	int numberOfTilesToCheck{};
+
+	switch (direction)
+	{
+	case MoveCommand::Direction::Up:
+	case MoveCommand::Direction::Down:	
+		numberOfTilesToCheck = std::abs(playerPosition.y - tankPosition.y) / GetManager()->GetTileSize();
+		break;
+	case MoveCommand::Direction::Right:	
+	case MoveCommand::Direction::Left:	
+		numberOfTilesToCheck = std::abs(playerPosition.x - tankPosition.x) / GetManager()->GetTileSize();
+		break;
+	default:
+		return canSee;
+		break;
+	}
+
+	if (numberOfTilesToCheck == 0)	
+	{	
+		canSee = true;		
+	}
+	else
+	{
+		int tilesChecked{ 0 };
+		do
+		{
+			glm::ivec2 positionToCheck{ tankPosition.x, tankPosition.y };		
+
+			switch (direction)
+			{
+			case MoveCommand::Direction::Up:
+				positionToCheck.y += (GetManager()->GetTileSize() * (tilesChecked + 1));
+				if (positionToCheck == playerPosition) --positionToCheck.y;
+				break;
+			case MoveCommand::Direction::Right:
+				positionToCheck.x += (GetManager()->GetTileSize() * (tilesChecked + 1));
+				if (positionToCheck == playerPosition) --positionToCheck.x;
+				break;
+			case MoveCommand::Direction::Down:
+				positionToCheck.y -= (GetManager()->GetTileSize() * (tilesChecked + 1));
+				if (positionToCheck == playerPosition) ++positionToCheck.y;
+				break;
+			case MoveCommand::Direction::Left:
+				positionToCheck.x -= (GetManager()->GetTileSize() * (tilesChecked + 1));
+				if (positionToCheck == playerPosition) ++positionToCheck.x;
+				break;
+			default:
+				break;
+			}
+
+			canSee = GetManager()->CanMove(positionToCheck, direction);	
+
+			++tilesChecked;
+		} 
+		while (tilesChecked < numberOfTilesToCheck and canSee);
+	}
+
+	return canSee;
 }

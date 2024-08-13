@@ -33,7 +33,8 @@ private:
 	Minigin::Subject<int> m_OnDie;
 	int m_Lives;
 
-	void SetRandomDirection();	
+	void SetRandomDirection();
+	bool CanSeePlayer(const glm::ivec2& tankPosition, const glm::ivec2& playerPosition, MoveCommand::Direction direction) const;
 
 	static int m_Counter;
 };

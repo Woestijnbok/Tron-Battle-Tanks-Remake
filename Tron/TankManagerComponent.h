@@ -41,6 +41,7 @@ public:
 	void RemoveTank(TankComponent* tank);
 	glm::ivec2 GetRandomPosition() const;
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
+	bool CanMove(const glm::ivec2& position, MoveCommand::Direction direction) const;
 	void AddBullet(TankComponent* tank) const;
 	int GetTileSize() const;
 	Minigin::Subject<>& OnGameOver();

@@ -31,6 +31,7 @@ public:
 	void SetManagers(BulletManagerComponent* bulletManager, TankManagerComponent* tankManager);
 	glm::ivec2 GetRandomPosition() const;	
 	bool CanMove(TankComponent* tank, MoveCommand::Direction direction) const;
+	bool CanMove(const glm::ivec2& position, MoveCommand::Direction direction) const;
 	void CheckCollision(BulletComponent* bullet) const;
 	int GetTileSize() const;
 	int GetTileArraySize() const;

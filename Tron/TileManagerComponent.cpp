@@ -91,64 +91,71 @@ bool TileManagerComponent::CanMove(TankComponent* tank, MoveCommand::Direction d
 		return canMove;
 	}
 
-	const glm::ivec2 tankPosition{ tank->GetOwner()->GetLocalTransform().GetPosition() };
+	canMove = CanMove(tank->GetOwner()->GetLocalTransform().GetPosition(), direction);		
 
-	const int row{ tankPosition.y / m_TileSize };	
-	const int collumn{ tankPosition.x / m_TileSize };	
+	return canMove;
+}
+
+bool TileManagerComponent::CanMove(const glm::ivec2& position, MoveCommand::Direction direction) const
+{
+	bool canMove{ false };
+
+	const int row{ position.y / m_TileSize };
+	const int collumn{ position.x / m_TileSize };
 
 	switch (direction)
 	{
 	case MoveCommand::Direction::Up:
-		if (tankPosition.x % m_TileSize == 0)
+		if (position.x % m_TileSize == 0)	
 		{
 			// cross road
-			if (tankPosition.y % m_TileSize == 0)
+			if (position.y % m_TileSize == 0)	
 			{
 				// not top edge
 				if (row < static_cast<int>(m_Tiles.size()))
 				{
 					// check if at right edge
-					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);		
-					else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);		
+					if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);
+					else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);
 				}
 			}
 			// between two
 			else
 			{
 				// check if at right edge
-				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);		
-				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);	
+				if (collumn == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Left);
+				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Left);
 			}
 		}
 		break;
 	case MoveCommand::Direction::Right:
-		if (tankPosition.y % m_TileSize == 0)
+		if (position.y % m_TileSize == 0)
 		{
 			// cross road
-			if (tankPosition.x % m_TileSize == 0)
+			if (position.x % m_TileSize == 0)
 			{
 				// not right edge
 				if (collumn < static_cast<int>(m_Tiles.size()))
 				{
 					// check if at top edge
-					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);	
-					else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);	
+					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);
+					else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);
 				}
 			}
 			// between two
 			else
 			{
 				// check if at top edge
-				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);	
-				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);	
+				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);
+				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);
 			}
 		}
 		break;
 	case MoveCommand::Direction::Down:
-		if (tankPosition.x % m_TileSize == 0)
+		if (position.x % m_TileSize == 0)
 		{
 			// cross road
-			if (tankPosition.y % m_TileSize == 0)
+			if (position.y % m_TileSize == 0)	
 			{
 				// not bottom edge
 				if (row > 0)
@@ -168,25 +175,25 @@ bool TileManagerComponent::CanMove(TankComponent* tank, MoveCommand::Direction d
 		}
 		break;
 	case MoveCommand::Direction::Left:
-		if (tankPosition.y % m_TileSize == 0)
+		if (position.y % m_TileSize == 0)	
 		{
 			// cross road	
-			if (tankPosition.x % m_TileSize == 0)	
+			if (position.x % m_TileSize == 0)	
 			{
 				// not left edge
 				if (collumn > 0)
 				{
 					// check if at top edge
-					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1)->CanPass(TileComponent::Side::Bottom);	
-					else canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Bottom);	
+					if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn - 1)->CanPass(TileComponent::Side::Bottom);
+					else canMove = m_Tiles.at(row).at(collumn - 1)->CanPass(TileComponent::Side::Bottom);
 				}
 			}
 			// between two
 			else
 			{
 				// check if at top edge
-				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);	
-				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);	
+				if (row == static_cast<int>(m_Tiles.size())) canMove = m_Tiles.at(row - 1).at(collumn)->CanPass(TileComponent::Side::Bottom);
+				else canMove = m_Tiles.at(row).at(collumn)->CanPass(TileComponent::Side::Bottom);
 			}
 		}
 		break;
@@ -338,6 +345,31 @@ void TileManagerComponent::CreateTiles()
 			m_Tiles.at(row).at(collumn) = tile;	
 		}
 	}
+
+	TileComponent* tileLeft{ m_Tiles.at(1).at(1) };	
+	tileLeft->SetSide(TileComponent::Side::Right, false);	
+	tileLeft->SetTexture(m_TileOne.get());	
+	tileLeft->GetOwner()->SetLocalRotation(GetRotation(tileLeft));
+
+	TileComponent* tileUp{ m_Tiles.at(2).at(2) };	
+	tileUp->SetSide(TileComponent::Side::Bottom, false);			
+	tileUp->SetTexture(m_TileOne.get());
+	tileUp->GetOwner()->SetLocalRotation(GetRotation(tileUp));
+
+	TileComponent* tileRight{ m_Tiles.at(1).at(3) };	
+	tileRight->SetSide(TileComponent::Side::Left, false);				
+	tileRight->SetTexture(m_TileOne.get());		
+	tileRight->GetOwner()->SetLocalRotation(GetRotation(tileRight));
+
+	TileComponent* tileDown{ m_Tiles.at(0).at(2) };
+	tileDown->SetSide(TileComponent::Side::Top, false);	
+	tileDown->SetTexture(m_TileOne.get());	
+	tileDown->GetOwner()->SetLocalRotation(GetRotation(tileDown));
+
+	TileComponent* tileMiddle{ m_Tiles.at(1).at(2) };			
+	tileMiddle->SetSides(std::array<bool, 4>{ false, false, false, false });	
+	tileMiddle->SetTexture(m_TileFour.get());			
+	tileMiddle->GetOwner()->SetLocalRotation(GetRotation(tileMiddle));		
 }
 
 void TileManagerComponent::CreateMiddleTile()

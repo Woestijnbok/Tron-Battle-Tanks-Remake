@@ -40,6 +40,11 @@ void TileComponent::SetSide(Side side, bool pass)
 	m_Sides.at(static_cast<int>(side)) = pass;
 }
 
+void TileComponent::SetSides(const std::array<bool, 4>& sides)
+{
+	m_Sides = sides;
+}
+
 void TileComponent::SetTexture(Minigin::Texture* texture)
 {
 	m_Texture = texture;
