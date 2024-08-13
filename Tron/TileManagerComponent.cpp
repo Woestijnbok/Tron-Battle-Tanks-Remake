@@ -363,7 +363,7 @@ void TileManagerComponent::CreateTiles(const std::filesystem::path& path)
 
 			if (file.is_open() and file.good())	
 			{	
-				int lineCounter{};
+				size_t lineCounter{};	
 				std::string line{};
 				const std::regex pattern{ R"((\w),\s(\w),\s(\w),\s(\w),\s(\w),\s(\w),\s(\w),\s(\w))"  };		
 
@@ -376,7 +376,7 @@ void TileManagerComponent::CreateTiles(const std::filesystem::path& path)
 					{
 						for (size_t i{}; i < m_Tiles.size(); ++i)
 						{
-							CreateTile(8 - lineCounter, int(i), match[i + 1].str().at(0));
+							CreateTile(int(8 - lineCounter), int(i), match[i + 1].str().at(0));
 						}
 					}
 					else throw std::runtime_error(std::format("TileManagerComponent::CreatTiles() - {} failed to read.", fullPath.generic_string().c_str()));

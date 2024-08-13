@@ -346,7 +346,7 @@ void LoadVersusLevel()
 
 	// Managers
 	GameObject* manager{ scene->CreateGameObject("Manager") };
-	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level 1.csv");
+	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level Versus.csv");
 	TankManagerComponent* tankManager = manager->CreateComponent<TankManagerComponent>();
 	BulletManagerComponent* bulletManager = manager->CreateComponent<BulletManagerComponent>();
 	manager->SetLocalPosition(glm::ivec2{ 55, 55 });
