@@ -104,7 +104,7 @@ void LoadLevelOne()
 	// Enemies
 	std::shared_ptr<Texture> blueTankTexture{ ResourceManager::Instance()->LoadTexture("Blue Tank.png") };
 	BlueTankComponent* enemyOne{ tankManager->CreateBlueTank(blueTankTexture) };
-	//BlueTankComponent* enemyTwo{ tankManager->CreateBlueTank(blueTankTexture) };		
+	BlueTankComponent* enemyTwo{ tankManager->CreateBlueTank(blueTankTexture) };		
 
 	// Scoreboard
 	std::shared_ptr<Minigin::Font> scoreFont{ Minigin::ResourceManager::Instance()->LoadFont("Arcade.otf", 30) };
@@ -116,7 +116,7 @@ void LoadLevelOne()
 	// Hooking scoreboard up to player tank
 	playerTank->OnHit().AddObserver(std::bind(&ScoreboardComponent::UpdateLives, scoreboard, std::placeholders::_1));	
 	enemyOne->OnDie().AddObserver(std::bind(&ScoreboardComponent::UpdateScore, scoreboard, std::placeholders::_1));
-	//enemyTwo->OnDie().AddObserver(std::bind(&ScoreboardComponent::UpdateScore, scoreboard, std::placeholders::_1));
+	enemyTwo->OnDie().AddObserver(std::bind(&ScoreboardComponent::UpdateScore, scoreboard, std::placeholders::_1));
 
 	// Input for player tank
 	CreateKeyboardAndMouseInput(playerTank);
@@ -126,7 +126,7 @@ void LoadLevelOne()
 	playerTank->OnFire().AddObserver(&PlayFireSoundEffect);	
 	playerTank->OnHit().AddObserver(&PlayHitSoundEffect);	
 	enemyOne->OnFire().AddObserver(&PlayFireSoundEffect);	
-	//enemyTwo->OnFire().AddObserver(&PlayFireSoundEffect);	
+	enemyTwo->OnFire().AddObserver(&PlayFireSoundEffect);	
 	PlayGameMusic();	
 }
 
@@ -140,7 +140,7 @@ void LoadLevelTwo()
 
 	// Managers
 	GameObject* manager{ scene->CreateGameObject("Manager") };
-	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level 1.csv");
+	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level 2.csv");
 	TankManagerComponent* tankManager = manager->CreateComponent<TankManagerComponent>();
 	BulletManagerComponent* bulletManager = manager->CreateComponent<BulletManagerComponent>();
 	manager->SetLocalPosition(glm::ivec2{ 55, 55 });
@@ -207,7 +207,7 @@ void LoadLevelThree()
 
 	// Managers
 	GameObject* manager{ scene->CreateGameObject("Manager") };
-	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level 1.csv");
+	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level 3.csv");
 	TankManagerComponent* tankManager = manager->CreateComponent<TankManagerComponent>();
 	BulletManagerComponent* bulletManager = manager->CreateComponent<BulletManagerComponent>();
 	manager->SetLocalPosition(glm::ivec2{ 55, 55 });
@@ -276,7 +276,7 @@ void LoadCoopLevel()
 
 	// Managers
 	GameObject* manager{ scene->CreateGameObject("Manager") };
-	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level 1.csv");
+	TileManagerComponent* tileManager = manager->CreateComponent<TileManagerComponent>(50, "Levels/Level Coop.csv");
 	TankManagerComponent* tankManager = manager->CreateComponent<TankManagerComponent>();
 	BulletManagerComponent* bulletManager = manager->CreateComponent<BulletManagerComponent>();	
 	manager->SetLocalPosition(glm::ivec2{ 55, 55 });	
