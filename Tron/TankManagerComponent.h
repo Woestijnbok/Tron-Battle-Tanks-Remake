@@ -2,11 +2,13 @@
 
 #include <vector>
 #include <vec2.hpp>
+#include <memory>
 
 #include "Component.h"
 #include "MoveCommand.h"
 #include "Texture.h"
 #include "Subject.h"
+#include "Texture.h"
 
 #include <memory>
 
@@ -30,7 +32,7 @@ public:
 	TankManagerComponent& operator= (const TankManagerComponent&&) noexcept = delete;
 
 	void SetManagers(TileManagerComponent* tileManager, BulletManagerComponent* bulletManager);	
-	PlayerTankComponent* CreatePlayerTank(Minigin::Texture* tankTexture, Minigin::Texture* barrelTexture);
+	PlayerTankComponent* CreatePlayerTank(const std::shared_ptr<Minigin::Texture>& tankTexture, const std::shared_ptr<Minigin::Texture>& barrelTexture, int lives);
 	BlueTankComponent* CreateBlueTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
 	PurpleTankComponent* CreatePurpleTank(const std::shared_ptr<Minigin::Texture>& tankTexture);
 	const std::vector<TankComponent*>& GetTanks() const;

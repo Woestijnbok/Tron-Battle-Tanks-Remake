@@ -5,7 +5,7 @@
 
 class PlayerTankComponent;
 
-class FireCommand : public Minigin::GameObjectCommand
+class FireCommand final : public Minigin::GameObjectCommand
 {
 public:
 	explicit FireCommand(PlayerTankComponent* tank);

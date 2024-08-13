@@ -55,6 +55,7 @@ public:
 	void StopMusic();
 	void StopAll();
 	void StopRunning();
+	void Mute(bool mute);
 
 
 private:
@@ -131,32 +132,24 @@ void AudioManager::Impl::Update()
 
 void AudioManager::Impl::PlayMusic(const std::filesystem::path& path)	
 {
-	if (!m_Running) return;
-
 	std::unique_lock lock{ m_Mutex };
 	m_Requests.push(Request{ Action::Play, Type::Music, path });			
 }
 
 void AudioManager::Impl::PlayEffect(const std::filesystem::path& path)
 {
-	if (!m_Running) return;
-
 	std::unique_lock lock{ m_Mutex };	
 	m_Requests.push(Request{ Action::Play, Type::Effect, path });		
 }
 
 void AudioManager::Impl::StopMusic()
 {
-	if (!m_Running) return;
-
 	std::unique_lock lock{ m_Mutex };	
 	m_Requests.push(Request{ Action::Stop, Type::Music, "" });	
 }
 
 void AudioManager::Impl::StopAll()
 {
-	if (!m_Running) return;
-
 	std::unique_lock lock{ m_Mutex };	
 	m_Requests.push(Request{ Action::Stop, Type::All, "" });	
 }
@@ -164,6 +157,20 @@ void AudioManager::Impl::StopAll()
 void AudioManager::Impl::StopRunning()
 {
 	if(m_Running) m_Running = false;
+}
+
+void AudioManager::Impl::Mute(bool mute)
+{
+	if (mute)
+	{
+		Mix_Volume(-1, 0);
+		Mix_VolumeMusic(0);
+	}
+	else
+	{
+		Mix_Volume(-1, MIX_MAX_VOLUME);	
+		Mix_VolumeMusic(MIX_MAX_VOLUME);		
+	}
 }
 
 void AudioManager::Impl::ProcessRequest(const Request& request)
@@ -229,7 +236,8 @@ void AudioManager::Impl::StartPlayingEffect(const std::filesystem::path& path)
 
 	if (it == m_EffectChannels.end())	
 	{
-		throw std::runtime_error("AudioManager::Impl::StartPlayingEffect() - Failed find open sound channel.");
+		//throw std::runtime_error("AudioManager::Impl::StartPlayingEffect() - Failed find open sound channel.");
+		return;
 	}
 
 	*it = Mix_LoadWAV(path.generic_string().c_str());
@@ -331,4 +339,9 @@ void AudioManager::StopAll()
 void AudioManager::StopRunning()
 {
 	m_Pimpl->StopRunning();	
+}
+
+void Minigin::AudioManager::Mute(bool mute)
+{
+	m_Pimpl->Mute(mute);
 }

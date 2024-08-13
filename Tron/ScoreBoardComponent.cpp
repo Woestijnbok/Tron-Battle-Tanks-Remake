@@ -7,10 +7,11 @@ const int ScoreboardComponent::m_LivesOffset{ 2 };
 const int ScoreboardComponent::m_ScoreLivesOffset{ 2 };	
 int ScoreboardComponent::m_Score{ 0 };
 
-ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, int score, int lives, bool withScore) :
+ScoreboardComponent::ScoreboardComponent(Minigin::GameObject* owner, const std::shared_ptr<Minigin::Font>& scoreFont, const std::shared_ptr<Minigin::Texture>& livesTexture, int score, int lives, bool withScore) :
 	Component{ owner },
-	m_ScoreText{ std::make_unique<Minigin::Text>(std::to_string(score), Minigin::ResourceManager::Instance()->LoadFont("Arcade.otf", 30)) },	
-	m_LiveTexture{ Minigin::ResourceManager::Instance()->LoadTexture("Hearth.png") },
+	m_ScoreFont{ scoreFont },
+	m_ScoreText{ std::make_unique<Minigin::Text>(std::to_string(score), m_ScoreFont) },	
+	m_LiveTexture{ livesTexture },	
 	m_Lives{ lives },
 	m_WithScore{ withScore }
 {

@@ -60,6 +60,7 @@ namespace Minigin
 		void StopMusic();
 		void StopAll();
 		void StopRunning();
+		void Mute(bool mute);
 		
 
 	private:

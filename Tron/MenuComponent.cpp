@@ -8,18 +8,17 @@
 
 using namespace Minigin;
 
-const std::string MenuComponent::m_DefaultPlayerName{ "Name only characters..." };
-const int MenuComponent::m_NameBarWidth{ 200 };
-const int MenuComponent::m_NameBarOffset{ 100 };
-
 MenuComponent::MenuComponent(Minigin::GameObject* owner, const glm::ivec2& buttonSize, int spacing) :
 	Component{ owner },
     m_ButtonSize{ float(buttonSize.x), float(buttonSize.y) },   
     m_Spacing{ spacing },
     m_WindowSize{ static_cast<float>(Engine::GetWindowSize().x), static_cast<float>(Engine::GetWindowSize().y) },
     m_MenuStartPosition{ CalculateMenuStartPosition() },
-    m_NameStartPosition{ CalculateNameStartPosition() },
-    m_PlayerName{ m_DefaultPlayerName } 
+    m_DefaultPlayerName{ "Name only characters..." },
+    m_PlayerName{ m_DefaultPlayerName },
+    m_NameBarWidth{ 200 },
+    m_NameBarOffset{ 100 },
+    m_NameStartPosition{ CalculateNameStartPosition() }
 {   
    
 }
@@ -56,15 +55,10 @@ void MenuComponent::Render() const
 {
     ImGui::SetNextWindowPos(ImVec2{ 0.0f, 0.0f });  
     ImGui::SetNextWindowSize(m_WindowSize); 
-    ImGui::Begin("Invisible Window", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoMove); 
+    ImGui::Begin("Invisible Window", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoMove);    
 
-    const std::string oldPlayerName{ m_PlayerName };    
-
-    // Create an InputText box
-    // The second parameter is a pointer to the buffer where the text is stored
-    const ImVec2 windowCenter{ m_WindowSize.x * 0.5f, m_WindowSize.y * 0.5f };  
-    ImGui::SetCursorPos(ImVec2{ windowCenter.x - (m_NameBarWidth * 0.5f), m_NameBarOffset });    
-    ImGui::SetNextItemWidth(m_NameBarWidth);
+    ImGui::SetNextItemWidth(static_cast<float>(m_NameBarWidth));
+    ImGui::SetCursorPos(m_NameStartPosition);
     ImGui::InputText("##PlayerName", const_cast<char*>(m_PlayerName.data()), m_PlayerName.size() + 1, ImGuiInputTextFlags_::ImGuiInputTextFlags_AutoSelectAll);
 
     ImGui::SetCursorPos(m_MenuStartPosition);   
@@ -104,10 +98,14 @@ ImVec2 MenuComponent::CalculateMenuStartPosition() const
 
 ImVec2 MenuComponent::CalculateNameStartPosition()
 {
-    const ImVec2 windowCenter{ m_WindowSize.x * 0.5f, m_WindowSize.y * 0.5f };
-    windowCenter;
+    ImVec2 nameStart{};
 
-    return ImVec2{};
+    const ImVec2 windowCenter{ m_WindowSize.x * 0.5f, m_WindowSize.y * 0.5f };
+    
+    nameStart.x = windowCenter.x - (m_NameBarWidth * 0.5f);
+    nameStart.y = static_cast<float>(m_NameBarOffset);
+
+    return nameStart;
 }
 
 void MenuComponent::SoloMenuClicked() const

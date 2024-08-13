@@ -1,14 +1,16 @@
 #pragma once
 
 #include <vec2.hpp>
+#include "memory"
 
 #include "TankComponent.h"
 #include "Subject.h"
+#include "Texture.h"
 
 class PlayerTankComponent final : public TankComponent
 {
 public:
-	explicit PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, Minigin::Texture* tankTexture, Minigin::Texture* barrelTexture);
+	explicit PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, const std::shared_ptr<Minigin::Texture>& tankTexture, const std::shared_ptr<Minigin::Texture>& barrelTexture, int lives);
 	virtual ~PlayerTankComponent();
 
 	PlayerTankComponent(const PlayerTankComponent&) = delete;
@@ -27,10 +29,11 @@ public:
 	static int SharedLives();	
 	static int Counter();
 	static void SetLivesShared(bool shared);
+	static int SetSharedLives(int lives);
 
 private:
-	const std::unique_ptr<const Minigin::Texture> m_TankTexture;	
-	const std::unique_ptr<const Minigin::Texture> m_BarrelTexture;
+	const std::shared_ptr<const Minigin::Texture> m_TankTexture;	
+	const std::shared_ptr<const Minigin::Texture> m_BarrelTexture;
 	std::array<const glm::ivec2, 4> m_BarrelOffsets;
 	const glm::ivec2 m_BarrelRotationPoint;	
 	int m_BarrelRotation;

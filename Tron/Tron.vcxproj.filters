@@ -64,6 +64,18 @@
     <Filter Include="Components\HighScores">
       <UniqueIdentifier>{9758b5bd-06d8-4b05-807a-e268964f77b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Helpers\Loaders">
+      <UniqueIdentifier>{c63514a6-d58f-4768-a2da-161b6b74cba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Helpers\Music">
+      <UniqueIdentifier>{33d9e6cd-328d-4773-9ad3-58a04f6cb9c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Mute">
+      <UniqueIdentifier>{1bfcf284-f570-4441-a4ef-44404d612841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Commands\Skip">
+      <UniqueIdentifier>{65c23e11-c3ed-4d19-9bea-a65f520e1f18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -122,7 +134,16 @@
       <Filter>Components\HighScores</Filter>
     </ClCompile>
     <ClCompile Include="Loaders.cpp">
-      <Filter>Helpers</Filter>
+      <Filter>Helpers\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioHelpers.cpp">
+      <Filter>Helpers\Music</Filter>
+    </ClCompile>
+    <ClCompile Include="MuteCommand.cpp">
+      <Filter>Commands\Mute</Filter>
+    </ClCompile>
+    <ClCompile Include="SkipCommand.cpp">
+      <Filter>Commands\Skip</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,7 +202,16 @@
       <Filter>Components\HighScores</Filter>
     </ClInclude>
     <ClInclude Include="Loaders.h">
-      <Filter>Helpers</Filter>
+      <Filter>Helpers\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioHelpers.h">
+      <Filter>Helpers\Music</Filter>
+    </ClInclude>
+    <ClInclude Include="MuteCommand.h">
+      <Filter>Commands\Mute</Filter>
+    </ClInclude>
+    <ClInclude Include="SkipCommand.h">
+      <Filter>Commands\Skip</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

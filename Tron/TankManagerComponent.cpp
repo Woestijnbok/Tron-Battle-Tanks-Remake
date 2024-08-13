@@ -49,13 +49,13 @@ void TankManagerComponent::SetManagers(TileManagerComponent* tileManager, Bullet
 	m_BulletManager = bulletManager;
 }
 
-PlayerTankComponent* TankManagerComponent::CreatePlayerTank(Minigin::Texture* tankTexture, Minigin::Texture* barrelTexture)
+PlayerTankComponent* TankManagerComponent::CreatePlayerTank(const std::shared_ptr<Minigin::Texture>& tankTexture, const std::shared_ptr<Minigin::Texture>& barrelTexture, int lives)
 {
 	PlayerTankComponent* playerTank{};
 
 	Minigin::GameObject* object{ GetOwner()->GetScene()->CreateGameObject(std::format("Tank {}", m_Tanks.size())) };
 	object->SetParent(GetOwner());	
-	playerTank = object->CreateComponent<PlayerTankComponent>(this, tankTexture, barrelTexture);
+	playerTank = object->CreateComponent<PlayerTankComponent>(this, tankTexture, barrelTexture, lives);
 
 	m_Tanks.push_back(playerTank);
 
@@ -135,7 +135,14 @@ void TankManagerComponent::RemoveTank(TankComponent* tank)
 
 glm::ivec2 TankManagerComponent::GetRandomPosition() const
 {
-	return m_TileManager->GetRandomPosition();
+	glm::ivec2 position{ m_TileManager->GetRandomPosition() };
+
+	while (std::ranges::any_of(m_Tanks, [&position](TankComponent* tank) -> bool { return tank->GetOwner()->GetLocalTransform().GetPosition() == position; }))	
+	{
+		position = m_TileManager->GetRandomPosition();
+	}
+
+	return position;
 }
 
 bool TankManagerComponent::CanMove(TankComponent* tank, MoveCommand::Direction direction) const

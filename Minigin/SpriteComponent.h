@@ -11,7 +11,7 @@ namespace Minigin
 {
 	class Sprite;
 
-	class SpriteComponent : public Component
+	class SpriteComponent final : public Component
 	{
 	public:
 		explicit SpriteComponent(GameObject* owner);	

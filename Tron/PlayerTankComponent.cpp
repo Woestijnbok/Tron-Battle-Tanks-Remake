@@ -8,17 +8,16 @@ int PlayerTankComponent::m_Counter{ 0 };
 int PlayerTankComponent::m_SharedLives{ 0 };
 bool PlayerTankComponent::m_LivesShared{ false };
 
-PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, Minigin::Texture* tankTexture, Minigin::Texture* barrelTexture) :
+PlayerTankComponent::PlayerTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, const std::shared_ptr<Minigin::Texture>& tankTexture, const std::shared_ptr<Minigin::Texture>& barrelTexture, int lives) :
 	TankComponent{ owner, manager, 100.0f, 20 },
 	m_TankTexture{ tankTexture },		
 	m_BarrelTexture{ barrelTexture },	
 	m_BarrelOffsets{ glm::ivec2{ 0, 4 }, glm::ivec2{ -4, 8 }, glm::ivec2{ 0, 12 }, glm::ivec2{ 4, 8 } },	
 	m_BarrelRotationPoint{ 16, 8 },
 	m_BarrelRotation{},
-	m_Lives{ 3 }
+	m_Lives{ lives }	
 {
 	++m_Counter;
-	if (m_SharedLives != 3) m_SharedLives = 3;
 }
 
 PlayerTankComponent::~PlayerTankComponent()
@@ -126,6 +125,11 @@ int PlayerTankComponent::Counter()
 void PlayerTankComponent::SetLivesShared(bool shared)
 {
 	m_LivesShared = shared;
+}
+
+int PlayerTankComponent::SetSharedLives(int lives)
+{
+	return m_SharedLives = lives;
 }
 
 void PlayerTankComponent::Die()

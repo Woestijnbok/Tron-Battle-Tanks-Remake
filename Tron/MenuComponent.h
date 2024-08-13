@@ -29,8 +29,11 @@ private:
 	const int m_Spacing;
 	const ImVec2 m_WindowSize;	
 	const ImVec2 m_MenuStartPosition;
+	const std::string m_DefaultPlayerName;
+	std::string m_PlayerName;
+	const int m_NameBarWidth;
+	const int m_NameBarOffset;
 	const ImVec2 m_NameStartPosition;
-	std::string m_PlayerName;	
 
 	ImVec2 CalculateMenuStartPosition() const;
 	ImVec2 CalculateNameStartPosition();
@@ -39,7 +42,4 @@ private:
 	void VersusMenuClicked() const;
 	void ScoreboardMenuClicked() const;
 
-	static const std::string m_DefaultPlayerName;
-	static const int m_NameBarWidth;
-	static const int m_NameBarOffset;
 };

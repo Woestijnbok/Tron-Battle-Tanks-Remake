@@ -4,7 +4,7 @@
 
 class PlayerTankComponent;
 
-class PurpleTankComponent : public EnemyTankComponent
+class PurpleTankComponent final : public EnemyTankComponent
 {
 public:
 	explicit PurpleTankComponent(Minigin::GameObject* owner, TankManagerComponent* manager, const std::shared_ptr<Minigin::Texture>& tankTexture);

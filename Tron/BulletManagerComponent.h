@@ -12,7 +12,7 @@ class TileManagerComponent;
 class TankComponent;
 class TankManagerComponent;
 
-class BulletManagerComponent : public Minigin::Component
+class BulletManagerComponent final : public Minigin::Component
 {
 public:
 	explicit BulletManagerComponent(Minigin::GameObject* owner);

@@ -12,7 +12,7 @@ namespace Minigin
 	};
 
 	// Is really a line segment
-	struct Line
+	struct Line final
 	{
 		glm::ivec2 Start;
 		glm::ivec2 End;

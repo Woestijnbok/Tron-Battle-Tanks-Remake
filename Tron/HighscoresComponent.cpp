@@ -72,7 +72,7 @@ void HighscoresComponent::SaveHighscores()
 	{
 		file << std::endl;	
 
-		int index{};
+		size_t index{};
 		for (const ScoreEntry& scoreEntry : m_ScoreEntries)		
 		{
 			file << scoreEntry.Name << ", " << scoreEntry.Score;		

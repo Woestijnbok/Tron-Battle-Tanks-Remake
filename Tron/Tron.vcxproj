@@ -104,6 +104,12 @@
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -127,6 +133,12 @@
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -146,6 +158,12 @@
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -169,9 +187,16 @@
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AimCommand.cpp" />
+    <ClCompile Include="AudioHelpers.cpp" />
     <ClCompile Include="BlueTankComponent.cpp" />
     <ClCompile Include="BulletComponent.cpp" />
     <ClCompile Include="BulletManagerComponent.cpp" />
@@ -184,9 +209,11 @@
     <ClCompile Include="MenuComponent.cpp" />
     <ClCompile Include="MiddleTileComponent.cpp" />
     <ClCompile Include="MoveCommand.cpp" />
+    <ClCompile Include="MuteCommand.cpp" />
     <ClCompile Include="PlayerTankComponent.cpp" />
     <ClCompile Include="PurpleTankComponent.cpp" />
     <ClCompile Include="ScoreBoardComponent.cpp" />
+    <ClCompile Include="SkipCommand.cpp" />
     <ClCompile Include="TankComponent.cpp" />
     <ClCompile Include="TankManagerComponent.cpp" />
     <ClCompile Include="TileComponent.cpp" />
@@ -194,6 +221,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AimCommand.h" />
+    <ClInclude Include="AudioHelpers.h" />
     <ClInclude Include="BlueTankComponent.h" />
     <ClInclude Include="BulletComponent.h" />
     <ClInclude Include="BulletManagerComponent.h" />
@@ -205,9 +233,11 @@
     <ClInclude Include="MenuComponent.h" />
     <ClInclude Include="MiddleTileComponent.h" />
     <ClInclude Include="MoveCommand.h" />
+    <ClInclude Include="MuteCommand.h" />
     <ClInclude Include="PlayerTankComponent.h" />
     <ClInclude Include="PurpleTankComponent.h" />
     <ClInclude Include="ScoreBoardComponent.h" />
+    <ClInclude Include="SkipCommand.h" />
     <ClInclude Include="TankComponent.h" />
     <ClInclude Include="TankManagerComponent.h" />
     <ClInclude Include="TileComponent.h" />

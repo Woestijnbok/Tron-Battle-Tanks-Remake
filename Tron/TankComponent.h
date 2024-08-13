@@ -1,10 +1,8 @@
 #pragma once
 
-#include <memory>
 #include <array>
 
 #include "Component.h"
-#include "Texture.h"
 #include "MoveCommand.h"
 #include "Subject.h"
 #include "Collision.h"

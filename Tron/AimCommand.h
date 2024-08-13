@@ -6,7 +6,7 @@
 
 class PlayerTankComponent;	
 
-class AimCommand : public Minigin::GameObjectCommand
+class AimCommand final : public Minigin::GameObjectCommand
 {
 public:
 	AimCommand(PlayerTankComponent* tank, bool controller = false);

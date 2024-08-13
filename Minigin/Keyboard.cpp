@@ -10,7 +10,7 @@
 
 using namespace Minigin;
 
-class Keyboard::Impl
+class Keyboard::Impl final
 {
 public:
 	explicit Impl() = default;
@@ -263,6 +263,9 @@ unsigned int Keyboard::Impl::ConvertKey(Keyboard::Key key) const
 		break;
 	case Minigin::Keyboard::Key::Backspace:
 		return static_cast<unsigned int>(SDLK_BACKSPACE);	
+		break;
+	case Minigin::Keyboard::Key::F1:
+		return static_cast<unsigned int>(SDLK_F1);	
 		break;
 	default:
 		return 0U;

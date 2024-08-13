@@ -8,7 +8,7 @@
 
 using namespace Minigin;
 
-class Mouse::Impl
+class Mouse::Impl final
 {
 public:
 	explicit Impl() = default;

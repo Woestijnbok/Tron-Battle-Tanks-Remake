@@ -10,7 +10,7 @@
 
 using namespace Minigin;
 
-class Controller::Impl
+class Controller::Impl final
 {
 public:
 	explicit Impl(unsigned int index);	

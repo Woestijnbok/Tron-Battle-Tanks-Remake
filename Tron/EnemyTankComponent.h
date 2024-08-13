@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
+
 #include "TankComponent.h"
+#include "Texture.h"
 
 class EnemyTankComponent : public TankComponent
 {
