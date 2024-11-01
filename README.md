@@ -5,7 +5,8 @@ I then used Minigin to create the remake, this remake has some new game modes an
 The player and enemies can teleport to a random location when entering the pink diamond in the middle.
 
 <div align="center">
-  <img src="https://github.com/Woestijnbok/Tron-Battle-Tanks-Remake/blob/main/Screenshots/General.jpg" width="auto" height="auto">
+  <img src="https://github.com/Woestijnbok/Tron-Battle-Tanks-Remake/blob/main/Screenshots/Solo.jpg" width="400" height="auto">
+  <img src="https://github.com/Woestijnbok/Tron-Battle-Tanks-Remake/blob/main/Screenshots/Coop.jpg" width="400" height="auto">
 </div>
 
 # Controls
