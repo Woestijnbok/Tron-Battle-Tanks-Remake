@@ -1,10 +1,11 @@
 # Introduction
 
 Welcome to my remake of *Tron Battle Tanks*, this is one of my larger projects that I have done. Mainly because I am using my self made engine "Minigin" which has some neat features.
-I then used Minigin to create the remake, this remake has some new game modes and a scoreboard.
+I then used Minigin to create the remake, this remake has some new game modes and a scoreboard. Bullets in this game can bounce up to a maximum amount of 5.
+The player and enemies can teleport to a random location when entering the pink diamond in the middle.
 
 <div align="center">
-  <img src="https://github.com/Woestijnbok/Metal-Slug-1/blob/main/Screenshots/General.jpg" width="800" height="auto">
+  <img src="https://github.com/Woestijnbok/Tron-Battle-Tanks-Remake/blob/main/Screenshots/General.jpg" width="auto" height="auto">
 </div>
 
 # Controls
@@ -29,18 +30,14 @@ The game can be played with both a controller and keyboard-and-mouse. The co-op 
 - **Co-op**: Here you can play together with a friend against multiple enemies, this has only a single level.
 - **Versus**: Similar to co-op but instead like the name suggests against each other, also only one level.
 
-<div align="center">
-  <img src="https://github.com/Woestijnbok/Metal-Slug-1/blob/main/Screenshots/General.jpg" width="800" height="auto">
-</div>
-
 # Enemies
 
  The game has two main enemies the **Blue Tank** and the **Purple Tank**. The **Blue Tank** will roam around the level an start shooting whilst standing still when he can see a player.
  On the other hand the **Purple Tank** has a bit more health but doesn't shoot instead he tries to collide with the player (moves also faster) like a kamikaze tank.
 
  <div align="center">
-  <img src=https://github.com/Woestijnbok/Metal-Slug-1/blob/main/Screenshots/Rebel%20Soldier.jpg width="400" height="auto">
-  <img src=https://github.com/Woestijnbok/Metal-Slug-1/blob/main/Screenshots/Rebel%20Soldier%20Rifle.jpg width="400" height="auto">
+  <img src=https://github.com/Woestijnbok/Tron-Battle-Tanks-Remake/blob/main/Screenshots/Blue%20Tank.jpg width="400" height="auto">
+  <img src=https://github.com/Woestijnbok/Tron-Battle-Tanks-Remake/blob/main/Screenshots/Purple%20Tank.jpg width="400" height="auto">
 </div>
 
 # Final Thoughts
