@@ -1,9 +1,5 @@
 #pragma once
 
-#if _DEBUG
-#include <vld.h>
-#endif
-
 #include <string>
 #include <functional>
 #include <chrono>

@@ -2,25 +2,25 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\imgui.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_demo.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_demo.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_draw.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_draw.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_tables.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_tables.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_widgets.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_widgets.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\implot - 0.16\include\implot.cpp">
+    <ClCompile Include="..\Libraries\Implot\include\implot.cpp">
       <Filter>implot</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\implot - 0.16\include\implot_items.cpp">
+    <ClCompile Include="..\Libraries\Implot\include\implot_items.cpp">
       <Filter>implot</Filter>
     </ClCompile>
     <ClCompile Include="Component.cpp">
@@ -68,10 +68,10 @@
     <ClCompile Include="Command.cpp">
       <Filter>Input\Command</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\backends\imgui_impl_sdlrenderer2.cpp">
       <Filter>imgui\backends</Filter>
     </ClCompile>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp">
+    <ClCompile Include="..\Libraries\Imgui\include\backends\imgui_impl_sdl2.cpp">
       <Filter>imgui\backends</Filter>
     </ClCompile>
     <ClCompile Include="TimeManager.cpp">
@@ -116,28 +116,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h">
+    <ClInclude Include="..\Libraries\Imgui\include\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui.h">
+    <ClInclude Include="..\Libraries\Imgui\include\imgui.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui_internal.h">
+    <ClInclude Include="..\Libraries\Imgui\include\imgui_internal.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\implot - 0.16\include\implot.h">
+    <ClInclude Include="..\Libraries\Implot\include\implot.h">
       <Filter>implot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h">
+    <ClInclude Include="..\Libraries\Implot\include\implot_internal.h">
       <Filter>implot</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_truetype.h">
+    <ClInclude Include="..\Libraries\Imgui\include\imstb_truetype.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_textedit.h">
+    <ClInclude Include="..\Libraries\Imgui\include\imstb_textedit.h">
       <Filter>imgui</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_rectpack.h">
+    <ClInclude Include="..\Libraries\Imgui\include\imstb_rectpack.h">
       <Filter>imgui</Filter>
     </ClInclude>
     <ClInclude Include="Component.h">
@@ -185,10 +185,10 @@
     <ClInclude Include="Command.h">
       <Filter>Input\Command</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.h">
+    <ClInclude Include="..\Libraries\Imgui\include\backends\imgui_impl_sdl2.h">
       <Filter>imgui\backends</Filter>
     </ClInclude>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.h">
+    <ClInclude Include="..\Libraries\Imgui\include\backends\imgui_impl_sdlrenderer2.h">
       <Filter>imgui\backends</Filter>
     </ClInclude>
     <ClInclude Include="TimeManager.h">

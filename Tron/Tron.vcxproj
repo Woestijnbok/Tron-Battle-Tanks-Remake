@@ -59,32 +59,50 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\SDL.props" />
+    <Import Project="..\GLM, Imgui And Implot.props" />
+    <Import Project="..\VLD.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\SDL.props" />
+    <Import Project="..\GLM, Imgui And Implot.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\SDL.props" />
+    <Import Project="..\GLM, Imgui And Implot.props" />
+    <Import Project="..\VLD.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\SDL.props" />
+    <Import Project="..\GLM, Imgui And Implot.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(ProjectDir)Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Minigin;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(ProjectDir)Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Minigin;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>$(ProjectDir)Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Minigin;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(ProjectDir)Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Minigin;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -92,23 +110,21 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget);C:/Program Files (x86)\Visual Leak Detector\lib\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Image\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Mixer\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL TTF\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,7 +135,6 @@ xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -128,16 +143,15 @@ xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget);C:/Program Files (x86)\Visual Leak Detector\lib\Win32</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Image\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Mixer\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL TTF\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -146,23 +160,21 @@ xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget);C:/Program Files (x86)\Visual Leak Detector\lib\Win64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Image\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Mixer\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL TTF\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -173,7 +185,6 @@ xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
@@ -182,16 +193,15 @@ xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)Minigin\Output\$(Configuration)\$(PlatformTarget);$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget);$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget);C:/Program Files (x86)\Visual Leak Detector\lib\Win64</AdditionalLibraryDirectories>
-      <AdditionalDependencies>Minigin.lib;SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_ttf.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Minigin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>
       </IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL - 2.30.4\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL image - 2.8.2\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL mixer - 2.8.0\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
-xcopy /Y /I "$(SolutionDir)Libraries\SDL ttf - 2.22.0\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
+      <Command>xcopy /Y /I "$(SolutionDir)Libraries\SDL\lib\$(PlatformTarget)\SDL2.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Image\lib\$(PlatformTarget)\SDL2_image.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL Mixer\lib\$(PlatformTarget)\SDL2_mixer.dll" $(OutDir)
+xcopy /Y /I "$(SolutionDir)Libraries\SDL TTF\lib\$(PlatformTarget)\SDL2_ttf.dll" $(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -74,22 +74,30 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Libraries\SDL\include;$(SolutionDir)Libraries\SDL Image\include;$(SolutionDir)Libraries\SDL TTF\include;$(SolutionDir)Libraries\SDL Mixer\include;$(SolutionDir)Libraries\GLM\include;$(SolutionDir)Libraries\Imgui\include;$(SolutionDir)Libraries\Implot\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Libraries\SDL\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Image\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL TTF\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Mixer\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Libraries\SDL\include;$(SolutionDir)Libraries\SDL Image\include;$(SolutionDir)Libraries\SDL TTF\include;$(SolutionDir)Libraries\SDL Mixer\include;$(SolutionDir)Libraries\GLM\include;$(SolutionDir)Libraries\Imgui\include;$(SolutionDir)Libraries\Implot\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Libraries\SDL\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Image\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL TTF\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Mixer\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Libraries\SDL\include;$(SolutionDir)Libraries\SDL Image\include;$(SolutionDir)Libraries\SDL TTF\include;$(SolutionDir)Libraries\SDL Mixer\include;$(SolutionDir)Libraries\GLM\include;$(SolutionDir)Libraries\Imgui\include;$(SolutionDir)Libraries\Implot\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Libraries\SDL\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Image\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL TTF\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Mixer\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <OutDir>$(ProjectDir)\Output\$(Configuration)\$(PlatformTarget)\</OutDir>
     <IntDir>$(ProjectDir)\Intermediate\$(Configuration)\$(PlatformTarget)\</IntDir>
+    <IncludePath>$(SolutionDir)Libraries\SDL\include;$(SolutionDir)Libraries\SDL Image\include;$(SolutionDir)Libraries\SDL TTF\include;$(SolutionDir)Libraries\SDL Mixer\include;$(SolutionDir)Libraries\GLM\include;$(SolutionDir)Libraries\Imgui\include;$(SolutionDir)Libraries\Implot\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)\Libraries\SDL\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Image\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL TTF\lib\$(PlatformTarget);$(SolutionDir)\Libraries\SDL Mixer\lib\$(PlatformTarget);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -98,7 +106,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -109,8 +116,9 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib />
     <Lib>
-      <AdditionalDependencies>vld.lib;xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -120,7 +128,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -131,8 +138,9 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib />
     <Lib>
-      <AdditionalDependencies>vld.lib;xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,7 +152,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -157,8 +164,9 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib />
     <Lib>
-      <AdditionalDependencies>vld.lib;xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -170,7 +178,6 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Libraries\SDL - 2.30.4\include;$(SolutionDir)Libraries\SDL image - 2.8.2\include;$(SolutionDir)Libraries\SDL ttf - 2.22.0\include;$(SolutionDir)Libraries\SDL mixer - 2.8.0\include;$(SolutionDir)\Libraries\glm - 1.0.1\include;$(SolutionDir)Libraries\imgui - 1.90.9\include;$(SolutionDir)Libraries\implot - 0.16\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
@@ -183,21 +190,22 @@
       <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
+    <Lib />
     <Lib>
-      <AdditionalDependencies>vld.lib;xinput.lib</AdditionalDependencies>
+      <AdditionalDependencies>xinput.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imconfig.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imgui_internal.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_rectpack.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_textedit.h" />
-    <ClInclude Include="..\Libraries\imgui - 1.90.9\include\imstb_truetype.h" />
-    <ClInclude Include="..\Libraries\implot - 0.16\include\implot.h" />
-    <ClInclude Include="..\Libraries\implot - 0.16\include\implot_internal.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\backends\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\imconfig.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\imgui.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\imgui_internal.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\imstb_rectpack.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\imstb_textedit.h" />
+    <ClInclude Include="..\Libraries\Imgui\include\imstb_truetype.h" />
+    <ClInclude Include="..\Libraries\Implot\include\implot.h" />
+    <ClInclude Include="..\Libraries\Implot\include\implot_internal.h" />
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
@@ -230,15 +238,15 @@
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdl2.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\backends\imgui_impl_sdlrenderer2.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_demo.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_draw.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_tables.cpp" />
-    <ClCompile Include="..\Libraries\imgui - 1.90.9\include\imgui_widgets.cpp" />
-    <ClCompile Include="..\Libraries\implot - 0.16\include\implot.cpp" />
-    <ClCompile Include="..\Libraries\implot - 0.16\include\implot_items.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\imgui.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_demo.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_draw.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_tables.cpp" />
+    <ClCompile Include="..\Libraries\Imgui\include\imgui_widgets.cpp" />
+    <ClCompile Include="..\Libraries\Implot\include\implot.cpp" />
+    <ClCompile Include="..\Libraries\Implot\include\implot_items.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />

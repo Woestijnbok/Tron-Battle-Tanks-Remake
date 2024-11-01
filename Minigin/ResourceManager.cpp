@@ -11,10 +11,10 @@ using namespace Minigin;
 
 ResourceManager::ResourceManager() :	
 	Singleton{},	
-	m_TextureRootDirectory{ "../Resources/Textures" },	
-	m_FontRootDirectory{ "../Resources/Fonts" },
-	m_AudioRootDirectory{ "../Resources/Audio" },
-	m_FileRootDirectory{ "../Resources/Files" }
+	m_TextureRootDirectory{ "Resources/Textures" },	
+	m_FontRootDirectory{ "Resources/Fonts" },
+	m_AudioRootDirectory{ "Resources/Audio" },
+	m_FileRootDirectory{ "Resources/Files" }
 {	
 	// Checking texture root directory	
 	if (std::filesystem::exists(m_TextureRootDirectory))
