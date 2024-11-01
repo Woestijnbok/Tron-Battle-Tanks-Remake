@@ -1,7 +1,7 @@
 # Introduction
 
-Welcome to my remake of *Tron Battle Tanks*, this is one of my larger projects that I have done. Mainly because I am made my own engine "Minigin" which has some neat features.
-I then used Minigin to create the remake, this remake has some new game modes and a scoreboard. Bullets in this game can bounce up to a maximum amount of 5.
+Welcome to my remake of *Tron Battle Tanks*, this is one of my larger projects that I have done. Mainly because I made my own engine "Minigin" which has some neat features.
+I then used Minigin to create the remake which some new game modes and other features. Bullets in this game can bounce up to a maximum amount of 5.
 The player and enemies can teleport to a random location when entering the pink diamond in the middle.
 
 <div align="center">
