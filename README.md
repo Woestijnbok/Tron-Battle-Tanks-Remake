@@ -43,4 +43,7 @@ The game can be played with both a controller and keyboard-and-mouse. The co-op 
 
 # Final Thoughts
 
-This project was a very rewarding and challenging opportunity to further improve my game developing journey. I hope you enjoy playing it as much as I enjoyed creating it!
+This project was a very rewarding and challenging opportunity to further improve my game developing journey.
+One of the most important takeaways was learning to use the C++ Standard Library more effectively, especially with the new C++20 features.
+But the most important one was learning and choosing the correct gameplay patterns for my engine.
+I hope you enjoy playing it as much as I enjoyed creating it!
